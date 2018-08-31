@@ -1,0 +1,70 @@
+package com.mlaroche.smartheater.services;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.inject.Inject;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mlaroche.smartheater.dao.HeaterDAO;
+import com.mlaroche.smartheater.domain.Heater;
+import com.mlaroche.smartheater.domain.ProtocolEnum;
+import com.mlaroche.smartheater.domain.WeeklyCalendar;
+import com.mlaroche.smartheater.model.HeaterMode;
+import com.mlaroche.smartheater.model.HeaterWeeklyCalendar;
+import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.DailyCalendar;
+import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
+
+import io.vertigo.commons.daemon.DaemonScheduled;
+import io.vertigo.core.component.Component;
+import io.vertigo.dynamo.criteria.Criterions;
+import io.vertigo.dynamo.domain.model.DtList;
+import io.vertigo.lang.Assertion;
+
+public class HeaterControlServicesImpl implements Component {
+
+	@Inject
+	private HeaterDAO heaterDAO;
+
+	private final Map<ProtocolEnum, RemoteHeaterControlerPlugin> pluginByProtocol = new HashMap<>();
+
+	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+	@Inject
+	public HeaterControlServicesImpl(final List<RemoteHeaterControlerPlugin> remoteHeaterControlerPlugins) {
+		Assertion.checkNotNull(remoteHeaterControlerPlugins);
+		Assertion.checkState(!remoteHeaterControlerPlugins.isEmpty(), "at least one remoteHeaterControlerPlugin is needed");
+		//---
+		remoteHeaterControlerPlugins.forEach(plugin -> pluginByProtocol.put(plugin.getProtocol(), plugin));
+	}
+
+	@DaemonScheduled(name = "DMN_HEATER_MODE", periodInSeconds = 60 * 2) // every two minutes
+	public void mainLoop() {
+		final DtList<Heater> heaters = heaterDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
+		final LocalDateTime now = LocalDateTime.now();
+		final LocalTime nowTime = now.toLocalTime();
+
+		for (final Heater heater : heaters) {
+			heater.weeklyCalendar().load();// at max 20 heaters
+			final WeeklyCalendar weeklyCalendar = heater.weeklyCalendar().get();
+			final HeaterWeeklyCalendar heaterWeeklyCalendar = gson.fromJson(weeklyCalendar.getJsonValue(), HeaterWeeklyCalendar.class);
+
+			final DailyCalendar dailyCalendar = heaterWeeklyCalendar.getDailyCalendars().get(now.getDayOfWeek());
+			final Optional<HeaterMode> heaterModeOpt = dailyCalendar.getTimeSlots()
+					.stream()
+					.filter(timeSlot -> nowTime.isAfter(timeSlot.getBegin()) && nowTime.isBefore(timeSlot.getEnd())) //we find the current time slot if any
+					.findAny()
+					.map(TimeSlot::getMode);
+
+			pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterModeOpt.orElse(HeaterMode.ARRET));
+
+		}
+
+	}
+
+}

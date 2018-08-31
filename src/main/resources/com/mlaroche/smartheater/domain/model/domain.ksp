@@ -1,0 +1,70 @@
+package com.mlaroche.smartheater.domain
+
+/**************************************************************************************************/
+/********************************* Formatters *****************************************************/
+/**************************************************************************************************/
+create Formatter FMT_DEFAULT{
+	className : "io.vertigo.dynamox.domain.formatter.FormatterDefault"
+}
+
+create Formatter FMT_DATE {
+     className :"io.vertigo.dynamox.domain.formatter.FormatterDate"
+     args : "dd/MM/yy;dd/MM/yyyy"
+}
+
+
+/**************************************************************************************************/
+/********************************* Constraints ****************************************************/
+/**************************************************************************************************/
+
+
+
+/**************************************************************************************************/
+/********************************* Domains ********************************************************/
+/**************************************************************************************************/
+
+create Domain DO_ID {
+	dataType : Long
+	formatter : FMT_DEFAULT
+	storeType : "NUMERIC"
+}
+
+create Domain DO_DATE {
+	dataType : LocalDate
+	formatter : FMT_DATE
+	storeType : "DATE"
+}
+
+create Domain DO_TIMESTAMP {
+	dataType : Instant
+	formatter : FMT_DEFAULT
+	storeType : "TIMESTAMP"
+}
+
+
+create Domain DO_NUMBER {
+	dataType : Integer
+	formatter : FMT_DEFAULT
+	storeType : "NUMERIC"
+}
+
+
+create Domain DO_LABEL {
+	dataType : String
+	formatter : FMT_DEFAULT
+	storeType : "VARCHAR(100)"
+}
+
+create Domain DO_TEXT {
+	dataType : String
+	formatter : FMT_DEFAULT
+	storeType : "TEXT"
+}
+
+create Domain DO_BOOLEAN {
+	dataType : Boolean
+	formatter : FMT_DEFAULT
+	storeType : "BOOL"
+}
+
+

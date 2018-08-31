@@ -1,0 +1,25 @@
+package com.mlaroche.smartheater.domain;
+
+import java.io.Serializable;
+
+import io.vertigo.dynamo.domain.model.MasterDataEnum;
+import io.vertigo.dynamo.domain.model.URI;
+import io.vertigo.dynamo.domain.util.DtObjectUtil;
+
+public enum ProtocolEnum implements MasterDataEnum<com.mlaroche.smartheater.domain.Protocol> {
+
+	http("1")
+	;
+
+	private final URI<com.mlaroche.smartheater.domain.Protocol> entityUri;
+
+	private ProtocolEnum(final Serializable id) {
+		entityUri = DtObjectUtil.createURI(com.mlaroche.smartheater.domain.Protocol.class, id);
+	}
+
+	@Override
+	public URI<com.mlaroche.smartheater.domain.Protocol> getEntityUri() {
+		return entityUri;
+	}
+
+}

@@ -11,15 +11,15 @@ public enum ProtocolEnum implements MasterDataEnum<com.mlaroche.smartheater.doma
 	http("1")
 	;
 
-	private final URI<com.mlaroche.smartheater.domain.Protocol> entityUri;
+	private final Serializable entityId;
 
 	private ProtocolEnum(final Serializable id) {
-		entityUri = DtObjectUtil.createURI(com.mlaroche.smartheater.domain.Protocol.class, id);
+		entityId = id;
 	}
 
 	@Override
 	public URI<com.mlaroche.smartheater.domain.Protocol> getEntityUri() {
-		return entityUri;
+		return DtObjectUtil.createURI(com.mlaroche.smartheater.domain.Protocol.class, entityId);
 	}
 
 }

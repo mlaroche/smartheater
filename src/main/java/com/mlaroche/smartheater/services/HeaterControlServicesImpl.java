@@ -21,26 +21,39 @@ import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.DailyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
 
 import io.vertigo.commons.daemon.DaemonScheduled;
+import io.vertigo.commons.transaction.Transactional;
+import io.vertigo.core.component.Activeable;
 import io.vertigo.core.component.Component;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.lang.Assertion;
 
-public class HeaterControlServicesImpl implements Component {
+@Transactional
+public class HeaterControlServicesImpl implements Component, Activeable {
 
 	@Inject
 	private HeaterDAO heaterDAO;
+
+	@Inject
+	private List<RemoteHeaterControlerPlugin> remoteHeaterControlerPlugins;
 
 	private final Map<ProtocolEnum, RemoteHeaterControlerPlugin> pluginByProtocol = new HashMap<>();
 
 	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-	@Inject
-	public HeaterControlServicesImpl(final List<RemoteHeaterControlerPlugin> remoteHeaterControlerPlugins) {
+	@Override
+	public void start() {
 		Assertion.checkNotNull(remoteHeaterControlerPlugins);
 		Assertion.checkState(!remoteHeaterControlerPlugins.isEmpty(), "at least one remoteHeaterControlerPlugin is needed");
 		//---
 		remoteHeaterControlerPlugins.forEach(plugin -> pluginByProtocol.put(plugin.getProtocol(), plugin));
+
+	}
+
+	@Override
+	public void stop() {
+		// nothing
+
 	}
 
 	@DaemonScheduled(name = "DMN_HEATER_MODE", periodInSeconds = 60 * 2) // every two minutes

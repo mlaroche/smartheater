@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>Sample "Hello, World" Application</title>
+    <script
+		  src="https://code.jquery.com/jquery-3.3.1.min.js"
+		  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		  crossorigin="anonymous"></script>
+  </head>
+  <body>
+
+	<script type="text/javascript">
+		$.get( "api/weeklyCalendars/1000", function( data ) {
+		  console.log(JSON.parse(data.jsonValue));
+		});
+	
+	</script>
+  </body>
+</html>

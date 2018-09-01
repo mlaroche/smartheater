@@ -22,12 +22,13 @@ import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
 
 import io.vertigo.commons.daemon.DaemonScheduled;
 import io.vertigo.commons.transaction.Transactional;
+import io.vertigo.core.component.Activeable;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.lang.Assertion;
 
 @Transactional
-public class HeaterControlServicesImpl implements HeaterControlServices {
+public class HeaterControlServicesImpl implements HeaterControlServices, Activeable {
 
 	@Inject
 	private HeaterDAO heaterDAO;

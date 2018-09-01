@@ -18,6 +18,7 @@ import io.vertigo.dynamo.impl.DynamoFeatures;
 import io.vertigo.dynamo.plugins.environment.DynamoDefinitionProvider;
 import io.vertigo.dynamo.plugins.store.datastore.sql.SqlDataStorePlugin;
 import io.vertigo.vega.VegaFeatures;
+import spark.Spark;
 
 public class Main {
 
@@ -68,6 +69,7 @@ public class Main {
 	}
 
 	public static void main(final String[] args) throws InterruptedException {
+		Spark.staticFileLocation("/web");
 		try (final AutoCloseableApp app = new AutoCloseableApp(buildAppConfig())) {
 			while (!Thread.interrupted()) {
 				try {

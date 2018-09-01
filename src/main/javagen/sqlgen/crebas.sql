@@ -28,7 +28,7 @@ create table HEATER
     DNS_NAME    	 VARCHAR(100)	,
     ACTIVE      	 BOOL        	,
     WCA_ID      	 NUMERIC     	not null,
-    PRO_ID      	 NUMERIC     	not null,
+    PRO_CD      	 VARCHAR(100)	not null,
     constraint PK_HEATER primary key (HEA_ID)
 );
 
@@ -47,7 +47,7 @@ comment on column HEATER.ACTIVE is
 comment on column HEATER.WCA_ID is
 'WeeklyCalendar';
 
-comment on column HEATER.PRO_ID is
+comment on column HEATER.PRO_CD is
 'Protocol';
 
 -- ============================================================
@@ -55,12 +55,12 @@ comment on column HEATER.PRO_ID is
 -- ============================================================
 create table PROTOCOL
 (
-    PRO_ID      	 NUMERIC     	not null,
+    PRO_CD      	 VARCHAR(100)	not null,
     LABEL       	 VARCHAR(100)	,
-    constraint PK_PROTOCOL primary key (PRO_ID)
+    constraint PK_PROTOCOL primary key (PRO_CD)
 );
 
-comment on column PROTOCOL.PRO_ID is
+comment on column PROTOCOL.PRO_CD is
 'Id';
 
 comment on column PROTOCOL.LABEL is
@@ -89,10 +89,10 @@ comment on column WEEKLY_CALENDAR.JSON_VALUE is
 
 
 alter table HEATER
-	add constraint FK_HEA_PRO_PROTOCOL foreign key (PRO_ID)
-	references PROTOCOL (PRO_ID);
+	add constraint FK_HEA_PRO_PROTOCOL foreign key (PRO_CD)
+	references PROTOCOL (PRO_CD);
 
-create index HEA_PRO_PROTOCOL_FK on HEATER (PRO_ID asc);
+create index HEA_PRO_PROTOCOL_FK on HEATER (PRO_CD asc);
 
 alter table HEATER
 	add constraint FK_HEA_WCA_WEEKLY_CALENDAR foreign key (WCA_ID)

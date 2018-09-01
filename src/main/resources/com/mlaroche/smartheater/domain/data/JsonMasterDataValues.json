@@ -1,7 +1,7 @@
 {"com.mlaroche.smartheater.domain.Protocol" : 
 	{
 		"http" : {
-			"proId" : "1",
+			"proCd" : "HTTP",
 			"label" : "http"
 		}
 				

@@ -19,7 +19,7 @@ public class WeeklyCalendarWebServices implements WebServices {
 	public HeaterWeeklyCalendar test() {
 		final DailyCalendar defaultCalendar = new DailyCalendar();
 		defaultCalendar.getTimeSlots()
-				.add(new TimeSlot(LocalTime.of(7, 0), LocalTime.of(8, 0), HeaterMode.CONFORT));
+				.add(new TimeSlot(LocalTime.of(7, 0), LocalTime.of(8, 0), HeaterMode.confort));
 
 		final HeaterWeeklyCalendar heaterWeeklyCalendar = new HeaterWeeklyCalendar();
 		heaterWeeklyCalendar.getDailyCalendars()

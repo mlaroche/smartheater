@@ -8,7 +8,7 @@ import io.vertigo.dynamo.domain.util.DtObjectUtil;
 
 public enum ProtocolEnum implements MasterDataEnum<com.mlaroche.smartheater.domain.Protocol> {
 
-	http("1")
+	http("HTTP")
 	;
 
 	private final Serializable entityId;

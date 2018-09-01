@@ -14,7 +14,7 @@ import io.vertigo.lang.Generated;
 public final class Protocol implements DtStaticMasterData {
 	private static final long serialVersionUID = 1L;
 
-	private Long proId;
+	private String proCd;
 	private String label;
 
 	/** {@inheritDoc} */
@@ -26,20 +26,20 @@ public final class Protocol implements DtStaticMasterData {
 	/**
 	 * Champ : ID.
 	 * Récupère la valeur de la propriété 'Id'.
-	 * @return Long proId <b>Obligatoire</b>
+	 * @return String proCd <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_ID", type = "ID", required = true, label = "Id")
-	public Long getProId() {
-		return proId;
+	@Field(domain = "DO_LABEL", type = "ID", required = true, label = "Id")
+	public String getProCd() {
+		return proCd;
 	}
 
 	/**
 	 * Champ : ID.
 	 * Définit la valeur de la propriété 'Id'.
-	 * @param proId Long <b>Obligatoire</b>
+	 * @param proCd String <b>Obligatoire</b>
 	 */
-	public void setProId(final Long proId) {
-		this.proId = proId;
+	public void setProCd(final String proCd) {
+		this.proCd = proCd;
 	}
 	
 	/**

@@ -38,7 +38,7 @@ public final class Heater implements Entity {
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "A_HEA_PRO",
-			fkFieldName = "PRO_ID",
+			fkFieldName = "PRO_CD",
 			primaryDtDefinitionName = "DT_PROTOCOL",
 			primaryIsNavigable = true,
 			primaryRole = "Protocol",
@@ -49,7 +49,7 @@ public final class Heater implements Entity {
 			foreignRole = "Heater",
 			foreignLabel = "Heater",
 			foreignMultiplicity = "0..*")
-	private final EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> proIdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.Protocol.class, "Protocol", com.mlaroche.smartheater.domain.ProtocolEnum.class);
+	private final EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> proCdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.Protocol.class, "Protocol", com.mlaroche.smartheater.domain.ProtocolEnum.class);
 
 	/** {@inheritDoc} */
 	@Override
@@ -155,20 +155,20 @@ public final class Heater implements Entity {
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'Protocol'.
-	 * @return Long proId <b>Obligatoire</b>
+	 * @return String proCd <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_ID", type = "FOREIGN_KEY", required = true, label = "Protocol")
-	public Long getProId() {
-		return (Long)  proIdAccessor.getId();
+	@Field(domain = "DO_LABEL", type = "FOREIGN_KEY", required = true, label = "Protocol")
+	public String getProCd() {
+		return (String)  proCdAccessor.getId();
 	}
 
 	/**
 	 * Champ : FOREIGN_KEY.
 	 * Définit la valeur de la propriété 'Protocol'.
-	 * @param proId Long <b>Obligatoire</b>
+	 * @param proCd String <b>Obligatoire</b>
 	 */
-	public void setProId(final Long proId) {
-		proIdAccessor.setId(proId);
+	public void setProCd(final String proCd) {
+		proCdAccessor.setId(proCd);
 	}
 
  	/**
@@ -176,16 +176,16 @@ public final class Heater implements Entity {
 	 * @return l'accesseur vers la propriété 'Protocol'
 	 */
 	public EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> protocol() {
-		return proIdAccessor;
+		return proCdAccessor;
 	}
 	
 	@Deprecated
 	public com.mlaroche.smartheater.domain.Protocol getProtocol() {
 		// we keep the lazyness
-		if (!proIdAccessor.isLoaded()) {
-			proIdAccessor.load();
+		if (!proCdAccessor.isLoaded()) {
+			proCdAccessor.load();
 		}
-		return proIdAccessor.get();
+		return proCdAccessor.get();
 	}
 
 	/**
@@ -194,7 +194,7 @@ public final class Heater implements Entity {
 	 */
 	@Deprecated
 	public io.vertigo.dynamo.domain.model.URI<com.mlaroche.smartheater.domain.Protocol> getProtocolURI() {
-		return proIdAccessor.getURI();
+		return proCdAccessor.getURI();
 	}
 
  	/**

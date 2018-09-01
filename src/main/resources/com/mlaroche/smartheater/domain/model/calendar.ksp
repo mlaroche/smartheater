@@ -17,7 +17,7 @@ create DtDefinition DT_HEATER {
 
 create DtDefinition DT_PROTOCOL {
 	stereotype : "StaticMasterData",
-	key PRO_ID 				{ domain: DO_ID,			 label: "Id", 			notNull: "false" }
+	key PRO_CD 				{ domain: DO_LABEL,			 label: "Id", 			notNull: "false" }
 	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		notNull: "false" }
 
 }
@@ -42,7 +42,7 @@ create Association A_HEA_WCA {
 
 
 create Association A_HEA_PRO {
-  	fkFieldName : "PRO_ID"
+  	fkFieldName : "PRO_CD"
     
   	dtDefinitionA : DT_PROTOCOL
 	dtDefinitionB : DT_HEATER

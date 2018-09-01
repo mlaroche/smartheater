@@ -34,7 +34,7 @@ public enum DtResources implements MessageKey {
 	/**
 	 * Protocol.
 	 */
-	FLD_HEATER$PRO_ID,
+	FLD_HEATER$PRO_CD,
 
 	/***********************************************************
 	/** Protocol.
@@ -42,7 +42,7 @@ public enum DtResources implements MessageKey {
 	/**
 	 * Id.
 	 */
-	FLD_PROTOCOL$PRO_ID,
+	FLD_PROTOCOL$PRO_CD,
 	/**
 	 * Name.
 	 */

@@ -1,0 +1,2 @@
+insert into weekly_calendar(wca_id, name, json_value ) values (nextval('seq_weekly_calendar'), 'empty', '{"dailyCalendars": { "MONDAY": { "timeSlots": [] },	"TUESDAY": { "timeSlots": [] }, "WEDNESDAY": { "timeSlots": [] }, "THURSDAY": { "timeSlots": [] }, "FRIDAY": { "timeSlots": [] }, "SATURDAY": { "timeSlots": [] }, "SUNDAY": { "timeSlots": [] }}}');
+insert into heater(hea_id, name, dns_name, active, pro_cd, wca_id) values (nextval('seq_heater'), 'proto', '192.168.1.24', true, 'HTTP' ,currval('seq_weekly_calendar'));

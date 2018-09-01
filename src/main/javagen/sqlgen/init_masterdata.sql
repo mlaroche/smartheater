@@ -1,4 +1,4 @@
 -- ============================================================
 --   Insert MasterData values : PROTOCOL                                        
 -- ============================================================
-insert into PROTOCOL(PRO_ID, LABEL) values ('1', 'http');
+insert into PROTOCOL(PRO_CD, LABEL) values ('HTTP', 'http');

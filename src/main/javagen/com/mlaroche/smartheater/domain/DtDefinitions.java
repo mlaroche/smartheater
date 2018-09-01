@@ -54,14 +54,14 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		/** Propriété 'WeeklyCalendar'. */
 		WCA_ID,
 		/** Propriété 'Protocol'. */
-		PRO_ID	}
+		PRO_CD	}
 
 	/**
 	 * Enumération des champs de Protocol.
 	 */
 	public enum ProtocolFields implements DtFieldName<com.mlaroche.smartheater.domain.Protocol> {
 		/** Propriété 'Id'. */
-		PRO_ID,
+		PRO_CD,
 		/** Propriété 'Name'. */
 		LABEL	}
 

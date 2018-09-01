@@ -22,14 +22,12 @@ import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
 
 import io.vertigo.commons.daemon.DaemonScheduled;
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.core.component.Activeable;
-import io.vertigo.core.component.Component;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.lang.Assertion;
 
 @Transactional
-public class HeaterControlServicesImpl implements Component, Activeable {
+public class HeaterControlServicesImpl implements HeaterControlServices {
 
 	@Inject
 	private HeaterDAO heaterDAO;
@@ -74,10 +72,24 @@ public class HeaterControlServicesImpl implements Component, Activeable {
 					.findAny()
 					.map(TimeSlot::getMode);
 
-			pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterModeOpt.orElse(HeaterMode.ARRET));
+			pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterModeOpt.orElse(HeaterMode.arret));
 
 		}
 
+	}
+
+	@Override
+	public void changeHeaterMode(final Long heaId, final HeaterMode heaterMode) {
+		Assertion.checkNotNull(heaId);
+		Assertion.checkNotNull(heaterMode);
+		//---
+		final Heater heater = heaterDAO.get(heaId);
+		pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterMode);
+	}
+
+	@Override
+	public DtList<Heater> listAllHeaters() {
+		return heaterDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
 	}
 
 }

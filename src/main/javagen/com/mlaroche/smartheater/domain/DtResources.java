@@ -1,5 +1,5 @@
 /**
- * Copyright [2018] [Matthieu Laroche - France]
+ * Copyright 2018 Matthieu Laroche - France
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

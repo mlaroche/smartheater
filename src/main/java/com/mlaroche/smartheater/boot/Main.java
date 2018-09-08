@@ -1,3 +1,18 @@
+/**
+ * Copyright [2018] [Matthieu Laroche - France]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.mlaroche.smartheater.boot;
 
 import com.mlaroche.smartheater.domain.DtDefinitions;
@@ -6,7 +21,6 @@ import io.vertigo.app.AutoCloseableApp;
 import io.vertigo.app.config.AppConfig;
 import io.vertigo.app.config.DefinitionProviderConfig;
 import io.vertigo.app.config.ModuleConfig;
-import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
 import io.vertigo.commons.impl.CommonsFeatures;
 import io.vertigo.commons.plugins.cache.memory.MemoryCachePlugin;
 import io.vertigo.core.param.Param;
@@ -18,7 +32,6 @@ import io.vertigo.dynamo.impl.DynamoFeatures;
 import io.vertigo.dynamo.plugins.environment.DynamoDefinitionProvider;
 import io.vertigo.dynamo.plugins.store.datastore.sql.SqlDataStorePlugin;
 import io.vertigo.vega.VegaFeatures;
-import spark.Spark;
 
 public class Main {
 
@@ -49,13 +62,7 @@ public class Main {
 						.withEmbeddedServer(8080)
 						.withApiPrefix("/api")
 						.build())
-				.addModule(new ModuleDiscoveryFeatures("smartheater") {
-
-					@Override
-					protected String getPackageRoot() {
-						return "com.mlaroche.smartheater";
-					}
-				}.build())
+				.addModule(new SmartHeaterFeature().build())
 				.addModule(ModuleConfig.builder("definitions")
 						.addDefinitionProvider(DefinitionProviderConfig.builder(DynamoDefinitionProvider.class)
 								.addDefinitionResource("classes", DtDefinitions.class.getName())
@@ -69,7 +76,7 @@ public class Main {
 	}
 
 	public static void main(final String[] args) throws InterruptedException {
-		Spark.staticFileLocation("/web");
+		//Spark.staticFileLocation("/web");
 		try (final AutoCloseableApp app = new AutoCloseableApp(buildAppConfig())) {
 			while (!Thread.interrupted()) {
 				try {

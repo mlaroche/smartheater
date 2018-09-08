@@ -13,28 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mlaroche.smartheater.domain;
+package com.mlaroche.smartheater.boot;
 
-import java.io.Serializable;
+import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
 
-import io.vertigo.dynamo.domain.model.MasterDataEnum;
-import io.vertigo.dynamo.domain.model.URI;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
+public final class SmartHeaterFeature extends ModuleDiscoveryFeatures {
 
-public enum ProtocolEnum implements MasterDataEnum<com.mlaroche.smartheater.domain.Protocol> {
-
-	http("HTTP")
-	;
-
-	private final Serializable entityId;
-
-	private ProtocolEnum(final Serializable id) {
-		entityId = id;
+	public SmartHeaterFeature() {
+		super("smartheater");
 	}
 
 	@Override
-	public URI<com.mlaroche.smartheater.domain.Protocol> getEntityUri() {
-		return DtObjectUtil.createURI(com.mlaroche.smartheater.domain.Protocol.class, entityId);
+	protected String getPackageRoot() {
+		return "com.mlaroche.smartheater";
 	}
-
 }

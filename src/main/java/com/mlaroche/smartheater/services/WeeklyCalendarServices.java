@@ -18,11 +18,14 @@ package com.mlaroche.smartheater.services;
 import com.mlaroche.smartheater.domain.WeeklyCalendar;
 
 import io.vertigo.core.component.Component;
+import io.vertigo.dynamo.domain.model.DtList;
 
 public interface WeeklyCalendarServices extends Component {
 
 	void saveWeeklyCalendar(WeeklyCalendar weeklyCalendar);
 
 	WeeklyCalendar getWeeklyCalendar(Long wcaId);
+
+	DtList<WeeklyCalendar> listCalendars();
 
 }

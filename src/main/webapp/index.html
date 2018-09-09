@@ -39,6 +39,11 @@
 		      next(vm => vm.setWeeklyCalendar(data))
 		    })
 		  },
+		  beforeRouteUpdate (to, from, next) {
+			  $.get("api/weeklyCalendars/"+ to.params.id, data => {
+			      this.setWeeklyCalendar(data)
+			    })
+		  },
 		  mounted: function () {
 			  this.$nextTick(function () {
 			  	$('#schedule').jqs();

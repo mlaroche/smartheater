@@ -62,9 +62,9 @@ public class WeeklyCalendarWebServices implements WebServices {
 
 	}
 
-	@POST("")
-	public void createCalendar(final WeeklyCalendar weeklyCalendar) {
-		weeklyCalendarServices.saveWeeklyCalendar(weeklyCalendar);
+	@POST("/")
+	public WeeklyCalendar createCalendar(final WeeklyCalendar weeklyCalendar) {
+		return weeklyCalendarServices.saveWeeklyCalendar(weeklyCalendar);
 
 	}
 

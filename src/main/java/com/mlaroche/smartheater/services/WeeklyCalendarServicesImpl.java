@@ -38,7 +38,7 @@ public class WeeklyCalendarServicesImpl implements WeeklyCalendarServices {
 	private final Gson gson = new Gson();
 
 	@Override
-	public void saveWeeklyCalendar(final WeeklyCalendar weeklyCalendar) {
+	public WeeklyCalendar saveWeeklyCalendar(final WeeklyCalendar weeklyCalendar) {
 		Assertion.checkNotNull(weeklyCalendar);
 		//---
 		// just to make sure that the weeklyCalendar is valid we marshall and unmarshall the json value
@@ -47,7 +47,7 @@ public class WeeklyCalendarServicesImpl implements WeeklyCalendarServices {
 		} catch (final JsonParseException e) {
 			throw new VUserException("json calendar is not valid : {0}", weeklyCalendar.getJsonValue());
 		}
-		weeklyCalendarDAO.save(weeklyCalendar);
+		return weeklyCalendarDAO.save(weeklyCalendar);
 	}
 
 	@Override

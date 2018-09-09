@@ -18,49 +18,105 @@
 	</div>
 
 	<script type="text/javascript">
-		const WeeklyCalendar = {
+	const WeeklyCalendarEdit = {
+			  name : "weekly-calendar-edit",
+			  template: `
+			  		<div>
+			  			<weekly-calendar-detail v-bind:weeklyCalendar="weeklyCalendar" v-bind:is-edit="false" >
+						</weekly-calendar-detail>
+					</div>
+				 `,
+			  beforeRouteEnter (to, from, next) {
+				 $.get("api/weeklyCalendars/"+ to.params.id, data => {
+			      next(vm => vm.setWeeklyCalendar(data))
+			    })
+			  },
+			  beforeRouteUpdate (to, from, next) {
+				  $.get("api/weeklyCalendars/"+ to.params.id, data => {
+				      this.setWeeklyCalendar(data)
+				    })
+			  },
+			  methods: {
+				  setWeeklyCalendar : function (data) {
+					  this.$data.weeklyCalendar  = data
+				  }
+			  },
+			  data: function () {
+				  return {
+			  		  weeklyCalendar:  {}
+			  	  }
+			  }
+			}
+	
+	const WeeklyCalendarCreate = {
+			  name : "weekly-calendar-create",
+			  template: `
+			  		<div>
+			  			<weekly-calendar-detail v-bind:weeklyCalendar="weeklyCalendar" v-bind:is-edit="true" >
+						</weekly-calendar-detail>
+					</div>
+				 `,
+			  data: function () {
+				  return {
+			  		  weeklyCalendar:  {}
+			  	  }
+			  }
+			}
+		
+	
+		const WeeklyCalendarDetailView = {
+		  name : "weekly-calendar-detail",
 		  template: `
 		  	<div>
 			  <form>
 				  <div class="form-group row">
 				  <label for="name" class="col-sm-2 col-form-label">Nom</label>
 				    <div class="col-sm-10">
-				    	<input v-model="weeklyCalendar.name" class="form-control" name="name" placeholder="">
+				    	<input v-if="edition" v-model:value="weeklyCalendar.name"
+				                class="form-control" 
+				                name="name" 
+				                placeholder="">
+				    	<input v-else type="text" readonly class="form-control-plaintext" id="staticEmail" v-bind:value="weeklyCalendar.name">
 				    </div>
 				  </div>
 				</form>
 			  <input v-model="weeklyCalendar.jsonValue"  type=hidden name="jsonValue" >
 			  <div id="schedule"></div>
-			  <button v-on:click="save">Sauvegarder</button>
+			  <button  v-if="edition" v-on:click="save">Sauvegarder</button>
+			  <button  v-else v-on:click="toogleEdit">Modifier</button>
 		  	</div>	
 			 `,
-		  beforeRouteEnter (to, from, next) {
-			 $.get("api/weeklyCalendars/"+ to.params.id, data => {
-		      next(vm => vm.setWeeklyCalendar(data))
-		    })
-		  },
-		  beforeRouteUpdate (to, from, next) {
-			  $.get("api/weeklyCalendars/"+ to.params.id, data => {
-			      this.setWeeklyCalendar(data)
-			    })
+		  props: {
+			  weeklyCalendar: Object,
+			  isEdit: Boolean
 		  },
 		  mounted: function () {
 			  this.$nextTick(function () {
 			  	$('#schedule').jqs();
 			  });
 		  },
+		  computed: {
+		    // a computed getter
+		    edition: function () {
+		      return this.$props.isEdit || this.$data.edit
+		    }
+		  },
 		  methods: {
-			  setWeeklyCalendar : function (data) {
-				  this.$data.weeklyCalendar  = data
-			  },
 			  save : function () {
 				  var weeklyCalendar = JSON.parse($('#schedule').jqs('export'));
 				  //translate the format and then save the calendar
+				  $.post("api/weeklyCalendars/", JSON.stringify(this.$props.weeklyCalendar) , function( data, textStatus, jQxhr ){
+					  //router.push({ path: '/weeklyCalendars/'});
+				  }, 'json');
+				  
+			  },
+			  toogleEdit : function () {
+				  this.$data.edit = !this.$data.edit;
 			  }
 		  },
 		  data: function () {
 			  return {
-		  		  weeklyCalendar:  {}
+		  		  edit: false
 		  	  }
 		  }
 		}
@@ -109,18 +165,19 @@
 		  routes: [
 			{ path: '/weeklyCalendars/', component: WeeklyCalendarList },
 			  // dynamic segments start with a colon
-		    { path: '/weeklyCalendars/:id', component: WeeklyCalendar }
+			{ path: '/weeklyCalendars/new', component: WeeklyCalendarCreate },
+		    { path: '/weeklyCalendars/:id', component: WeeklyCalendarEdit }
 		  ]
 		});
 		
+		Vue.component('weekly-calendar-detail', WeeklyCalendarDetailView);
+		Vue.component('weekly-calendar-edit', WeeklyCalendarEdit);
+		Vue.component('weekly-calendar-create', WeeklyCalendarCreate);
+		Vue.component('weekly-calendar-list', WeeklyCalendarList);
 		
 		var app = new Vue({
 			  el: '#app',
 			  router : router,
-			  components: {
-				  'weekly-calendar' : WeeklyCalendar,
-				  'weekly-calendar-list' : WeeklyCalendarList
-			  },
 			  data: {
 			    message: 'Hello Vue!'
 			  }

@@ -22,7 +22,7 @@ import io.vertigo.dynamo.domain.model.DtList;
 
 public interface WeeklyCalendarServices extends Component {
 
-	void saveWeeklyCalendar(WeeklyCalendar weeklyCalendar);
+	WeeklyCalendar saveWeeklyCalendar(WeeklyCalendar weeklyCalendar);
 
 	WeeklyCalendar getWeeklyCalendar(Long wcaId);
 

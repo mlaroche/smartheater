@@ -106,7 +106,7 @@
 				  var weeklyCalendar = JSON.parse($('#schedule').jqs('export'));
 				  //translate the format and then save the calendar
 				  $.post("api/weeklyCalendars/", JSON.stringify(this.$props.weeklyCalendar) , function( data, textStatus, jQxhr ){
-					  //router.push({ path: '/weeklyCalendars/'});
+					  router.push({ path: '/weeklyCalendars/'});
 				  }, 'json');
 				  
 			  },
@@ -142,6 +142,7 @@
 								</tr>
 							</tbody>
 						</table>
+						<router-link :to="{ path: '/weeklyCalendars/new'}">Nouveau</router-link>
 				  	</div>	
 					 `,
 				  beforeRouteEnter (to, from, next) {

@@ -132,11 +132,10 @@
 				                class="form-control" 
 				                name="name" 
 				                placeholder="">
-				    	<input v-else type="text" readonly class="form-control-plaintext" id="staticEmail" v-bind:value="weeklyCalendar.name">
+				    	<input v-else type="text" readonly class="form-control-plaintext" v-bind:value="weeklyCalendar.name">
 				    </div>
 				  </div>
 				</form>
-			  <input v-model="weeklyCalendar.jsonValue"  type=hidden name="jsonValue" >
 			  <div id="schedule"></div>
 			  <button  v-if="edition" v-on:click="save">Sauvegarder</button>
 			  <button  v-else v-on:click="toogleEdit">Modifier</button>
@@ -153,12 +152,14 @@
 		  },
 		  beforeUpdate: function () {
 			  this.$nextTick(function () {
-				$('#schedule').after('<div id="schedule"></div>');
-				$('#schedule')[0].remove();
-				$('#schedule').jqs({
-					mode : this.edition ? 'edit' : 'read'
-				});
-			  	$('#schedule').jqs('import', convertToJqueryCalendar(JSON.parse(this.$props.weeklyCalendar.jsonValue)));
+				if(this.$props.weeklyCalendar.jsonValue) {
+					$('#schedule').after('<div id="schedule"></div>');
+					$('#schedule')[0].remove();
+					$('#schedule').jqs({
+						mode : this.edition ? 'edit' : 'read'
+					});
+				  	$('#schedule').jqs('import', convertToJqueryCalendar(JSON.parse(this.$props.weeklyCalendar.jsonValue)));
+				}
 			  });
 		  },
 		  computed: {

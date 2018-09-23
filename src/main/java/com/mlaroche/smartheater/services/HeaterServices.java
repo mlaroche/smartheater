@@ -15,12 +15,17 @@
  */
 package com.mlaroche.smartheater.services;
 
-import com.mlaroche.smartheater.model.HeaterMode;
+import com.mlaroche.smartheater.domain.Heater;
 
 import io.vertigo.core.component.Component;
+import io.vertigo.dynamo.domain.model.DtList;
 
-public interface HeaterControlServices extends Component {
+public interface HeaterServices extends Component {
 
-	void changeHeaterMode(Long heaId, HeaterMode heaterMode);
+	Heater saveHeater(Heater heater);
+
+	Heater getHeater(Long heaId);
+
+	DtList<Heater> listHeaters();
 
 }

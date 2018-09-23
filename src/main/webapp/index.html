@@ -7,6 +7,7 @@
 	crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="static/jquery.schedule.js"></script>
@@ -237,13 +238,194 @@
 				  	  }
 				  }
 				}
+	
+	
+	const HeaterCreate = {
+			  name : "heater-create",
+			  template: `
+			  		<div>
+			  			<heater-detail v-bind:heater="heater" v-bind:is-edit="true" >
+						</heater-detail>
+					</div>
+				 `,
+			  data: function () {
+				  return {
+					  heater:  {}
+			  	  }
+			  }
+			}
+	
+	const HeaterEdit = {
+			  name : "heater-edit",
+			  template: `
+			  		<div>
+			  			<heater-detail v-bind:heater="heater"  v-bind:is-edit="false" >
+						</heater-detail>
+					</div>
+				 `,
+			  beforeRouteEnter (to, from, next) {
+				 $.get("api/heaters/"+ to.params.id, data => {
+			      next(vm => vm.setHeater(data))
+			    })
+			  },
+			  beforeRouteUpdate (to, from, next) {
+				  $.get("api/heaters/"+ to.params.id, data => {
+				      this.setHeater(data);
+				    })
+			  },
+			  methods: {
+				  setHeater : function (data) {
+					  this.$data.heater  = data
+				  }
+			  },
+			  data: function () {
+				  return {
+			  		  heater:  {},
+			  		  calendars:  []
+			  	  }
+			  }
+			}
+	
+	
+	const HeaterDetailView = {
+			  name : "heater-detail",
+			  template: `
+			  	<div>
+				  <form>
+					  <div class="form-group row">
+					  <label for="name" class="col-sm-2 col-form-label">Nom</label>
+					    <div class="col-sm-10">
+					    	<input v-if="edition" v-model:value="heater.name"
+					                class="form-control" 
+					                name="name" 
+					                placeholder="">
+					    	<input v-else type="text" readonly class="form-control-plaintext" v-bind:value="heater.name">
+					    </div>
+					    <label for="wcaId" class="col-sm-2 col-form-label">Calendrier</label>
+					    <div class="col-sm-10">
+					    	<select v-model="heater.wcaId" name="wcaId">
+					    	  <option v-for="calendar in calendars" v-bind:value="calendar.wcaId">
+					    	    {{ calendar.name }}
+					    	  </option>
+					    	</select>
+					    </div>
+					  </div>
+					</form>
+				  <button  v-if="edition" v-on:click="save">Sauvegarder</button>
+				  <button  v-else v-on:click="toogleEdit">Modifier</button>
+			  	</div>	
+				 `,
+			  props: {
+				  heater: Object,
+				  isEdit: Boolean
+			  },
+			  computed: {
+			    // a computed getter
+			    edition: function () {
+			      return this.$props.isEdit || this.$data.edit
+			    }
+			  },
+			  methods: {
+				  save : function () {
+					  $.post("api/heaters/", JSON.stringify(this.$props.heater) , function( data, textStatus, jQxhr ){
+						  router.push({ path: '/heaters/'});
+					  }, 'json');
+					  
+				  },
+				  toogleEdit : function () {
+					  this.$data.edit = !this.$data.edit;
+					  this.loadCalendars();
+				  },
+				  loadCalendars : function () {
+					  if(this.$data.edit) {
+						  this.$http.get("api/weeklyCalendars").then( function (response) { 
+								if(!!response.body) {
+									this.$data.calendars = response.body;
+								}
+							});
+					  } else {
+						  if(this.$props.heater.wcaId) {
+							  this.$http.get("api/weeklyCalendars/"+ this.$props.heater.wcaId).then( function (response) { 
+									if(!!response.body) {
+										this.$data.calendars = [];
+										this.$data.calendars.push(response.body);
+									}
+							}); 
+						  }
+					  }
+				  }
+			  },
+			  watch : {
+				  heater : function (newHeater, oldHeater) {
+				      this.loadCalendars();
+
+				  }
+			  },
+			  data: function () {
+				  return {
+			  		  edit: false,
+			  		  calendars: []
+			  	  }
+			  }
+			}
 		
+	const HeaterList = {
+			  template: `
+			  	<div>
+					<table class="table">
+					    <thead>
+					      <tr>
+					        <th scope="col">Id</th>
+					        <th scope="col">Nom</th>
+					        <th scope="col">Nom DNS</th>
+					      </tr>
+					    </thead>
+						<tbody>
+							<tr v-for="heater in heaters">
+								<td>
+								 	<router-link :to="{ path: '/heaters/'+ heater.heaId}">{{ heater.heaId}}</router-link>
+								</td>
+								<td>
+									{{ heater.name }}
+								</td>
+								<td>
+									{{ heater.dnsName }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<router-link :to="{ path: '/heaters/new'}">Nouveau</router-link>
+			  	</div>	
+				 `,
+			  beforeRouteEnter (to, from, next) {
+				 $.get("api/heaters", data => {
+			      next(vm => vm.setHeaters(data))
+			    })
+			  },
+			  methods: {
+				  setHeaters : function (data) {
+					  this.$data.heaters  = data
+				  }
+			  },
+			  data: function () {
+				  return {
+			  		  heaters:  []
+			  	  }
+			  }
+			}
+	
+	
+	
 		const router = new VueRouter({
 		  routes: [
 			{ path: '/weeklyCalendars/', component: WeeklyCalendarList },
 			  // dynamic segments start with a colon
 			{ path: '/weeklyCalendars/new', component: WeeklyCalendarCreate },
-		    { path: '/weeklyCalendars/:id', component: WeeklyCalendarEdit }
+		    { path: '/weeklyCalendars/:id', component: WeeklyCalendarEdit },
+		    
+		    { path: '/heaters/', component: HeaterList },
+		    { path: '/heaters/new', component: HeaterCreate },
+		    { path: '/heaters/:id', component: HeaterEdit }
 		  ]
 		});
 		
@@ -251,6 +433,10 @@
 		Vue.component('weekly-calendar-edit', WeeklyCalendarEdit);
 		Vue.component('weekly-calendar-create', WeeklyCalendarCreate);
 		Vue.component('weekly-calendar-list', WeeklyCalendarList);
+		
+		Vue.component('heater-detail', HeaterDetailView);
+		Vue.component('heater-edit', HeaterEdit);
+		Vue.component('heater-list', HeaterList);
 		
 		var app = new Vue({
 			  el: '#app',

@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import com.mlaroche.smartheater.domain.Heater;
 import com.mlaroche.smartheater.model.HeaterMode;
 import com.mlaroche.smartheater.services.HeaterControlServices;
+import com.mlaroche.smartheater.services.HeaterServices;
 
 import io.vertigo.dynamo.domain.model.DtList;
 import io.vertigo.vega.webservice.WebServices;
@@ -35,9 +36,24 @@ public class HeaterWebServices implements WebServices {
 	@Inject
 	private HeaterControlServices heaterControlServices;
 
+	@Inject
+	private HeaterServices heaterServices;
+
 	@GET("")
 	public DtList<Heater> listHeaters() {
-		return heaterControlServices.listAllHeaters();
+		return heaterServices.listHeaters();
+
+	}
+
+	@POST("/")
+	public Heater saveHeater(final Heater heater) {
+		return heaterServices.saveHeater(heater);
+
+	}
+
+	@GET("/{heaId}")
+	public Heater getHeater(@PathParam("heaId") final Long heaId) {
+		return heaterServices.getHeater(heaId);
 
 	}
 

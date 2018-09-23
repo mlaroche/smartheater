@@ -103,9 +103,4 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 		pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterMode);
 	}
 
-	@Override
-	public DtList<Heater> listAllHeaters() {
-		return heaterDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
-	}
-
 }

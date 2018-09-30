@@ -24,6 +24,9 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mlaroche.smartheater.dao.HeaterDAO;
@@ -44,6 +47,8 @@ import io.vertigo.lang.Assertion;
 
 @Transactional
 public class HeaterControlServicesImpl implements HeaterControlServices, Activeable {
+
+	private static Logger logger = LogManager.getLogger(HeaterControlServices.class);
 
 	@Inject
 	private HeaterDAO heaterDAO;
@@ -88,7 +93,11 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 					.findAny()
 					.map(TimeSlot::getMode);
 
-			pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterModeOpt.orElse(HeaterMode.arret));
+			try {
+				pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterModeOpt.orElse(HeaterMode.arret));
+			} catch (final Exception e) {
+				logger.error("Unable to change mode of heater : '" + heater.getName() + "'");
+			}
 
 		}
 

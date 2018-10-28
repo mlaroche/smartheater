@@ -2,3 +2,7 @@
 	width: 300px;
     max-width: 90vw;
 }
+
+#schedule {
+	overflow-y: hidden; 
+}

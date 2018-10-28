@@ -19,6 +19,23 @@ const HeaterEdit = {
 	  		<q-page padding>
 	  			<heater-detail v-bind:heater="heater"  v-bind:is-edit="false" >
 				</heater-detail>
+				<q-page-sticky position="bottom-right" :offset="[18, 18]">
+					  <q-fab color="purple" icon="keyboard_arrow_up" direction="up" >
+					  <q-tooltip slot="tooltip"  anchor="center left" self="center right" :offset="[20, 0]" >Modifier le mode</q-tooltip>
+					  	<q-fab-action  color="primary" @click="changeMode('arret')" icon="fas fa-ban" >
+					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Arrêter</q-tooltip>
+					  	</q-fab-action>
+					  	<q-fab-action  color="primary" @click="changeMode('confort')" icon="fas fa-fire" >
+					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode confort</q-tooltip>
+					  	</q-fab-action>
+					  	<q-fab-action  color="primary" @click="changeMode('confort')" icon="fas fa-leaf" >
+					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode éco</q-tooltip>
+					  	</q-fab-action>
+					  	<q-fab-action  color="primary" @click="changeMode('confort')" icon="fas fa-leaf" >
+					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode hors-gel</q-tooltip>
+					  	</q-fab-action>
+					  </q-fab>
+				  </q-page-sticky>
 			</q-page>
 		 `,
 	  beforeRouteEnter (to, from, next) {
@@ -34,6 +51,12 @@ const HeaterEdit = {
 	  methods: {
 		  setHeater : function (data) {
 			  this.$data.heater  = data
+		  },
+		  changeMode : function (mode) {
+			  this.$http.post("api/heaters/" + this.$props.heater.heaId +"/_changeMode", null ,{params:  {mode: mode}}).then( function (response) { 
+				  //nothing
+			  }, 'json');
+			  
 		  }
 	  },
 	  data: function () {
@@ -48,26 +71,35 @@ const HeaterDetailView = {
 	  name : "heater-detail",
 	  template: `
 	  	<div>
-		  <section >
-		  	<q-field label="Nom" orientation="vertical">
-	            <q-input v-if="edition" v-model="heater.name"></q-input>
-	            <span v-else>{{heater.name}}</span>
-	        </q-field>
-	        <q-field label="Nom DNS ou IP" orientation="vertical">
-	            <q-input v-if="edition" v-model="heater.dnsName"></q-input>
-	            <span v-else>{{heater.dnsName}}</span>
-	        </q-field>
-	        <q-field label="Calendrier" orientation="vertical">
-	            <q-select v-if="edition" v-model="heater.wcaId" :options="calendarsSelect"></q-select>
-	            <span v-else>{{calendarLabel}}</span>
-	        </q-field>
-	         <q-field label="Protocol" orientation="vertical">
-	            <q-select v-if="edition" v-model="heater.proCd" :options="protocolsSelect"></q-select>
-	            <span v-else>{{protocolLabel}}</span>
-	        </q-field>
-		  </section>
-		  <q-btn  v-if="edition" @click="save">Sauvegarder</q-btn>
-		  <q-btn  v-else @click="toogleEdit">Modifier</q-btn>
+		  <q-card>
+		  	<q-card-title>Informations techniques</q-card-title>
+		  	<q-card-separator></q-card-separator>
+		  	<q-card-main>
+				  <section >
+				  	<q-field label="Nom" >
+			            <q-input v-if="edition" v-model="heater.name"></q-input>
+			            <span v-else>{{heater.name}}</span>
+			        </q-field>
+			        <q-field label="Nom DNS ou IP" >
+			            <q-input v-if="edition" v-model="heater.dnsName"></q-input>
+			            <span v-else>{{heater.dnsName}}</span>
+			        </q-field>
+			        <q-field label="Calendrier" >
+			            <q-select v-if="edition" v-model="heater.wcaId" :options="calendarsSelect"></q-select>
+			            <span v-else>{{calendarLabel}}</span>
+			        </q-field>
+			         <q-field label="Protocol" >
+			            <q-select v-if="edition" v-model="heater.proCd" :options="protocolsSelect"></q-select>
+			            <span v-else>{{protocolLabel}}</span>
+			        </q-field>
+				  </section>
+			</q-card-main>
+		  	<q-card-separator></q-card-separator>
+		  	<q-card-actions>
+			  <q-btn  v-if="edition" @click="save">Sauvegarder</q-btn>
+			  <q-btn  v-else @click="toogleEdit">Modifier</q-btn>
+			</q-card-actions>
+		  </q-card>
 	  	</div>	
 		 `,
 	  props: {
@@ -104,7 +136,8 @@ const HeaterDetailView = {
 	  methods: {
 		  save : function () {
 			  this.$http.post("api/heaters/", JSON.stringify(this.$props.heater)).then( function (response) { 
-				  router.push({ path: '/heaters/'});
+				  //router.push({ path: '/heaters/'});
+				  this.toogleEdit();
 			  }, 'json');
 			  
 		  },

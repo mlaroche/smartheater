@@ -72,7 +72,7 @@ const HeaterDetailView = {
 	  template: `
 	  	<div>
 		  <q-card>
-		  	<q-card-title>Informations techniques</q-card-title>
+		  	<q-card-title>Informations générales</q-card-title>
 		  	<q-card-separator></q-card-separator>
 		  	<q-card-main>
 				  <section >

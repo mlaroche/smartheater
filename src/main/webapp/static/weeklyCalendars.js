@@ -1,19 +1,19 @@
 const WeeklyCalendarEdit = {
 	  name : "weekly-calendar-edit",
 	  template: `
-	  		<div>
+	  		<q-page padding>
 	  			<weekly-calendar-detail v-bind:weeklyCalendar="weeklyCalendar" v-bind:is-edit="false" >
 				</weekly-calendar-detail>
-			</div>
+			</q-page>
 		 `,
 	  beforeRouteEnter (to, from, next) {
-		 $.get("api/weeklyCalendars/"+ to.params.id, data => {
-	      next(vm => vm.setWeeklyCalendar(data))
+		Vue.http.get("api/weeklyCalendars/"+ to.params.id).then( function (response) { 
+	      next(vm => vm.setWeeklyCalendar(response.body))
 	    })
 	  },
 	  beforeRouteUpdate (to, from, next) {
-		  $.get("api/weeklyCalendars/"+ to.params.id, data => {
-		      this.setWeeklyCalendar(data)
+		  Vue.http.get("api/weeklyCalendars/"+ to.params.id).then( function (response) { 
+		      this.setWeeklyCalendar(response.body)
 		    })
 	  },
 	  methods: {
@@ -31,10 +31,10 @@ const WeeklyCalendarEdit = {
 const WeeklyCalendarCreate = {
 	  name : "weekly-calendar-create",
 	  template: `
-	  		<div>
+	  		<q-page padding>
 	  			<weekly-calendar-detail v-bind:weeklyCalendar="weeklyCalendar" v-bind:is-edit="true" >
 				</weekly-calendar-detail>
-			</div>
+			</q-page>
 		 `,
 	  data: function () {
 		  return {
@@ -48,21 +48,15 @@ const WeeklyCalendarDetailView = {
 	  name : "weekly-calendar-detail",
 	  template: `
 	  	<div>
-		  <form>
-			  <div class="form-group row">
-			  <label for="name" class="col-sm-2 col-form-label">Nom</label>
-			    <div class="col-sm-10">
-			    	<input v-if="edition" v-model:value="weeklyCalendar.name"
-			                class="form-control" 
-			                name="name" 
-			                placeholder="">
-			    	<input v-else type="text" readonly class="form-control-plaintext" v-bind:value="weeklyCalendar.name">
-			    </div>
-			  </div>
-			</form>
+		  <section >
+		  	<q-field label="Nom" orientation="vertical">
+	            <q-input v-if="edition" v-model="weeklyCalendar.name"></q-input>
+	            <span v-else>{{weeklyCalendar.name}}</span>
+	        </q-field>
+		  </section>
 		  <div id="schedule"></div>
-		  <button  v-if="edition" v-on:click="save">Sauvegarder</button>
-		  <button  v-else v-on:click="toogleEdit">Modifier</button>
+		  <q-btn  v-if="edition" @click="save">Sauvegarder</q-btn>
+		  <q-btn  v-else @click="toogleEdit">Modifier</q-btn>
 	  	</div>	
 		 `,
 	  props: {
@@ -95,6 +89,7 @@ const WeeklyCalendarDetailView = {
 	  methods: {
 		  save : function () {
 			  var jqueryWeeklyCalendar = JSON.parse($('#schedule').jqs('export'));
+			  //translate the format and then save the calendar
 			  var weeklyCalendarJsonValue = convertToWeeklyCalendarJsonValue(jqueryWeeklyCalendar);
 			  var weeklyCalendarToSave = {
 					"wcaId" : this.$props.weeklyCalendar.wcaId,
@@ -102,10 +97,7 @@ const WeeklyCalendarDetailView = {
 					"name" : this.$props.weeklyCalendar.name
 					
 			  }
-			  
-			console.log(weeklyCalendarToSave);
-			  //translate the format and then save the calendar
-			  $.post("api/weeklyCalendars/", JSON.stringify(weeklyCalendarToSave) , function( data, textStatus, jQxhr ){
+			  this.$http.post("api/weeklyCalendars/", JSON.stringify(weeklyCalendarToSave)).then( function (response) { 
 				  router.push({ path: '/weeklyCalendars/'});
 			  }, 'json');
 			  
@@ -123,31 +115,22 @@ const WeeklyCalendarDetailView = {
 		
 const WeeklyCalendarList = {
 	  template: `
-	  	<div>
-			<table class="table">
-			    <thead>
-			      <tr>
-			        <th scope="col">Id</th>
-			        <th scope="col">Nom</th>
-			      </tr>
-			    </thead>
-				<tbody>
-					<tr v-for="weeklyCalendar in weeklyCalendars">
-						<td>
-						 	<router-link :to="{ path: '/weeklyCalendars/'+ weeklyCalendar.wcaId}">{{ weeklyCalendar.wcaId}}</router-link>
-						</td>
-						<td>
-							{{ weeklyCalendar.name }}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<router-link :to="{ path: '/weeklyCalendars/new'}">Nouveau</router-link>
-	  	</div>	
+	  	<q-page padding>
+			<q-card v-for="weeklyCalendar in weeklyCalendars" :key="weeklyCalendar.wcaId" class="standard q-ma-sm">
+				<q-card-title>
+					<router-link :to="{ path: '/weeklyCalendars/'+ weeklyCalendar.wcaId}">{{ weeklyCalendar.name}}</router-link>
+				</q-card-title>
+				<q-card-separator />
+				<q-card-main>
+					{{ weeklyCalendar.name}}
+				</q-card-main>
+			</q-card>
+			<q-btn :to="{ path: '/weeklyCalendars/new'}">Nouveau</q-btn>
+	  	</q-page>	
 		 `,
 	  beforeRouteEnter (to, from, next) {
-		 $.get("api/weeklyCalendars", data => {
-	      next(vm => vm.setWeeklyCalendars(data))
+		 Vue.http.get("api/weeklyCalendars").then( function (response) { 
+	      next(vm => vm.setWeeklyCalendars(response.body))
 	    })
 	  },
 	  methods: {

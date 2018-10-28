@@ -1,10 +1,10 @@
 const HeaterCreate = {
 			  name : "heater-create",
 			  template: `
-			  		<div>
+			  		<q-page padding>
 			  			<heater-detail v-bind:heater="heater" v-bind:is-edit="true" >
 						</heater-detail>
-					</div>
+					</q-page>
 				 `,
 			  data: function () {
 				  return {
@@ -16,19 +16,19 @@ const HeaterCreate = {
 const HeaterEdit = {
 	  name : "heater-edit",
 	  template: `
-	  		<div>
+	  		<q-page padding>
 	  			<heater-detail v-bind:heater="heater"  v-bind:is-edit="false" >
 				</heater-detail>
-			</div>
+			</q-page>
 		 `,
 	  beforeRouteEnter (to, from, next) {
-		 $.get("api/heaters/"+ to.params.id, data => {
-	      next(vm => vm.setHeater(data))
+		 Vue.http.get("api/heaters/"+ to.params.id).then( function (response) { 
+	      next(vm => vm.setHeater(response.body))
 	    })
 	  },
 	  beforeRouteUpdate (to, from, next) {
-		  $.get("api/heaters/"+ to.params.id, data => {
-		      this.setHeater(data);
+		  Vue.http.get("api/heaters/"+ to.params.id).then( function (response) { 
+		      this.setHeater(response.body);
 		    })
 	  },
 	  methods: {
@@ -48,46 +48,26 @@ const HeaterDetailView = {
 	  name : "heater-detail",
 	  template: `
 	  	<div>
-		  <form>
-			  <div class="form-group row">
-			  <label for="name" class="col-sm-2 col-form-label">Nom</label>
-			    <div class="col-sm-10">
-			    	<input v-if="edition" v-model:value="heater.name"
-			                class="form-control" 
-			                name="name" 
-			                placeholder="">
-			    	<input v-else type="text" readonly class="form-control-plaintext" v-bind:value="heater.name">
-			    </div>
-			    <label for="dnsName" class="col-sm-2 col-form-label">Nom DNS ou IP</label>
-			    <div class="col-sm-10">
-			    	<input v-if="edition" v-model:value="heater.dnsName"
-			                class="form-control" 
-			                name="dnsName" 
-			                placeholder="">
-			    	<input v-else type="text" readonly class="form-control-plaintext" v-bind:value="heater.dnsName">
-			    </div>
-			    <label for="wcaId" class="col-sm-2 col-form-label">Calendrier</label>
-			    <div class="col-sm-10">
-		  <select v-if="edition" v-model="heater.wcaId" name="wcaId">
-			    	  <option v-for="calendar in calendars" v-bind:value="calendar.wcaId">
-			    	    {{ calendar.name }}
-			    	  </option>
-			    	</select>
-			    	<input v-else type="text" readonly class="form-control-plaintext"  v-bind:value="calendarLabel" >
-			    </div>
-			    <label for="proCd" class="col-sm-2 col-form-label">Protocol</label>
-			    <div class="col-sm-10">
-			    	<select v-if="edition" v-model="heater.proCd" name="proCd">
-			    	  <option v-for="protocol in protocols" v-bind:value="protocol.proCd">
-			    	    {{ protocol.label }}
-			    	  </option>
-			    	</select>
-			    	<input v-else type="text" readonly class="form-control-plaintext" v-bind:value="protocolLabel" >
-			    </div>
-			  </div>
-			</form>
-		  <button  v-if="edition" v-on:click="save">Sauvegarder</button>
-		  <button  v-else v-on:click="toogleEdit">Modifier</button>
+		  <section >
+		  	<q-field label="Nom" orientation="vertical">
+	            <q-input v-if="edition" v-model="heater.name"></q-input>
+	            <span v-else>{{heater.name}}</span>
+	        </q-field>
+	        <q-field label="Nom DNS ou IP" orientation="vertical">
+	            <q-input v-if="edition" v-model="heater.dnsName"></q-input>
+	            <span v-else>{{heater.dnsName}}</span>
+	        </q-field>
+	        <q-field label="Calendrier" orientation="vertical">
+	            <q-select v-if="edition" v-model="heater.wcaId" :options="calendarsSelect"></q-select>
+	            <span v-else>{{calendarLabel}}</span>
+	        </q-field>
+	         <q-field label="Protocol" orientation="vertical">
+	            <q-select v-if="edition" v-model="heater.proCd" :options="protocolsSelect"></q-select>
+	            <span v-else>{{protocolLabel}}</span>
+	        </q-field>
+		  </section>
+		  <q-btn  v-if="edition" @click="save">Sauvegarder</q-btn>
+		  <q-btn  v-else @click="toogleEdit">Modifier</q-btn>
 	  	</div>	
 		 `,
 	  props: {
@@ -104,7 +84,17 @@ const HeaterDetailView = {
 		},
 		protocolLabel: function () {
 		     return this.protocols[0] ? this.protocols[0].label : ''
-		}
+		},
+		calendarsSelect  : function (){
+			return this.calendars.map(function (calendar) {
+				return { label : calendar.name, value : calendar.wcaId }
+			})
+		},
+		protocolsSelect  : function (){
+			return this.protocols.map(function (protocol) {
+				return { label : protocol.label, value : protocol.proCd }
+			})
+		}  
 	  },
 	  beforeMount : function () {
 	      this.loadCalendars();
@@ -113,7 +103,7 @@ const HeaterDetailView = {
 	  },
 	  methods: {
 		  save : function () {
-			  $.post("api/heaters/", JSON.stringify(this.$props.heater) , function( data, textStatus, jQxhr ){
+			  this.$http.post("api/heaters/", JSON.stringify(this.$props.heater)).then( function (response) { 
 				  router.push({ path: '/heaters/'});
 			  }, 'json');
 			  
@@ -178,35 +168,24 @@ const HeaterDetailView = {
 		
 const HeaterList = {
 	  template: `
-	  	<div>
-			<table class="table">
-			    <thead>
-			      <tr>
-			        <th scope="col">Id</th>
-			        <th scope="col">Nom</th>
-			        <th scope="col">Nom DNS</th>
-			      </tr>
-			    </thead>
-				<tbody>
-					<tr v-for="heater in heaters">
-						<td>
-						 	<router-link :to="{ path: '/heaters/'+ heater.heaId}">{{ heater.heaId}}</router-link>
-						</td>
-						<td>
-							{{ heater.name }}
-						</td>
-						<td>
-							{{ heater.dnsName }}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<router-link :to="{ path: '/heaters/new'}">Nouveau</router-link>
-	  	</div>	
+	  	<q-page padding>
+	  		<q-card v-for="heater in heaters" :key="heater.heaId" inline class="standard q-ma-sm" >
+				<q-card-title>
+					<router-link :to="{ path: '/heaters/'+ heater.heaId}">{{ heater.name}}</router-link>
+				</q-card-title>
+				<q-card-separator />
+				<q-card-main>
+					{{ heater.dnsName}}
+				</q-card-main>
+			</q-card>
+			<q-page-sticky position="bottom-right" :offset="[18, 18]">
+		  		<q-btn round color="primary" icon="add" :to="{ path: '/heaters/new'}" ></q-btn>
+		  	</q-page-sticky>
+	  	</q-page>	
 		 `,
 	  beforeRouteEnter (to, from, next) {
-		 $.get("api/heaters", data => {
-	      next(vm => vm.setHeaters(data))
+		Vue.http.get("api/heaters").then( function (response) { 
+	      next(vm => vm.setHeaters(response.body))
 	    })
 	  },
 	  methods: {

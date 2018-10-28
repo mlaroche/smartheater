@@ -1,14 +1,24 @@
 <html>
 <head>
 <title>Sample "Hello, World" Application</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+<link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@^2.0.0/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/animate.css@^3.5.2/animate.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/quasar-framework@0.17.17/dist/umd/quasar.mat.min.css" rel="stylesheet" type="text/css">
+
+<link href="static/site.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/quasar-framework@0.17.8/dist/umd/quasar.ie.polyfills.umd.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="static/jquery.schedule.js"></script>
 
@@ -19,45 +29,100 @@
 <link rel="stylesheet" href="static/jquery.schedule.css">
 </head>
 <body>
+	<script src="https://cdn.jsdelivr.net/npm/quasar-framework@0.17.17/dist/umd/quasar.mat.umd.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/quasar-framework@0.17.17/dist/umd/i18n.fr.umd.min.js"></script>
 	<div id="app">
-		 <router-view></router-view>
+		<q-layout view="hHr LpR lFf">
+		  <!-- Header -->
+		  <q-layout-header>
+		    <!-- First row of header is a QToolbar -->
+		    <q-toolbar>
+		      <!-- showLeft is a model attached to left side drawer below -->
+		      <q-btn
+		        flat round dense
+		        @click="showLeft = !showLeft"
+		        icon="menu"
+		      ></q-btn>
+		
+		      <q-toolbar-title>
+		        Gestion du chauffage
+		        <span slot="subtitle">Maison Laroche</span>
+		      </q-toolbar-title>
+		
+		    </q-toolbar>
+		  </q-layout-header>
+		
+		  <!-- Left Side Drawer -->
+		  <q-layout-drawer side="left" v-model="showLeft">
+		    <q-list no-border link inset-separator>
+		      <q-item to="/heaters">
+		        <q-item-side icon="fas fa-fire" ></q-item-side>
+		        <q-item-main label="Radiateurs" ></q-item-main>
+		      </q-item>
+		      <q-item to="/weeklyCalendars">
+		        <q-item-side icon="fas fa-calendar-alt" ></q-item-side>
+		        <q-item-main label="Calendriers" ></q-item-main>
+		      </q-item>
+		    </q-list>
+		  </q-layout-drawer>
+		
+		  <!-- sub-routes get injected here: -->
+		  <q-page-container>
+	    		<router-view ></router-view>
+		  </q-page-container>
+		</q-layout>
 	</div>
-	
+
 
 	<script type="text/javascript">
+		Quasar.i18n.set(Quasar.i18n.fr)
+
 		const router = new VueRouter({
-		  routes: [
-			{ path: '/weeklyCalendars/', component: WeeklyCalendarList },
-			  // dynamic segments start with a colon
-			{ path: '/weeklyCalendars/new', component: WeeklyCalendarCreate },
-		    { path: '/weeklyCalendars/:id', component: WeeklyCalendarEdit },
-		    
-		    { path: '/heaters/', component: HeaterList },
-		    { path: '/heaters/new', component: HeaterCreate },
-		    { path: '/heaters/:id', component: HeaterEdit }
-		  ]
+			routes : [ {
+				path : '/weeklyCalendars/',
+				component : WeeklyCalendarList
+			},
+			// dynamic segments start with a colon
+			{
+				path : '/weeklyCalendars/new',
+				component : WeeklyCalendarCreate
+			}, {
+				path : '/weeklyCalendars/:id',
+				component : WeeklyCalendarEdit
+			},
+
+			{
+				path : '/heaters/',
+				component : HeaterList
+			}, {
+				path : '/heaters/new',
+				component : HeaterCreate
+			}, {
+				path : '/heaters/:id',
+				component : HeaterEdit
+			} ]
 		});
-		
+
 		Vue.component('weekly-calendar-detail', WeeklyCalendarDetailView);
 		Vue.component('weekly-calendar-edit', WeeklyCalendarEdit);
 		Vue.component('weekly-calendar-create', WeeklyCalendarCreate);
 		Vue.component('weekly-calendar-list', WeeklyCalendarList);
-		
+
 		Vue.component('heater-detail', HeaterDetailView);
 		Vue.component('heater-edit', HeaterEdit);
 		Vue.component('heater-list', HeaterList);
-		
+
 		var app = new Vue({
-			  el: '#app',
-			  router : router,
-			  data: {
-			    message: 'Hello Vue!'
-			  }
-			})
-		
+			el : '#app',
+			router : router,
+			data : {
+				message : 'Hello Vue!',
+				showLeft : true
+			}
+		})
 	</script>
 
-	
-	
+
+
 </body>
 </html>

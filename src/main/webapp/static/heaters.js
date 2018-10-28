@@ -28,10 +28,10 @@ const HeaterEdit = {
 					  	<q-fab-action  color="primary" @click="changeMode('confort')" icon="fas fa-fire" >
 					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode confort</q-tooltip>
 					  	</q-fab-action>
-					  	<q-fab-action  color="primary" @click="changeMode('confort')" icon="fas fa-leaf" >
+					  	<q-fab-action  color="primary" @click="changeMode('eco')" icon="fas fa-leaf" >
 					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode éco</q-tooltip>
 					  	</q-fab-action>
-					  	<q-fab-action  color="primary" @click="changeMode('confort')" icon="fas fa-leaf" >
+					  	<q-fab-action  color="primary" @click="changeMode('horsgel')" icon="fas fa-leaf" >
 					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode hors-gel</q-tooltip>
 					  	</q-fab-action>
 					  </q-fab>

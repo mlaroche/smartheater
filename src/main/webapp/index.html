@@ -1,6 +1,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name=viewport content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
 <title>Gestion du chauffage</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
 <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
@@ -25,6 +26,7 @@
 
 
 <script src="static/utils.js"></script>
+<script src="static/home.js"></script>
 <script src="static/weeklyCalendars.js"></script>
 <script src="static/heaters.js"></script>
 <link rel="stylesheet" href="static/jquery.schedule.css">
@@ -56,6 +58,10 @@
 		  <!-- Left Side Drawer -->
 		  <q-layout-drawer side="left" v-model="showLeft">
 		    <q-list no-border link inset-separator>
+		      <q-item to="/home">
+		        <q-item-side icon="fas fa-home" ></q-item-side>
+		        <q-item-main label="Accueil" ></q-item-main>
+		      </q-item>
 		      <q-item to="/heaters">
 		        <q-item-side icon="fas fa-fire" ></q-item-side>
 		        <q-item-main label="Radiateurs" ></q-item-main>
@@ -80,6 +86,11 @@
 
 		const router = new VueRouter({
 			routes : [ {
+				path : '/home',
+				component : Home,
+				alias: '/'
+			},
+			{
 				path : '/weeklyCalendars/',
 				component : WeeklyCalendarList
 			},
@@ -103,6 +114,8 @@
 				component : HeaterEdit
 			} ]
 		});
+		
+		Vue.component('home', Home);
 
 		Vue.component('weekly-calendar-detail', WeeklyCalendarDetailView);
 		Vue.component('weekly-calendar-edit', WeeklyCalendarEdit);

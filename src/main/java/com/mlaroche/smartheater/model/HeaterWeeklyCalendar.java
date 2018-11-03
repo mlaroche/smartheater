@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mlaroche.smartheater.domain.HeaterModeEnum;
+
 import io.vertigo.lang.Assertion;
 
 public class HeaterWeeklyCalendar {
@@ -35,13 +37,13 @@ public class HeaterWeeklyCalendar {
 	public static class TimeSlot {
 		private LocalTime begin;
 		private LocalTime end;
-		private HeaterMode mode;
+		private HeaterModeEnum mode;
 
 		public TimeSlot() {
 			//
 		}
 
-		public TimeSlot(final LocalTime begin, final LocalTime end, final HeaterMode mode) {
+		public TimeSlot(final LocalTime begin, final LocalTime end, final HeaterModeEnum mode) {
 			Assertion.checkNotNull(begin);
 			Assertion.checkNotNull(end);
 			Assertion.checkNotNull(mode);
@@ -67,11 +69,11 @@ public class HeaterWeeklyCalendar {
 			this.end = end;
 		}
 
-		public HeaterMode getMode() {
+		public HeaterModeEnum getMode() {
 			return mode;
 		}
 
-		public void setMode(final HeaterMode mode) {
+		public void setMode(final HeaterModeEnum mode) {
 			this.mode = mode;
 		}
 

@@ -35,6 +35,8 @@ public final class Heater implements Entity {
 	private String name;
 	private String dnsName;
 	private Boolean active;
+	private Boolean auto;
+	private java.time.Instant autoSwitch;
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
 			name = "A_HEA_WCA",
@@ -65,6 +67,21 @@ public final class Heater implements Entity {
 			foreignLabel = "Heater",
 			foreignMultiplicity = "0..*")
 	private final EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> proCdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.Protocol.class, "Protocol", com.mlaroche.smartheater.domain.ProtocolEnum.class);
+
+	@io.vertigo.dynamo.domain.stereotype.Association(
+			name = "A_HEA_MOD",
+			fkFieldName = "MOD_CD",
+			primaryDtDefinitionName = "DT_HEATER_MODE",
+			primaryIsNavigable = true,
+			primaryRole = "Mode",
+			primaryLabel = "Mode",
+			primaryMultiplicity = "1..1",
+			foreignDtDefinitionName = "DT_HEATER",
+			foreignIsNavigable = false,
+			foreignRole = "Heater",
+			foreignLabel = "Heater",
+			foreignMultiplicity = "0..*")
+	private final EnumVAccessor<com.mlaroche.smartheater.domain.HeaterMode, com.mlaroche.smartheater.domain.HeaterModeEnum> modCdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.HeaterMode.class, "Mode", com.mlaroche.smartheater.domain.HeaterModeEnum.class);
 
 	/** {@inheritDoc} */
 	@Override
@@ -149,6 +166,44 @@ public final class Heater implements Entity {
 	}
 	
 	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Mode Auto'.
+	 * @return Boolean auto <b>Obligatoire</b>
+	 */
+	@Field(domain = "DO_BOOLEAN", required = true, label = "Mode Auto")
+	public Boolean getAuto() {
+		return auto;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Mode Auto'.
+	 * @param auto Boolean <b>Obligatoire</b>
+	 */
+	public void setAuto(final Boolean auto) {
+		this.auto = auto;
+	}
+	
+	/**
+	 * Champ : DATA.
+	 * Récupère la valeur de la propriété 'Retour au mode auto'.
+	 * @return Instant autoSwitch
+	 */
+	@Field(domain = "DO_TIMESTAMP", label = "Retour au mode auto")
+	public java.time.Instant getAutoSwitch() {
+		return autoSwitch;
+	}
+
+	/**
+	 * Champ : DATA.
+	 * Définit la valeur de la propriété 'Retour au mode auto'.
+	 * @param autoSwitch Instant
+	 */
+	public void setAutoSwitch(final java.time.Instant autoSwitch) {
+		this.autoSwitch = autoSwitch;
+	}
+	
+	/**
 	 * Champ : FOREIGN_KEY.
 	 * Récupère la valeur de la propriété 'WeeklyCalendar'.
 	 * @return Long wcaId <b>Obligatoire</b>
@@ -184,6 +239,51 @@ public final class Heater implements Entity {
 	 */
 	public void setProCd(final String proCd) {
 		proCdAccessor.setId(proCd);
+	}
+	
+	/**
+	 * Champ : FOREIGN_KEY.
+	 * Récupère la valeur de la propriété 'Mode'.
+	 * @return String modCd <b>Obligatoire</b>
+	 */
+	@Field(domain = "DO_LABEL", type = "FOREIGN_KEY", required = true, label = "Mode")
+	public String getModCd() {
+		return (String)  modCdAccessor.getId();
+	}
+
+	/**
+	 * Champ : FOREIGN_KEY.
+	 * Définit la valeur de la propriété 'Mode'.
+	 * @param modCd String <b>Obligatoire</b>
+	 */
+	public void setModCd(final String modCd) {
+		modCdAccessor.setId(modCd);
+	}
+
+ 	/**
+	 * Association : Mode.
+	 * @return l'accesseur vers la propriété 'Mode'
+	 */
+	public EnumVAccessor<com.mlaroche.smartheater.domain.HeaterMode, com.mlaroche.smartheater.domain.HeaterModeEnum> mode() {
+		return modCdAccessor;
+	}
+	
+	@Deprecated
+	public com.mlaroche.smartheater.domain.HeaterMode getMode() {
+		// we keep the lazyness
+		if (!modCdAccessor.isLoaded()) {
+			modCdAccessor.load();
+		}
+		return modCdAccessor.get();
+	}
+
+	/**
+	 * Retourne l'URI: Mode.
+	 * @return URI de l'association
+	 */
+	@Deprecated
+	public io.vertigo.dynamo.domain.model.URI<com.mlaroche.smartheater.domain.HeaterMode> getModeURI() {
+		return modCdAccessor.getURI();
 	}
 
  	/**

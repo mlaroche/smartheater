@@ -20,8 +20,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.mlaroche.smartheater.domain.Heater;
+import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.ProtocolEnum;
-import com.mlaroche.smartheater.model.HeaterMode;
 
 import io.vertigo.lang.Assertion;
 import io.vertigo.lang.WrappedException;
@@ -29,7 +29,7 @@ import io.vertigo.lang.WrappedException;
 public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlugin {
 
 	@Override
-	public void changeHeaterMode(final Heater heater, final HeaterMode heaterMode) {
+	public void changeHeaterMode(final Heater heater, final HeaterModeEnum heaterMode) {
 		Assertion.checkNotNull(heater);
 		Assertion.checkNotNull(heaterMode);
 		//---

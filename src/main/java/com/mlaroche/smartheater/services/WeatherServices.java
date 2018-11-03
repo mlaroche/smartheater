@@ -15,16 +15,12 @@
  */
 package com.mlaroche.smartheater.services;
 
-import com.mlaroche.smartheater.domain.Heater;
-import com.mlaroche.smartheater.domain.HeaterModeEnum;
-import com.mlaroche.smartheater.domain.ProtocolEnum;
+import com.mlaroche.smartheater.model.WeatherInfo;
 
-import io.vertigo.core.component.Plugin;
+import io.vertigo.core.component.Component;
 
-public interface RemoteHeaterControlerPlugin extends Plugin {
+public interface WeatherServices extends Component {
 
-	void changeHeaterMode(final Heater heater, final HeaterModeEnum heaterMode);
-
-	ProtocolEnum getProtocol();
+	WeatherInfo getWeatherInfo();
 
 }

@@ -34,6 +34,10 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	public enum Definitions {
 		/** Objet de données Heater. */
 		Heater(com.mlaroche.smartheater.domain.Heater.class),
+		/** Objet de données HeatersByMode. */
+		HeatersByMode(com.mlaroche.smartheater.domain.HeatersByMode.class),
+		/** Objet de données HeaterMode. */
+		HeaterMode(com.mlaroche.smartheater.domain.HeaterMode.class),
 		/** Objet de données Protocol. */
 		Protocol(com.mlaroche.smartheater.domain.Protocol.class),
 		/** Objet de données WeeklyCalendar. */
@@ -66,10 +70,34 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		DNS_NAME,
 		/** Propriété 'Active'. */
 		ACTIVE,
+		/** Propriété 'Mode Auto'. */
+		AUTO,
+		/** Propriété 'Retour au mode auto'. */
+		AUTO_SWITCH,
 		/** Propriété 'WeeklyCalendar'. */
 		WCA_ID,
 		/** Propriété 'Protocol'. */
-		PRO_CD	}
+		PRO_CD,
+		/** Propriété 'Mode'. */
+		MOD_CD	}
+
+	/**
+	 * Enumération des champs de HeatersByMode.
+	 */
+	public enum HeatersByModeFields implements DtFieldName<com.mlaroche.smartheater.domain.HeatersByMode> {
+		/** Propriété 'Id'. */
+		MODE,
+		/** Propriété 'Nombre'. */
+		COUNT	}
+
+	/**
+	 * Enumération des champs de HeaterMode.
+	 */
+	public enum HeaterModeFields implements DtFieldName<com.mlaroche.smartheater.domain.HeaterMode> {
+		/** Propriété 'Id'. */
+		MOD_CD,
+		/** Propriété 'Name'. */
+		LABEL	}
 
 	/**
 	 * Enumération des champs de Protocol.

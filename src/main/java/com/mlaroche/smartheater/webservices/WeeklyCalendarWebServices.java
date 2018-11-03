@@ -20,8 +20,8 @@ import java.time.LocalTime;
 
 import javax.inject.Inject;
 
+import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.WeeklyCalendar;
-import com.mlaroche.smartheater.model.HeaterMode;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.DailyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
@@ -52,7 +52,7 @@ public class WeeklyCalendarWebServices implements WebServices {
 	public HeaterWeeklyCalendar test() {
 		final DailyCalendar defaultCalendar = new DailyCalendar();
 		defaultCalendar.getTimeSlots()
-				.add(new TimeSlot(LocalTime.of(7, 0), LocalTime.of(8, 0), HeaterMode.confort));
+				.add(new TimeSlot(LocalTime.of(7, 0), LocalTime.of(8, 0), HeaterModeEnum.confort));
 
 		final HeaterWeeklyCalendar heaterWeeklyCalendar = new HeaterWeeklyCalendar();
 		heaterWeeklyCalendar.getDailyCalendars()

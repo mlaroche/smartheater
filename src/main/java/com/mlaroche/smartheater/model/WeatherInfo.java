@@ -13,18 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mlaroche.smartheater.services;
+package com.mlaroche.smartheater.model;
 
-import com.mlaroche.smartheater.domain.Heater;
-import com.mlaroche.smartheater.domain.HeaterModeEnum;
-import com.mlaroche.smartheater.domain.ProtocolEnum;
-
-import io.vertigo.core.component.Plugin;
-
-public interface RemoteHeaterControlerPlugin extends Plugin {
-
-	void changeHeaterMode(final Heater heater, final HeaterModeEnum heaterMode);
-
-	ProtocolEnum getProtocol();
+public class WeatherInfo {
+	public double temperature;
+	public double humidity;
+	public String location;
+	public String icon;
+	public String description;
 
 }

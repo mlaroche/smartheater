@@ -51,3 +51,17 @@ function convertToJqueryCalendar (weeklyCalendar) {
 function pad2(number) {
      return (number < 10 ? '0' : '') + number
 }
+
+
+function heaterModeLabel(mode) {
+    switch (mode) {
+		case "arret":
+			return "Arrêt"
+		case "confort":
+			return "Confort"
+		case "eco":
+			return "Eco"
+		case "horsgel":
+			return "Hors-gel"
+		}
+  }

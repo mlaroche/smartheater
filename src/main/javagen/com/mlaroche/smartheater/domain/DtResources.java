@@ -43,6 +43,14 @@ public enum DtResources implements MessageKey {
 	 */
 	FLD_HEATER$ACTIVE,
 	/**
+	 * Mode Auto.
+	 */
+	FLD_HEATER$AUTO,
+	/**
+	 * Retour au mode auto.
+	 */
+	FLD_HEATER$AUTO_SWITCH,
+	/**
 	 * WeeklyCalendar.
 	 */
 	FLD_HEATER$WCA_ID,
@@ -50,6 +58,34 @@ public enum DtResources implements MessageKey {
 	 * Protocol.
 	 */
 	FLD_HEATER$PRO_CD,
+	/**
+	 * Mode.
+	 */
+	FLD_HEATER$MOD_CD,
+
+	/***********************************************************
+	/** HeatersByMode.
+	/***********************************************************
+	/**
+	 * Id.
+	 */
+	FLD_HEATERS_BY_MODE$MODE,
+	/**
+	 * Nombre.
+	 */
+	FLD_HEATERS_BY_MODE$COUNT,
+
+	/***********************************************************
+	/** HeaterMode.
+	/***********************************************************
+	/**
+	 * Id.
+	 */
+	FLD_HEATER_MODE$MOD_CD,
+	/**
+	 * Name.
+	 */
+	FLD_HEATER_MODE$LABEL,
 
 	/***********************************************************
 	/** Protocol.

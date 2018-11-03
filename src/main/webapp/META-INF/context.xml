@@ -5,5 +5,4 @@
 		 driverClassName="org.h2.Driver" 
 		 url="jdbc:h2:mem:database" 
 		 maxActive="30" maxIdle="0" maxWait="10000" removeAbandoned="true" logAbandoned="true"/>
-		 
 </Context>

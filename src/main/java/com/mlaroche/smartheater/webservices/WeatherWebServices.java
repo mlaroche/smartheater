@@ -13,10 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mlaroche.smartheater.model;
+package com.mlaroche.smartheater.webservices;
 
-public enum HeaterMode {
+import javax.inject.Inject;
 
-	horsgel, arret, confort, eco;
+import com.mlaroche.smartheater.model.WeatherInfo;
+import com.mlaroche.smartheater.services.WeatherServices;
+
+import io.vertigo.vega.webservice.WebServices;
+import io.vertigo.vega.webservice.stereotype.GET;
+import io.vertigo.vega.webservice.stereotype.PathPrefix;
+
+@PathPrefix("/weather")
+public class WeatherWebServices implements WebServices {
+
+	@Inject
+	private WeatherServices weatherServices;
+
+	@GET("/info")
+	public WeatherInfo getTemperature() {
+		return weatherServices.getWeatherInfo();
+
+	}
 
 }

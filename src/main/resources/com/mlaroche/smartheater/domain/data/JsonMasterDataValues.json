@@ -5,5 +5,25 @@
 			"label" : "http"
 		}
 				
+	},
+	"com.mlaroche.smartheater.domain.HeaterMode" : 
+	{
+		"horsgel" : {
+			"modCd" : "horsgel",
+			"label" : "Hors-gel"
+		},
+		"arret" : {
+			"modCd" : "arret",
+			"label" : "Arret"
+		},
+		"confort" : {
+			"modCd" : "confort",
+			"label" : "Confort"
+		},
+		"eco" : {
+			"modCd" : "eco",
+			"label" : "Eco"
+		}
+				
 	}
 }

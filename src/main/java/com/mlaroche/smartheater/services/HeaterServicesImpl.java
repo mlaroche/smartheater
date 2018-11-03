@@ -18,7 +18,9 @@ package com.mlaroche.smartheater.services;
 import javax.inject.Inject;
 
 import com.mlaroche.smartheater.dao.HeaterDAO;
+import com.mlaroche.smartheater.dao.heater.HeaterPAO;
 import com.mlaroche.smartheater.domain.Heater;
+import com.mlaroche.smartheater.domain.HeatersByMode;
 
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.dynamo.criteria.Criterions;
@@ -30,6 +32,8 @@ public class HeaterServicesImpl implements HeaterServices {
 
 	@Inject
 	private HeaterDAO heaterDAO;
+	@Inject
+	private HeaterPAO heaterPAO;
 
 	@Override
 	public Heater saveHeater(final Heater heater) {
@@ -49,6 +53,11 @@ public class HeaterServicesImpl implements HeaterServices {
 	@Override
 	public DtList<Heater> listHeaters() {
 		return heaterDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
+	}
+
+	@Override
+	public DtList<HeatersByMode> getHeatersByMode() {
+		return heaterPAO.getHeatersByMode();
 	}
 
 }

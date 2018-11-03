@@ -8,10 +8,12 @@ create DtDefinition DT_WEEKLY_CALENDAR {
 }
 
 create DtDefinition DT_HEATER {
-	key HEA_ID 				{ domain: DO_ID,			 label: "Id", 				notNull: "false" }
-	field NAME 				{ domain: DO_LABEL,			 label: "Name", 			notNull: "false" }
-	field DNS_NAME 			{ domain: DO_LABEL,			 label: "DNS Name",			notNull: "false" }
-	field ACTIVE			{ domain: DO_BOOLEAN,		 label: "Active", 			notNull: "false" }
+	key HEA_ID 				{ domain: DO_ID,			label: "Id", 					notNull: "false" }
+	field NAME 				{ domain: DO_LABEL,			label: "Name", 					notNull: "false" }
+	field DNS_NAME 			{ domain: DO_LABEL,			label: "DNS Name",				notNull: "false" }
+	field ACTIVE			{ domain: DO_BOOLEAN,		label: "Active", 				notNull: "false" }
+	field AUTO				{ domain: DO_BOOLEAN,		label: "Mode Auto",				notNull: "true"  }
+	field AUTO_SWITCH		{ domain: DO_TIMESTAMP,		label: "Retour au mode auto", 	notNull: "false" }
 
 }
 
@@ -19,6 +21,19 @@ create DtDefinition DT_PROTOCOL {
 	stereotype : "StaticMasterData",
 	key PRO_CD 				{ domain: DO_LABEL,			 label: "Id", 			notNull: "false" }
 	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		notNull: "false" }
+
+}
+
+create DtDefinition DT_HEATER_MODE {
+	stereotype : "StaticMasterData",
+	key MOD_CD	 			{ domain: DO_LABEL,			 label: "Id", 			notNull: "false" }
+	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		notNull: "false" }
+
+}
+
+create DtDefinition DT_HEATERS_BY_MODE {
+	field MODE		{ domain: DO_LABEL,			 label: "Id", 			notNull: "false" }
+	field COUNT		{ domain: DO_NUMBER,		 label: "Nombre", 		notNull: "false" }
 
 }
 
@@ -56,5 +71,24 @@ create Association A_HEA_PRO {
 	labelA : "Protocol"
 	labelB : "Heater"
 	roleA : "Protocol"
+	roleB : "Heater"
+},
+
+
+create Association A_HEA_MOD {
+  	fkFieldName : "MOD_CD"
+    
+  	dtDefinitionA : DT_HEATER_MODE
+	dtDefinitionB : DT_HEATER
+			
+	navigabilityA : "true"
+	navigabilityB : "false"
+	
+	multiplicityA:"1..1"
+	multiplicityB:"0..*"
+	
+	labelA : "Mode"
+	labelB : "Heater"
+	roleA : "Mode"
 	roleB : "Heater"
 },

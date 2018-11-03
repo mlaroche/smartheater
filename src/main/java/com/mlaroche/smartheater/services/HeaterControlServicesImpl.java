@@ -20,7 +20,6 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -30,10 +29,11 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mlaroche.smartheater.dao.HeaterDAO;
+import com.mlaroche.smartheater.dao.heater.HeaterPAO;
 import com.mlaroche.smartheater.domain.Heater;
+import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.ProtocolEnum;
 import com.mlaroche.smartheater.domain.WeeklyCalendar;
-import com.mlaroche.smartheater.model.HeaterMode;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.DailyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
@@ -52,6 +52,8 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 
 	@Inject
 	private HeaterDAO heaterDAO;
+	@Inject
+	private HeaterPAO heaterPAO;
 
 	@Inject
 	private List<RemoteHeaterControlerPlugin> remoteHeaterControlerPlugins;
@@ -82,34 +84,57 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 		final LocalTime nowTime = now.toLocalTime();
 
 		for (final Heater heater : heaters) {
-			heater.weeklyCalendar().load();// at max 20 heaters
-			final WeeklyCalendar weeklyCalendar = heater.weeklyCalendar().get();
-			final HeaterWeeklyCalendar heaterWeeklyCalendar = gson.fromJson(weeklyCalendar.getJsonValue(), HeaterWeeklyCalendar.class);
+			// only do it for heaters in auto
+			if (heater.getAuto()) {
+				heater.weeklyCalendar().load();// at max 20 heaters
+				final WeeklyCalendar weeklyCalendar = heater.weeklyCalendar().get();
+				final HeaterWeeklyCalendar heaterWeeklyCalendar = gson.fromJson(weeklyCalendar.getJsonValue(), HeaterWeeklyCalendar.class);
 
-			final DailyCalendar dailyCalendar = heaterWeeklyCalendar.getDailyCalendars().get(now.getDayOfWeek());
-			final Optional<HeaterMode> heaterModeOpt = dailyCalendar.getTimeSlots()
-					.stream()
-					.filter(timeSlot -> nowTime.isAfter(timeSlot.getBegin()) && nowTime.isBefore(timeSlot.getEnd())) //we find the current time slot if any
-					.findAny()
-					.map(TimeSlot::getMode);
+				final DailyCalendar dailyCalendar = heaterWeeklyCalendar.getDailyCalendars().get(now.getDayOfWeek());
+				final HeaterModeEnum heaterMode = dailyCalendar.getTimeSlots()
+						.stream()
+						.filter(timeSlot -> nowTime.isAfter(timeSlot.getBegin()) && nowTime.isBefore(timeSlot.getEnd())) //we find the current time slot if any
+						.findAny()
+						.map(TimeSlot::getMode)
+						.orElse(HeaterModeEnum.arret);
 
-			try {
-				pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterModeOpt.orElse(HeaterMode.arret));
-			} catch (final Exception e) {
-				logger.error("Unable to change mode of heater : '" + heater.getName() + "'");
+				try {
+					pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterMode);
+					heater.mode().setEnumValue(heaterMode);
+					heaterDAO.save(heater);
+				} catch (final Exception e) {
+					logger.error("Unable to change mode of heater : '" + heater.getName() + "'");
+				}
+
 			}
 
 		}
 
 	}
 
+	@DaemonScheduled(name = "DMN_HEATER_AUTOSWITCH", periodInSeconds = 60 * 2) // every two minutes
+	public void switchToAutoMode() {
+
+	}
+
 	@Override
-	public void changeHeaterMode(final Long heaId, final HeaterMode heaterMode) {
+	public void forceHeaterMode(final Long heaId, final HeaterModeEnum heaterMode) {
 		Assertion.checkNotNull(heaId);
 		Assertion.checkNotNull(heaterMode);
 		//---
 		final Heater heater = heaterDAO.get(heaId);
 		pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterMode);
+		heater.mode().setEnumValue(heaterMode);
+		heater.setAuto(false);
+		heaterDAO.save(heater);
+	}
+
+	@Override
+	public void switchToAuto(final Long heaId) {
+		Assertion.checkNotNull(heaId);
+		//---
+		heaterPAO.switchHeaterToAuto(heaId);
+
 	}
 
 }

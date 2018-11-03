@@ -18,7 +18,8 @@ package com.mlaroche.smartheater.webservices;
 import javax.inject.Inject;
 
 import com.mlaroche.smartheater.domain.Heater;
-import com.mlaroche.smartheater.model.HeaterMode;
+import com.mlaroche.smartheater.domain.HeaterModeEnum;
+import com.mlaroche.smartheater.domain.HeatersByMode;
 import com.mlaroche.smartheater.services.HeaterControlServices;
 import com.mlaroche.smartheater.services.HeaterServices;
 
@@ -57,9 +58,21 @@ public class HeaterWebServices implements WebServices {
 
 	}
 
+	@GET("/countByMode")
+	public DtList<HeatersByMode> getHeater() {
+		return heaterServices.getHeatersByMode();
+
+	}
+
 	@POST("/{heaId}/_changeMode")
 	public void changeMode(@PathParam("heaId") final Long heaId, @QueryParam("mode") final String heaterMode) {
-		heaterControlServices.changeHeaterMode(heaId, HeaterMode.valueOf(heaterMode));
+		heaterControlServices.forceHeaterMode(heaId, HeaterModeEnum.valueOf(heaterMode));
+
+	}
+
+	@POST("/{heaId}/_auto")
+	public void switchToAuto(@PathParam("heaId") final Long heaId) {
+		heaterControlServices.switchToAuto(heaId);
 
 	}
 

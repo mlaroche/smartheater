@@ -15,12 +15,14 @@
  */
 package com.mlaroche.smartheater.services;
 
-import com.mlaroche.smartheater.model.HeaterMode;
+import com.mlaroche.smartheater.domain.HeaterModeEnum;
 
 import io.vertigo.core.component.Component;
 
 public interface HeaterControlServices extends Component {
 
-	void changeHeaterMode(Long heaId, HeaterMode heaterMode);
+	void forceHeaterMode(Long heaId, HeaterModeEnum heaterMode);
+
+	void switchToAuto(Long heaId);
 
 }

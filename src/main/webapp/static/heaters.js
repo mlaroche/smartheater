@@ -22,16 +22,19 @@ const HeaterEdit = {
 				<q-page-sticky position="bottom-right" :offset="[18, 18]">
 					  <q-fab color="purple" icon="keyboard_arrow_up" direction="up" >
 					  <q-tooltip slot="tooltip"  anchor="center left" self="center right" :offset="[20, 0]" >Modifier le mode</q-tooltip>
-					  	<q-fab-action  color="primary" @click="changeMode('arret')" icon="fas fa-ban" >
+					  	<q-fab-action  color="primary" @click="switchAuto()" icon="fas fa-recycle" >
+					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode automatique</q-tooltip>
+					  	</q-fab-action>
+					  	<q-fab-action  color="secondary" @click="changeMode('arret')" icon="fas fa-ban" >
 					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Arrêter</q-tooltip>
 					  	</q-fab-action>
-					  	<q-fab-action  color="primary" @click="changeMode('confort')" icon="fas fa-fire" >
+					  	<q-fab-action  color="secondary" @click="changeMode('confort')" icon="fas fa-fire" >
 					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode confort</q-tooltip>
 					  	</q-fab-action>
-					  	<q-fab-action  color="primary" @click="changeMode('eco')" icon="fas fa-leaf" >
+					  	<q-fab-action  color="secondary" @click="changeMode('eco')" icon="fas fa-leaf" >
 					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode éco</q-tooltip>
 					  	</q-fab-action>
-					  	<q-fab-action  color="primary" @click="changeMode('horsgel')" icon="fas fa-leaf" >
+					  	<q-fab-action  color="secondary" @click="changeMode('horsgel')" icon="fas fa-snowflake" >
 					  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode hors-gel</q-tooltip>
 					  	</q-fab-action>
 					  </q-fab>
@@ -53,7 +56,13 @@ const HeaterEdit = {
 			  this.$data.heater  = data
 		  },
 		  changeMode : function (mode) {
-			  this.$http.post("api/heaters/" + this.$props.heater.heaId +"/_changeMode", null ,{params:  {mode: mode}}).then( function (response) { 
+			  this.$http.post("api/heaters/" + this.heater.heaId +"/_changeMode", null ,{params:  {mode: mode}}).then( function (response) { 
+				  //nothing
+			  }, 'json');
+			  
+		  },
+		  switchAuto : function () {
+			  this.$http.post("api/heaters/" + this.heater.heaId +"/_auto", null).then( function (response) { 
 				  //nothing
 			  }, 'json');
 			  
@@ -135,7 +144,7 @@ const HeaterDetailView = {
 	  },
 	  methods: {
 		  save : function () {
-			  this.$http.post("api/heaters/", JSON.stringify(this.$props.heater)).then( function (response) { 
+			  this.$http.post("api/heaters/", JSON.stringify(this.heater)).then( function (response) { 
 				  //router.push({ path: '/heaters/'});
 				  this.toogleEdit();
 			  }, 'json');
@@ -203,16 +212,38 @@ const HeaterList = {
 	  template: `
 	  	<q-page padding>
 	  		<q-card v-for="heater in heaters" :key="heater.heaId" inline class="standard q-ma-sm" >
+	  			<q-card-media>
+				  <img src="static/silhouette.jpg">
+				</q-card-media>
 				<q-card-title>
 					<router-link :to="{ path: '/heaters/'+ heater.heaId}">{{ heater.name}}</router-link>
 				</q-card-title>
 				<q-card-separator />
 				<q-card-main>
-					{{ heater.dnsName}}
+					<div class="row justify-between" >Mode de gestion : <span class="bold">{{ heater.auto ? 'Automatique' : 'Manuel'}}</span></div>
+					<div class="row justify-between" >Mode en cours : <span class="bold">{{ modeLabel(heater.modCd)}}</span></div>
 				</q-card-main>
+				<q-card-separator ></q-card-separator>
+				<q-card-actions>
+					  	<q-btn round  color="primary" @click="switchAuto(heater)" icon="fas fa-recycle" >
+					  		<q-tooltip anchor="bottom middle" self="bottom middle" :offset="[0, 40]">Passer en mode automatique</q-tooltip>
+					  	</q-btn>
+					  	<q-btn round  color="secondary" @click="changeMode(heater, 'arret')" icon="fas fa-ban" >
+					  		<q-tooltip anchor="bottom middle" self="bottom middle" :offset="[0, 40]">Arrêter</q-tooltip>
+					  	</q-btn>
+					  	<q-btn round  color="secondary" @click="changeMode(heater, 'confort')" icon="fas fa-fire" >
+					  		<q-tooltip anchor="bottom middle" self="bottom middle" :offset="[0, 40]">Passer en mode confort</q-tooltip>
+					  	</q-btn>
+					  	<q-btn round  color="secondary" @click="changeMode(heater, 'eco')" icon="fas fa-leaf" >
+					  		<q-tooltip anchor="bottom middle" self="bottom middle" :offset="[0, 40]">Passer en mode éco</q-tooltip>
+					  	</q-btn>
+					  	<q-btn round  color="secondary" @click="changeMode(heater, 'horsgel')" icon="fas fa-snowflake" >
+					  		<q-tooltip anchor="bottom middle" self="bottom middle" :offset="[0, 40]" >Passer en mode hors-gel</q-tooltip>
+					  	</q-btn>
+				</q-card-actions>
 			</q-card>
-			<q-page-sticky position="bottom-right" :offset="[18, 18]">
-		  		<q-btn round color="primary" icon="add" :to="{ path: '/heaters/new'}" ></q-btn>
+			<q-page-sticky position="bottom-right" :offset="[20, 20]">
+		  		<q-btn round color="primary" icon="add" :to="{ path: '/heaters/new'}" size="lg" ></q-btn>
 		  	</q-page-sticky>
 	  	</q-page>	
 		 `,
@@ -224,7 +255,23 @@ const HeaterList = {
 	  methods: {
 		  setHeaters : function (data) {
 			  this.$data.heaters  = data
-		  }
+		  },
+		  changeMode : function (heater, mode) {
+			  this.$http.post("api/heaters/" + heater.heaId +"/_changeMode", null ,{params:  {mode: mode}}).then( function (response) { 
+				  heater.modCd = mode
+				  heater.auto = false
+			  }, 'json');
+			  
+		  },
+		  switchAuto : function (heater) {
+			  this.$http.post("api/heaters/" + heater.heaId +"/_auto", null).then( function (response) { 
+				  heater.auto = true
+			  }, 'json');
+			  
+		  },
+		  modeLabel: function (mode) {
+		      return heaterModeLabel(mode)
+		    }
 	  },
 	  data: function () {
 		  return {

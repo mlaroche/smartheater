@@ -8,7 +8,10 @@ const HeaterCreate = {
 				 `,
 			  data: function () {
 				  return {
-					  heater:  {}
+					  heater:  {
+						  modCd : 'arret',
+						  auto : true
+					  }
 			  	  }
 			  }
 			}
@@ -101,6 +104,9 @@ const HeaterDetailView = {
 			            <q-select v-if="edition" v-model="heater.proCd" :options="protocolsSelect"></q-select>
 			            <span v-else>{{protocolLabel}}</span>
 			        </q-field>
+			        <q-field label="Gestion automatique" >
+			           <q-checkbox v-model="heater.auto" :readonly="!edition" ></q-checkbox>
+			        </q-field>
 				  </section>
 			</q-card-main>
 		  	<q-card-separator></q-card-separator>
@@ -135,7 +141,7 @@ const HeaterDetailView = {
 			return this.protocols.map(function (protocol) {
 				return { label : protocol.label, value : protocol.proCd }
 			})
-		}  
+		}		
 	  },
 	  beforeMount : function () {
 	      this.loadCalendars();
@@ -145,8 +151,7 @@ const HeaterDetailView = {
 	  methods: {
 		  save : function () {
 			  this.$http.post("api/heaters/", JSON.stringify(this.heater)).then( function (response) { 
-				  //router.push({ path: '/heaters/'});
-				  this.toogleEdit();
+				  router.push({ path: '/heaters/'+response.body.heaId});
 			  }, 'json');
 			  
 		  },

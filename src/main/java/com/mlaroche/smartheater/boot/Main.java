@@ -24,6 +24,7 @@ import io.vertigo.app.config.ModuleConfig;
 import io.vertigo.commons.impl.CommonsFeatures;
 import io.vertigo.commons.plugins.cache.memory.MemoryCachePlugin;
 import io.vertigo.core.param.Param;
+import io.vertigo.core.plugins.param.properties.PropertiesParamPlugin;
 import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
 import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;
 import io.vertigo.database.DatabaseFeatures;
@@ -32,15 +33,18 @@ import io.vertigo.dynamo.impl.DynamoFeatures;
 import io.vertigo.dynamo.plugins.environment.DynamoDefinitionProvider;
 import io.vertigo.dynamo.plugins.store.datastore.sql.SqlDataStorePlugin;
 import io.vertigo.vega.VegaFeatures;
+import spark.Spark;
 
 public class Main {
 
-	private static final AppConfig buildAppConfig() {
+	private static final AppConfig buildAppConfig(final String confUrl) {
 		return AppConfig.builder()
 				.beginBoot()
 				.withLocales("fr_FR")
 				.addPlugin(ClassPathResourceResolverPlugin.class)
 				.addPlugin(URLResourceResolverPlugin.class)
+				.addPlugin(PropertiesParamPlugin.class,
+						Param.of("url", confUrl))
 				.endBoot()
 				.addModule(new CommonsFeatures()
 						.withScript()
@@ -76,8 +80,8 @@ public class Main {
 	}
 
 	public static void main(final String[] args) throws InterruptedException {
-		//Spark.staticFileLocation("/web");
-		try (final AutoCloseableApp app = new AutoCloseableApp(buildAppConfig())) {
+		Spark.staticFileLocation("/web");
+		try (final AutoCloseableApp app = new AutoCloseableApp(buildAppConfig(args[0]))) {
 			while (!Thread.interrupted()) {
 				try {
 					Thread.sleep(10 * 1000);

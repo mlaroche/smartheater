@@ -34,6 +34,7 @@ import com.mlaroche.smartheater.domain.Heater;
 import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.ProtocolEnum;
 import com.mlaroche.smartheater.domain.WeeklyCalendar;
+import com.mlaroche.smartheater.model.HeaterInfo;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.DailyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
@@ -135,6 +136,11 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 		//---
 		heaterPAO.switchHeaterToAuto(heaId);
 
+	}
+
+	@Override
+	public HeaterInfo getInfo(final Heater heater) {
+		return pluginByProtocol.get(heater.protocol().getEnumValue()).getInfo(heater);
 	}
 
 }

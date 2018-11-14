@@ -13,20 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mlaroche.smartheater.services;
+package com.mlaroche.smartheater.model;
 
-import com.mlaroche.smartheater.domain.Heater;
-import com.mlaroche.smartheater.domain.HeaterModeEnum;
-import com.mlaroche.smartheater.model.HeaterInfo;
-
-import io.vertigo.core.component.Component;
-
-public interface HeaterControlServices extends Component {
-
-	void forceHeaterMode(Long heaId, HeaterModeEnum heaterMode);
-
-	void switchToAuto(Long heaId);
-
-	HeaterInfo getInfo(Heater heater);
+public class HeaterInfo {
+	public double temperature;
+	public double humidity;
+	public String mode;
 
 }

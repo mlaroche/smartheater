@@ -55,7 +55,7 @@ public class Main {
 						.addSqlConnectionProviderPlugin(C3p0ConnectionProviderPlugin.class,
 								Param.of("dataBaseClass", "io.vertigo.database.impl.sql.vendor.h2.H2DataBase"),
 								Param.of("jdbcDriver", "org.h2.Driver"),
-								Param.of("jdbcUrl", "jdbc:h2:mem:database"))
+								Param.of("jdbcUrl", "${h2_db_url}"))
 						.build())
 				.addModule(new DynamoFeatures()
 						.withStore()
@@ -74,7 +74,7 @@ public class Main {
 								.addParam(Param.of("encoding", "utf8"))
 								.build())
 						.build())
-				.addInitializer(DataBaseInitializer.class)
+				//.addInitializer(DataBaseInitializer.class)
 				.build();
 
 	}

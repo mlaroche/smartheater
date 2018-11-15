@@ -34,9 +34,9 @@ public class HeaterInfosServicesImpl implements HeaterInfosServices {
 		Assertion.checkNotNull(paramManager);
 		// ---
 		final String serverUrl = paramManager.getParam("influxdb_url").getValueAsString();
+		final String dbName = paramManager.getParam("influxdb_dbname").getValueAsString();
 		// ---
 		influxDB = InfluxDBFactory.connect(serverUrl);
-		final String dbName = "smartheater";
 
 		final boolean dbExist = influxDB.query(new Query("SHOW DATABASES", null))
 				.getResults()

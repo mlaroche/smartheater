@@ -67,7 +67,9 @@
 		    </provider>
 		</definitions>  
 	</module>
+	<!-- 
 	<init>
 		<initializer class="com.mlaroche.smartheater.boot.DataBaseInitializer" />
 	</init>
+	 -->
 </config>

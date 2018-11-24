@@ -13,13 +13,14 @@ import org.influxdb.dto.Query;
 
 import com.mlaroche.smartheater.domain.Heater;
 import com.mlaroche.smartheater.model.HeaterInfo;
+import com.mlaroche.smartheater.model.WeatherInfo;
 
 import io.vertigo.commons.daemon.DaemonScheduled;
 import io.vertigo.core.param.ParamManager;
 import io.vertigo.lang.Assertion;
 import io.vertigo.lang.WrappedException;
 
-public class HeaterInfosServicesImpl implements HeaterInfosServices {
+public class InfosServicesImpl implements InfosServices {
 
 	private final InfluxDB influxDB;
 
@@ -27,9 +28,11 @@ public class HeaterInfosServicesImpl implements HeaterInfosServices {
 	private HeaterServices heaterServices;
 	@Inject
 	private HeaterControlServices heaterControlServices;
+	@Inject
+	private WeatherServices weatherServices;
 
 	@Inject
-	public HeaterInfosServicesImpl(
+	public InfosServicesImpl(
 			final ParamManager paramManager) {
 		Assertion.checkNotNull(paramManager);
 		// ---
@@ -52,7 +55,7 @@ public class HeaterInfosServicesImpl implements HeaterInfosServices {
 		influxDB.setDatabase(dbName);
 	}
 
-	@DaemonScheduled(name = "DMN_HEATER_INFO", periodInSeconds = 60 * 1) // every minute
+	@DaemonScheduled(name = "DMN_STORE_INFOS", periodInSeconds = 60 * 1) // every minute
 	public void putInfosToInflux() {
 		influxDB.enableBatch();
 		for (final Heater heater : heaterServices.listHeaters()) {
@@ -73,6 +76,19 @@ public class HeaterInfosServicesImpl implements HeaterInfosServices {
 				// do nothing if no info
 			}
 		}
+		final WeatherInfo weatherInfo = weatherServices.getWeatherInfo();
+		final Point weatherInfoPoint = Point.measurement("weather")
+				.time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+				.addField("temperature", weatherInfo.temperature)
+				.addField("humidity", weatherInfo.humidity)
+				.addField("description", weatherInfo.description)
+				.addField("location", weatherInfo.location)
+				.addField("icon", weatherInfo.icon)
+				.tag("description", weatherInfo.description)
+				.tag("location", weatherInfo.location)
+				.tag("icon", weatherInfo.icon)
+				.build();
+		influxDB.write(weatherInfoPoint);
 		influxDB.disableBatch();
 
 	}

@@ -6,7 +6,7 @@ import com.mlaroche.smartheater.model.HeaterInfo;
 
 import io.vertigo.core.component.Component;
 
-public interface HeaterInfosServices extends Component {
+public interface InfosServices extends Component {
 
 	List<HeaterInfo> getInfos();
 

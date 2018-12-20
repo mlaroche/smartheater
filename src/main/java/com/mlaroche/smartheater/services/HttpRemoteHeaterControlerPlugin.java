@@ -66,6 +66,7 @@ public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlu
 			final URL url = new URL(wsUrl);
 			final HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 			httpURLConnection.setConnectTimeout(500);
+			httpURLConnection.setReadTimeout(500);
 			//---
 			Assertion.checkState(httpURLConnection.getResponseCode() == 200, "Error calling '{0}' ", wsUrl);
 		} catch (final IOException e) {
@@ -81,6 +82,7 @@ public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlu
 			final URL url = new URL(wsUrl);
 			final HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 			httpURLConnection.setConnectTimeout(500);
+			httpURLConnection.setReadTimeout(500);
 			httpURLConnection.setRequestProperty("Content-Type", "application/json");
 
 			final ByteArrayOutputStream result = new ByteArrayOutputStream();

@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Point;
@@ -21,6 +23,8 @@ import io.vertigo.lang.Assertion;
 import io.vertigo.lang.WrappedException;
 
 public class InfosServicesImpl implements InfosServices {
+
+	private final static Logger LOGGER = LogManager.getLogger(InfosServicesImpl.class);
 
 	private final InfluxDB influxDB;
 
@@ -73,7 +77,7 @@ public class InfosServicesImpl implements InfosServices {
 						.build();
 				influxDB.write(infoPoint);
 			} catch (final WrappedException e) {
-				// do nothing if no info
+				LOGGER.error(e.getCause());
 			}
 		}
 		final WeatherInfo weatherInfo = weatherServices.getWeatherInfo();

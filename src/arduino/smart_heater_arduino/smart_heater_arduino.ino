@@ -99,18 +99,9 @@ void loop() {
     client.print("HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE HTML>\r\n<html>\r\nRadiateur en mode ECO </html>\n");
   }
   else if (req.indexOf("/infos/") != -1){        // infos
-    float t = dht.readTemperature();
-    char t_buff[4];
-    String t_string = "";
-    dtostrf(t, 2, 2, t_buff);
-    t_string += t_buff;
-
-    float h = dht.readHumidity();
-    char h_buff[4];
-    String h_string = "";
-    dtostrf(h, 2, 2, h_buff);
-    h_string += h_buff;
-
+    String* t_string = new String(dht.readTemperature());
+    String* h_string = new String(dht.readHumidity());
+  
     String mode_string;
     int pin12 = digitalRead(12);
     int pin13 = digitalRead(13);
@@ -128,9 +119,8 @@ void loop() {
         mode_string =  "eco";
       }
     }
-    
     client.flush();
-    client.print("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{'temperature' :"+t_string+", 'humidity' :"+h_string+", 'mode' : '"+mode_string+"'}\n");
+    client.print("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{'temperature' :"+*t_string+", 'humidity' :"+*h_string+", 'mode' : '"+mode_string+"'}\n");
   }
   else {
     Serial.println("invalid request");

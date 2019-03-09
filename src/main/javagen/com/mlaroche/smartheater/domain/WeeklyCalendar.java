@@ -1,7 +1,7 @@
 package com.mlaroche.smartheater.domain;
 
 import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.URI;
+import io.vertigo.dynamo.domain.model.UID;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 import io.vertigo.lang.Generated;
@@ -20,8 +20,8 @@ public final class WeeklyCalendar implements Entity {
 
 	/** {@inheritDoc} */
 	@Override
-	public URI<WeeklyCalendar> getURI() {
-		return DtObjectUtil.createURI(this);
+	public UID<WeeklyCalendar> getUID() {
+		return UID.of(this);
 	}
 	
 	/**

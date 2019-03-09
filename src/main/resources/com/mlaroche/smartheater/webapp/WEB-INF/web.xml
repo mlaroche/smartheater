@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
-	<display-name>orchestra</display-name>
+<web-app version="3.1" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd">
+	
+	<display-name>smartheater</display-name>
 	<context-param>
 		<param-name>boot.applicationConfiguration</param-name>
-		<param-value>/META-INF/managers.xml</param-value>
+		<param-value>/META-INF/smartheater.yaml</param-value>
 	</context-param>
 	<context-param>
 		<param-name>boot.db.source</param-name>
@@ -16,6 +16,12 @@
 		<param-name>boot.db.classname</param-name>
 		<param-value>io.vertigo.database.impl.sql.vendor.h2.H2DataBase</param-value>
 	</context-param>
+	<context-param>
+		<param-name>app.version</param-name>
+		<param-value>0.0.1</param-value>
+	</context-param>
+	
+	
 
 	<listener>
 		<listener-class>io.vertigo.vega.impl.webservice.servlet.AppServletContextListener</listener-class>
@@ -31,6 +37,22 @@
 		<filter-name>SparkFilter</filter-name>
 		<url-pattern>/api/*</url-pattern>
 	</filter-mapping>
+	
+	
+	
+	<!-- prevent Locking of static files on windows -->
+	<context-param>
+		<param-name>org.eclipse.jetty.servlet.Default.useFileMappedBuffer</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<!-- serve static files by jetty -->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/static/*</url-pattern>
+		<url-pattern>/index.html</url-pattern>
+	</servlet-mapping>
+	
+	
 
 	<session-config>
 		<session-timeout>60</session-timeout>

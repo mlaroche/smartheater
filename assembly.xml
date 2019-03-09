@@ -15,16 +15,4 @@
       <scope>runtime</scope>
     </dependencySet>
   </dependencySets>
-  <fileSets>
-    <fileSet>
-      <outputDirectory>web/static/</outputDirectory>
-      <directory>src/main/webapp/static</directory>
-    </fileSet>
-  </fileSets>
-  <files>
-    <file>
-      <source>src/main/webapp/index.html</source>
-      <outputDirectory>web</outputDirectory>
-    </file>
-  </files>
 </assembly>

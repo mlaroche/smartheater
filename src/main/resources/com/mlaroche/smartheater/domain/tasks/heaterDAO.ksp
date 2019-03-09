@@ -5,7 +5,7 @@ create Task TK_SWITCH_HEATER_TO_AUTO {
         request : "
         	update heater set auto = true where hea_id = #HEA_ID#
 			"
-	attribute HEA_ID		{domain : DO_ID 		notNull:"true" 	inOut :"in"}
+	attribute HEA_ID		{domain : DO_ID 		required:"true" 	inOut :"in"}
 }
 
 
@@ -14,5 +14,5 @@ create Task TK_GET_HEATERS_BY_MODE {
         request : "
         	select mod_cd as MODE,  count(mod_cd) as COUNT from heater group by mod_cd
 			"
-	attribute RESULT		{domain : DO_DT_HEATERS_BY_MODE_DTC 		notNull:"true" 	inOut :"out"}
+	attribute RESULT		{domain : DO_DT_HEATERS_BY_MODE_DTC 		required:"true" 	inOut :"out"}
 }

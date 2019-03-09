@@ -1,7 +1,7 @@
 package com.mlaroche.smartheater.domain;
 
 import io.vertigo.dynamo.domain.model.DtStaticMasterData;
-import io.vertigo.dynamo.domain.model.URI;
+import io.vertigo.dynamo.domain.model.UID;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 import io.vertigo.lang.Generated;
@@ -19,8 +19,8 @@ public final class Protocol implements DtStaticMasterData {
 
 	/** {@inheritDoc} */
 	@Override
-	public URI<Protocol> getURI() {
-		return DtObjectUtil.createURI(this);
+	public UID<Protocol> getUID() {
+		return UID.of(this);
 	}
 	
 	/**

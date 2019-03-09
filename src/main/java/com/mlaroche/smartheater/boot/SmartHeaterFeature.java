@@ -15,9 +15,14 @@
  */
 package com.mlaroche.smartheater.boot;
 
-import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
+import com.mlaroche.smartheater.domain.DtDefinitions;
 
-public final class SmartHeaterFeature extends ModuleDiscoveryFeatures {
+import io.vertigo.app.config.DefinitionProviderConfig;
+import io.vertigo.app.config.discovery.ModuleDiscoveryFeatures;
+import io.vertigo.core.param.Param;
+import io.vertigo.dynamo.plugins.environment.DynamoDefinitionProvider;
+
+public final class SmartHeaterFeature extends ModuleDiscoveryFeatures<SmartHeaterFeature> {
 
 	public SmartHeaterFeature() {
 		super("smartheater");
@@ -26,5 +31,16 @@ public final class SmartHeaterFeature extends ModuleDiscoveryFeatures {
 	@Override
 	protected String getPackageRoot() {
 		return "com.mlaroche.smartheater";
+	}
+
+	@Override
+	protected void buildFeatures() {
+		super.buildFeatures();
+		//----
+		getModuleConfigBuilder().addDefinitionProvider(DefinitionProviderConfig.builder(DynamoDefinitionProvider.class)
+				.addDefinitionResource("classes", DtDefinitions.class.getName())
+				.addDefinitionResource("kpr", "com/mlaroche/smartheater/domain/execution.kpr")
+				.addParam(Param.of("encoding", "utf8"))
+				.build());
 	}
 }

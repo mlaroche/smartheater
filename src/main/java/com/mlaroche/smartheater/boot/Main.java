@@ -15,81 +15,65 @@
  */
 package com.mlaroche.smartheater.boot;
 
-import com.mlaroche.smartheater.domain.DtDefinitions;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 
-import io.vertigo.app.AutoCloseableApp;
-import io.vertigo.app.config.AppConfig;
-import io.vertigo.app.config.DefinitionProviderConfig;
-import io.vertigo.app.config.ModuleConfig;
-import io.vertigo.commons.impl.CommonsFeatures;
-import io.vertigo.commons.plugins.cache.memory.MemoryCachePlugin;
-import io.vertigo.core.param.Param;
-import io.vertigo.core.plugins.param.properties.PropertiesParamPlugin;
-import io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin;
-import io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin;
-import io.vertigo.database.DatabaseFeatures;
-import io.vertigo.database.plugins.sql.connection.c3p0.C3p0ConnectionProviderPlugin;
-import io.vertigo.dynamo.impl.DynamoFeatures;
-import io.vertigo.dynamo.plugins.environment.DynamoDefinitionProvider;
-import io.vertigo.dynamo.plugins.store.datastore.sql.SqlDataStorePlugin;
-import io.vertigo.vega.VegaFeatures;
-import spark.Spark;
+import org.eclipse.jetty.annotations.ServletContainerInitializersStarter;
+import org.eclipse.jetty.plus.annotation.ContainerInitializer;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.WebAppClassLoader;
+import org.eclipse.jetty.webapp.WebAppContext;
+import org.springframework.web.SpringServletContainerInitializer;
 
 public class Main {
 
-	private static final AppConfig buildAppConfig(final String confUrl) {
-		return AppConfig.builder()
-				.beginBoot()
-				.withLocales("fr_FR")
-				.addPlugin(ClassPathResourceResolverPlugin.class)
-				.addPlugin(URLResourceResolverPlugin.class)
-				.addPlugin(PropertiesParamPlugin.class,
-						Param.of("url", confUrl))
-				.endBoot()
-				.addModule(new CommonsFeatures()
-						.withScript()
-						.withCache(MemoryCachePlugin.class)
-						.build())
-				.addModule(new DatabaseFeatures()
-						.withSqlDataBase()
-						.addSqlConnectionProviderPlugin(C3p0ConnectionProviderPlugin.class,
-								Param.of("dataBaseClass", "io.vertigo.database.impl.sql.vendor.h2.H2DataBase"),
-								Param.of("jdbcDriver", "org.h2.Driver"),
-								Param.of("jdbcUrl", "${h2_db_url}"))
-						.build())
-				.addModule(new DynamoFeatures()
-						.withStore()
-						.addDataStorePlugin(SqlDataStorePlugin.class,
-								Param.of("sequencePrefix", "SEQ_"))
-						.build())
-				.addModule(new VegaFeatures()
-						.withEmbeddedServer(8080)
-						.withApiPrefix("/api")
-						.build())
-				.addModule(new SmartHeaterFeature().build())
-				.addModule(ModuleConfig.builder("definitions")
-						.addDefinitionProvider(DefinitionProviderConfig.builder(DynamoDefinitionProvider.class)
-								.addDefinitionResource("classes", DtDefinitions.class.getName())
-								.addDefinitionResource("kpr", "com/mlaroche/smartheater/domain/execution.kpr")
-								.addParam(Param.of("encoding", "utf8"))
-								.build())
-						.build())
-				//.addInitializer(DataBaseInitializer.class)
-				.build();
-
+	private static List<ContainerInitializer> springInitializers() {
+		final SpringServletContainerInitializer sci = new SpringServletContainerInitializer();
+		final ContainerInitializer initializer = new ContainerInitializer(sci, null);
+		initializer.addApplicableTypeName(SmartheaterVSpringWebApplicationInitializer.class.getCanonicalName());
+		final List<ContainerInitializer> initializers = new ArrayList<>();
+		initializers.add(initializer);
+		return initializers;
 	}
 
-	public static void main(final String[] args) throws InterruptedException {
-		Spark.staticFileLocation("/web");
-		try (final AutoCloseableApp app = new AutoCloseableApp(buildAppConfig(args[0]))) {
-			while (!Thread.interrupted()) {
-				try {
-					Thread.sleep(10 * 1000);
-				} catch (final InterruptedException e) {
-					e.printStackTrace();
-				}
+	private static ClassLoader getUrlClassLoader() {
+		return new URLClassLoader(new URL[0], Main.class.getClassLoader());
+	}
+
+	private static File getScratchDir() throws IOException {
+		final File tempDir = new File(System.getProperty("java.io.tmpdir"));
+		final File scratchDir = new File(tempDir.toString(), "embedded-jetty-jsp");
+
+		if (!scratchDir.exists()) {
+			if (!scratchDir.mkdirs()) {
+				throw new IOException("Unable to create scratch directory: " + scratchDir);
 			}
 		}
+		return scratchDir;
+	}
+
+	public static void main(final String[] args) throws IOException, Exception {
+		final Server server = new Server(8080);
+		final WebAppContext context = new WebAppContext(getUrlClassLoader().getResource("com/mlaroche/smartheater/webapp").toExternalForm(), "/smartheater");
+		System.setProperty("org.apache.jasper.compiler.disablejsr199", "false");
+		//context.setAttribute("jacoco.exclClassLoaders", "*");
+
+		context.setAttribute("javax.servlet.context.tempdir", getScratchDir());
+		context.setAttribute("org.eclipse.jetty.containerInitializers", springInitializers());
+
+		context.setInitParameter("boot.paramsUrl", args[0]);
+		context.addBean(new ServletContainerInitializersStarter(context), true);
+		context.setClassLoader(getUrlClassLoader());
+		context.setClassLoader(new WebAppClassLoader(Main.class.getClassLoader(), context));
+
+		server.setHandler(context);
+		server.start();
+
+		server.join();
 
 	}
 

@@ -3,8 +3,7 @@ package com.mlaroche.smartheater.domain;
 import java.io.Serializable;
 
 import io.vertigo.dynamo.domain.model.MasterDataEnum;
-import io.vertigo.dynamo.domain.model.URI;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
+import io.vertigo.dynamo.domain.model.UID;
 
 public enum HeaterModeEnum implements MasterDataEnum<com.mlaroche.smartheater.domain.HeaterMode> {
 
@@ -21,8 +20,8 @@ public enum HeaterModeEnum implements MasterDataEnum<com.mlaroche.smartheater.do
 	}
 
 	@Override
-	public URI<com.mlaroche.smartheater.domain.HeaterMode> getEntityUri() {
-		return DtObjectUtil.createURI(com.mlaroche.smartheater.domain.HeaterMode.class, entityId);
+	public UID<com.mlaroche.smartheater.domain.HeaterMode> getEntityUID() {
+		return UID.of(com.mlaroche.smartheater.domain.HeaterMode.class, entityId);
 	}
 
 }

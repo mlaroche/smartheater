@@ -3,8 +3,7 @@ package com.mlaroche.smartheater.domain;
 import java.io.Serializable;
 
 import io.vertigo.dynamo.domain.model.MasterDataEnum;
-import io.vertigo.dynamo.domain.model.URI;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
+import io.vertigo.dynamo.domain.model.UID;
 
 public enum ProtocolEnum implements MasterDataEnum<com.mlaroche.smartheater.domain.Protocol> {
 
@@ -18,8 +17,8 @@ public enum ProtocolEnum implements MasterDataEnum<com.mlaroche.smartheater.doma
 	}
 
 	@Override
-	public URI<com.mlaroche.smartheater.domain.Protocol> getEntityUri() {
-		return DtObjectUtil.createURI(com.mlaroche.smartheater.domain.Protocol.class, entityId);
+	public UID<com.mlaroche.smartheater.domain.Protocol> getEntityUID() {
+		return UID.of(com.mlaroche.smartheater.domain.Protocol.class, entityId);
 	}
 
 }

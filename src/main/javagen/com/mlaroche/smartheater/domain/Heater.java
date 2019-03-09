@@ -1,9 +1,9 @@
 package com.mlaroche.smartheater.domain;
 
 import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.URI;
-import io.vertigo.dynamo.domain.model.VAccessor;
 import io.vertigo.dynamo.domain.model.EnumVAccessor;
+import io.vertigo.dynamo.domain.model.UID;
+import io.vertigo.dynamo.domain.model.VAccessor;
 import io.vertigo.dynamo.domain.stereotype.Field;
 import io.vertigo.dynamo.domain.util.DtObjectUtil;
 import io.vertigo.lang.Generated;
@@ -70,8 +70,8 @@ public final class Heater implements Entity {
 
 	/** {@inheritDoc} */
 	@Override
-	public URI<Heater> getURI() {
-		return DtObjectUtil.createURI(this);
+	public UID<Heater> getUID() {
+		return UID.of(this);
 	}
 	
 	/**
@@ -195,7 +195,7 @@ public final class Heater implements Entity {
 	 */
 	@Field(domain = "DO_ID", type = "FOREIGN_KEY", required = true, label = "WeeklyCalendar")
 	public Long getWcaId() {
-		return (Long)  wcaIdAccessor.getId();
+		return (Long) wcaIdAccessor.getId();
 	}
 
 	/**
@@ -214,7 +214,7 @@ public final class Heater implements Entity {
 	 */
 	@Field(domain = "DO_LABEL", type = "FOREIGN_KEY", required = true, label = "Protocol")
 	public String getProCd() {
-		return (String)  proCdAccessor.getId();
+		return (String) proCdAccessor.getId();
 	}
 
 	/**
@@ -233,7 +233,7 @@ public final class Heater implements Entity {
 	 */
 	@Field(domain = "DO_LABEL", type = "FOREIGN_KEY", required = true, label = "Mode")
 	public String getModCd() {
-		return (String)  modCdAccessor.getId();
+		return (String) modCdAccessor.getId();
 	}
 
 	/**
@@ -252,24 +252,6 @@ public final class Heater implements Entity {
 	public EnumVAccessor<com.mlaroche.smartheater.domain.HeaterMode, com.mlaroche.smartheater.domain.HeaterModeEnum> mode() {
 		return modCdAccessor;
 	}
-	
-	@Deprecated
-	public com.mlaroche.smartheater.domain.HeaterMode getMode() {
-		// we keep the lazyness
-		if (!modCdAccessor.isLoaded()) {
-			modCdAccessor.load();
-		}
-		return modCdAccessor.get();
-	}
-
-	/**
-	 * Retourne l'URI: Mode.
-	 * @return URI de l'association
-	 */
-	@Deprecated
-	public io.vertigo.dynamo.domain.model.URI<com.mlaroche.smartheater.domain.HeaterMode> getModeURI() {
-		return modCdAccessor.getURI();
-	}
 
  	/**
 	 * Association : Protocol.
@@ -278,24 +260,6 @@ public final class Heater implements Entity {
 	public EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> protocol() {
 		return proCdAccessor;
 	}
-	
-	@Deprecated
-	public com.mlaroche.smartheater.domain.Protocol getProtocol() {
-		// we keep the lazyness
-		if (!proCdAccessor.isLoaded()) {
-			proCdAccessor.load();
-		}
-		return proCdAccessor.get();
-	}
-
-	/**
-	 * Retourne l'URI: Protocol.
-	 * @return URI de l'association
-	 */
-	@Deprecated
-	public io.vertigo.dynamo.domain.model.URI<com.mlaroche.smartheater.domain.Protocol> getProtocolURI() {
-		return proCdAccessor.getURI();
-	}
 
  	/**
 	 * Association : WeeklyCalendar.
@@ -303,24 +267,6 @@ public final class Heater implements Entity {
 	 */
 	public VAccessor<com.mlaroche.smartheater.domain.WeeklyCalendar> weeklyCalendar() {
 		return wcaIdAccessor;
-	}
-	
-	@Deprecated
-	public com.mlaroche.smartheater.domain.WeeklyCalendar getWeeklyCalendar() {
-		// we keep the lazyness
-		if (!wcaIdAccessor.isLoaded()) {
-			wcaIdAccessor.load();
-		}
-		return wcaIdAccessor.get();
-	}
-
-	/**
-	 * Retourne l'URI: WeeklyCalendar.
-	 * @return URI de l'association
-	 */
-	@Deprecated
-	public io.vertigo.dynamo.domain.model.URI<com.mlaroche.smartheater.domain.WeeklyCalendar> getWeeklyCalendarURI() {
-		return wcaIdAccessor.getURI();
 	}
 	
 	/** {@inheritDoc} */

@@ -1,0 +1,50 @@
+---
+boot:
+  params:
+    locales: fr_FR
+  plugins:
+    - io.vertigo.core.plugins.resource.classpath.ClassPathResourceResolverPlugin: {}
+    - io.vertigo.core.plugins.resource.local.LocalResourceResolverPlugin: {}
+    - io.vertigo.core.plugins.resource.url.URLResourceResolverPlugin: {}
+    - io.vertigo.core.plugins.param.properties.PropertiesParamPlugin:
+        url: ${boot.paramsUrl}
+    - io.vertigo.vega.plugins.webservice.servlet.WebAppContextParamPlugin: {}
+modules:
+  io.vertigo.commons.CommonsFeatures:
+    features:
+      - script:
+      - cache:
+    featuresConfig:
+      - script.janino:
+      - cache.memory:
+  io.vertigo.database.DatabaseFeatures:
+    features:
+      - sql:
+    featuresConfig:
+      - sql.c3p0:
+          dataBaseClass: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
+          jdbcDriver: org.h2.Driver
+          jdbcUrl: ${h2_db_url}
+  io.vertigo.dynamo.DynamoFeatures:
+    features:
+      - store:
+      - kvStore:
+    featuresConfig:
+      - store.data.sql:
+      - collections.luceneIndex:
+      - kvStore.delayedMemory:
+          collections: protected-value
+          timeToLiveSeconds: 3600
+      - kvStore.berkeley:
+          collections: VViewContext;TTL=43200
+          dbFilePath: ${java.io.tmpdir}/vertigo/SmartheaterViewContext
+  io.vertigo.vega.VegaFeatures:
+    features:
+        - webservices:
+    featuresConfig:
+        - webservices.apiPrefix:
+            apiPrefix: /api
+  com.mlaroche.smartheater.boot.SmartHeaterFeature:
+initializers:
+  - com.mlaroche.smartheater.boot.DataBaseInitializer:
+      __flags__: ["initdb"]

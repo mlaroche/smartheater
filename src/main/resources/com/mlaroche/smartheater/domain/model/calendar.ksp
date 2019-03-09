@@ -1,39 +1,39 @@
 package com.mlaroche.smartheater.domain
 
 create DtDefinition DT_WEEKLY_CALENDAR {
-	key WCA_ID 				{ domain: DO_ID,			 label: "Id", 					notNull: "false" }
-	field NAME 				{ domain: DO_LABEL,			 label: "Name", 				notNull: "false" }
-	field JSON_VALUE 		{ domain: DO_TEXT,			 label: "Value as json", 		notNull: "false" }
+	id WCA_ID 				{ domain: DO_ID,			 label: "Id"}
+	field NAME 				{ domain: DO_LABEL,			 label: "Name", 				required: "false" }
+	field JSON_VALUE 		{ domain: DO_TEXT,			 label: "Value as json", 		required: "false" }
 
 }
 
 create DtDefinition DT_HEATER {
-	key HEA_ID 				{ domain: DO_ID,			label: "Id", 					notNull: "false" }
-	field NAME 				{ domain: DO_LABEL,			label: "Name", 					notNull: "false" }
-	field DNS_NAME 			{ domain: DO_LABEL,			label: "DNS Name",				notNull: "false" }
-	field ACTIVE			{ domain: DO_BOOLEAN,		label: "Active", 				notNull: "false" }
-	field AUTO				{ domain: DO_BOOLEAN,		label: "Mode Auto",				notNull: "true"  }
-	field AUTO_SWITCH		{ domain: DO_TIMESTAMP,		label: "Retour au mode auto", 	notNull: "false" }
+	id HEA_ID 				{ domain: DO_ID,			label: "Id"}
+	field NAME 				{ domain: DO_LABEL,			label: "Name", 					required: "false" }
+	field DNS_NAME 			{ domain: DO_LABEL,			label: "DNS Name",				required: "false" }
+	field ACTIVE			{ domain: DO_BOOLEAN,		label: "Active", 				required: "false" }
+	field AUTO				{ domain: DO_BOOLEAN,		label: "Mode Auto",				required: "true"  }
+	field AUTO_SWITCH		{ domain: DO_TIMESTAMP,		label: "Retour au mode auto", 	required: "false" }
 
 }
 
 create DtDefinition DT_PROTOCOL {
 	stereotype : "StaticMasterData",
-	key PRO_CD 				{ domain: DO_LABEL,			 label: "Id", 			notNull: "false" }
-	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		notNull: "false" }
+	id PRO_CD 				{ domain: DO_LABEL,			 label: "Id"}
+	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		required: "false" }
 
 }
 
 create DtDefinition DT_HEATER_MODE {
 	stereotype : "StaticMasterData",
-	key MOD_CD	 			{ domain: DO_LABEL,			 label: "Id", 			notNull: "false" }
-	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		notNull: "false" }
+	id MOD_CD	 			{ domain: DO_LABEL,			 label: "Id"}
+	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		required: "false" }
 
 }
 
 create DtDefinition DT_HEATERS_BY_MODE {
-	field MODE		{ domain: DO_LABEL,			 label: "Id", 			notNull: "false" }
-	field COUNT		{ domain: DO_NUMBER,		 label: "Nombre", 		notNull: "false" }
+	field MODE		{ domain: DO_LABEL,			 label: "Id" , 			required: "false"}
+	field COUNT		{ domain: DO_NUMBER,		 label: "Nombre", 		required: "false" }
 
 }
 

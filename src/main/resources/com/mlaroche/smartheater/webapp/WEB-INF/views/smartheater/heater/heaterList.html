@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:vu="http://www.morphbit.com/thymeleaf/component"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{templates/smartheaterListLayout}"
+>
+	<head>
+		<title>Bases</title>
+	</head>
+	
+	<body>
+		<section layout:fragment="content" >
+			<vu:include-data object="heaters" field="heaId" />
+			<vu:include-data object="heaters" field="name" />
+			<vu:include-data object="heaters" field="dnsName" />
+			<vu:include-data object="heaters" field="modCd" />
+			<vu:include-data object="heaters" field="auto" />
+			<div class="q-title q-mb-md">{{vueData.heaters.length}} Heaters</div>
+			<vu:cards list="heaters" componentId="baseCards" cardClass="marsCard col-xl-4 col-md-6 col-xs-12" rowsPerPage="8" showMore="true" showMoreLabel="Show more" >
+					<div class="nav" th:@click="|goTo('@{/heater/}'+item.heaId)|">
+						<q-card-media>
+							<img th:src="@{/static/silhouette.jpg}" />
+						</q-card-media>
+						<q-card-main class="row" >
+							<div class="col ellipsis" >
+								<span class="text-primary small-caps text-bigger">{{item.name}}</span><br/>
+								<vu:field-read field="modCd" list="heaterModes" listKey="modCd" /><br/>
+							</div>		
+					</q-card-main>
+					</div>
+					<q-card-separator></q-card-separator>
+					<q-card-actions>
+					</q-card-actions>
+				</vu:cards>
+		</section>
+	</body>
+</html>

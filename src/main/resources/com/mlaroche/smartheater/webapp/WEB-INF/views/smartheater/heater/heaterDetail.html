@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:vu="http://www.morphbit.com/thymeleaf/component" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{templates/smartheaterDetailLayout}">
+<head>
+<title>Base Information</title>
+</head>
+<body>
+	<section>
+		<div layout:fragment="content-header-left" id="baseImg">
+			<img th:src="@{/static/silhouette.jpg}" class="detailImg gt-md" />
+		</div>
+		<div layout:fragment="content-header-title" id="baseTitle">
+			<span class="text-bigger" th:text="${model.heater.name}"></span> <br />
+		</div>
+		<div layout:fragment="content-header-actions">
+			<vu:button-link th:if="${model.modeEdit}" class="text-tertiary-inverted on-left" flat round size="lg" icon="fas fa-ban"
+				url="@{/heater/} + ${model.heater.heaId}" ariaLabel="Cancel" />
+			<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" ariaLabel="Edit" class="on-left" />
+			<th:block id="baseActions">
+			</th:block>
+		</div>
+	</section>
+	<section layout:fragment="content">
+		<vu:block title="General Information">
+			<vu:grid cols="1">
+				<vu:text-field object="heater" field="name" />
+				<vu:text-field object="heater" field="dnsName" />
+				<vu:checkbox object="heater" field="auto" />
+				<vu:select object="heater" field="proCd" list="protocols"/>
+				<vu:select object="heater" field="wcaId" list="calendars"/>
+			</vu:grid>
+		</vu:block>
+		<q-page-sticky position="bottom-right"> 
+			<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
+		</q-page-sticky>
+	</section>
+</body>
+</html>

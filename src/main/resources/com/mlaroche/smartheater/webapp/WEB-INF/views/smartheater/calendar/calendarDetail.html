@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:vu="http://www.morphbit.com/thymeleaf/component" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{templates/smartheaterDetailLayout}">
+<head>
+<title>Calendar detail</title>
+<script th:src="@{/static/utils.js}"></script>
+
+<link rel="stylesheet" th:href="@{/static/jquery.schedule.css}">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script th:src="@{/static/jquery.schedule.js}"></script>
+</head>
+<body>
+	<section>
+		<div layout:fragment="content-header-title" id="baseTitle">
+			<span class="text-bigger" th:text="${model.calendar.name}"></span> <br />
+		</div>
+		<div layout:fragment="content-header-actions">
+			<vu:button-link th:if="${model.modeEdit}" class="text-tertiary-inverted on-left" flat round size="lg" icon="fas fa-ban"
+				url="@{/calendar/} + ${model.calendar.wcaId}" ariaLabel="Cancel" />
+			<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" ariaLabel="Edit" class="on-left" />
+		</div>
+	</section>
+	<section layout:fragment="content">
+		<vu:block title="General Information">
+			<vu:grid cols="1">
+				<vu:text-field object="calendar" field="name" />
+				<vu:include-data object="calendar" field="jsonValue" />
+			</vu:grid>
+		</vu:block>
+		<div id="schedule"></div>
+		<input name="vContext[calendar][jsonValue]" type="hidden" v-bind:value="vueData.calendar.jsonValue">
+		<q-page-sticky position="bottom-right"> 
+			<vu:button-submit th:if="${!model.modeReadOnly}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
+		</q-page-sticky>
+		
+	</section>
+	
+	<div layout:fragment="javascript-footer">
+		<script type="text/javascript">
+			var updateCalendarVueData = function () {
+				vueData.calendar.jsonValue = convertToWeeklyCalendarJsonValue(JSON.parse($('#schedule').jqs('export')));
+			}
+			
+			$('#schedule').jqs({
+				mode : '[[${model.modeReadOnly?'read':'edit'}]]',
+				onUpdate: function () {
+					updateCalendarVueData();
+				}
+			});
+			
+			if(vueData.calendar.jsonValue) {
+			  	$('#schedule').jqs('import', convertToJqueryCalendar(JSON.parse(vueData.calendar.jsonValue)));
+			}
+		</script>
+	</div>
+</body>
+</html>

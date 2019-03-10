@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:vu="http://www.morphbit.com/thymeleaf/component"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{templates/smartheaterListLayout}"
+>
+	<head>
+		<title>Calendars</title>
+	</head>
+	
+	<body>
+		<section layout:fragment="content" >
+			<vu:include-data object="calendars" field="wcaId" />
+			<div class="q-title q-mb-md">{{vueData.calendars.length}} Calendars</div>
+			<vu:table list="calendars" componentId="calendarsTable" rowsPerPage="8" tr_@click.native="|goTo('@{/calendar/}'+props.row.wcaId)|" tr_class="nav" >
+				<vu:column field="name"/>
+			</vu:table>
+		</section>
+	</body>
+</html>

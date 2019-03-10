@@ -35,7 +35,9 @@
       onAddPeriod: function () {},
       onRemovePeriod: function () {},
       onDuplicatePeriod: function () {},
-      onClickPeriod: function () {}
+      onClickPeriod: function () {},
+      //added
+      onUpdate: function () {}
     },
     pluginName = 'jqs';
 
@@ -388,6 +390,8 @@
       }
 
       this.settings.onAddPeriod.call(this, period, this.element);
+      //added
+      this.settings.onUpdate.call();
 
       return true;
     },
@@ -400,6 +404,8 @@
       if (!this.settings.onRemovePeriod.call(this, period, this.element)) {
         period.remove();
         this.closeOptions();
+        //added
+        this.settings.onUpdate.call();
       }
     },
 
@@ -534,6 +540,8 @@
      */
     closeOptions: function () {
       $('.jqs-options', this.element).remove();
+      //added
+      this.settings.onUpdate.call();
     },
 
     /**

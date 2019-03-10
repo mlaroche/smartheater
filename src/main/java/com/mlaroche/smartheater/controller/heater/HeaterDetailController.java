@@ -25,11 +25,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mlaroche.smartheater.domain.Heater;
 import com.mlaroche.smartheater.domain.HeaterMode;
+import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.Protocol;
 import com.mlaroche.smartheater.domain.WeeklyCalendar;
+import com.mlaroche.smartheater.services.HeaterControlServices;
 import com.mlaroche.smartheater.services.HeaterServices;
 import com.mlaroche.smartheater.services.WeeklyCalendarServices;
 
@@ -51,6 +54,9 @@ public final class HeaterDetailController extends AbstractVSpringMvcController {
 	private HeaterServices heaterServices;
 	@Inject
 	private WeeklyCalendarServices weeklyCalendarServices;
+
+	@Inject
+	private HeaterControlServices heaterControlServices;
 
 	@GetMapping("/new")
 	public void initContext(final ViewContext viewContext) {
@@ -78,6 +84,20 @@ public final class HeaterDetailController extends AbstractVSpringMvcController {
 	@PostMapping("/_edit")
 	public void doEdit() {
 		toModeEdit();
+	}
+
+	@PostMapping("/_changeMode")
+	public ViewContext doChangeMode(final ViewContext viewContext, @ViewAttribute("heater") final Heater heater, @RequestParam("mode") final String mode) {
+		heaterControlServices.forceHeaterMode(heater.getHeaId(), HeaterModeEnum.valueOf(mode));
+		viewContext.publishDto(heaterKey, heaterServices.getHeater(heater.getHeaId()));
+		return viewContext;
+	}
+
+	@PostMapping("/_switchAuto")
+	public ViewContext doChangeMode(final ViewContext viewContext, @ViewAttribute("heater") final Heater heater) {
+		heaterControlServices.switchToAuto(heater.getHeaId());
+		viewContext.publishDto(heaterKey, heaterServices.getHeater(heater.getHeaId()));
+		return viewContext;
 	}
 
 	@PostMapping("/_save")

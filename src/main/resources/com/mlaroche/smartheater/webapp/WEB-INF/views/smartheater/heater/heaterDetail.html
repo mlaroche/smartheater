@@ -16,6 +16,24 @@
 			<vu:button-link th:if="${model.modeEdit}" class="text-tertiary-inverted on-left" flat round size="lg" icon="fas fa-ban"
 				url="@{/heater/} + ${model.heater.heaId}" ariaLabel="Cancel" />
 			<vu:button-submit th:if="${model.modeReadOnly}" action="@{_edit}" :round size="lg" color="primary" icon="edit" ariaLabel="Edit" class="on-left" />
+			<q-fab color="purple" icon="keyboard_arrow_down" direction="down" >
+			  <q-tooltip slot="tooltip"  anchor="center left" self="center right" :offset="[20, 0]" >Modifier le mode</q-tooltip>
+			  	<q-fab-action  color="primary" th:@click="|httpPostAjax('@{_switchAuto}',{})|" icon="fas fa-recycle" >
+			  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode automatique</q-tooltip>
+			  	</q-fab-action>
+			  	<q-fab-action  color="secondary" th:@click="|httpPostAjax('@{_changeMode}', {'mode':'arret'})|" icon="fas fa-ban" >
+			  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Arrêter</q-tooltip>
+			  	</q-fab-action>
+			  	<q-fab-action  color="secondary" th:@click="|httpPostAjax('@{_changeMode}', {'mode':'confort'})|" icon="fas fa-fire" >
+			  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode confort</q-tooltip>
+			  	</q-fab-action>
+			  	<q-fab-action  color="secondary" th:@click="|httpPostAjax('@{_changeMode}', {'mode':'eco'})|" icon="fas fa-leaf" >
+			  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode éco</q-tooltip>
+			  	</q-fab-action>
+			  	<q-fab-action  color="secondary" th:@click="|httpPostAjax('@{_changeMode}', {'mode':'horsgel'})|" icon="fas fa-snowflake" >
+			  		<q-tooltip anchor="center left" self="center right" :offset="[20, 0]">Passer en mode hors-gel</q-tooltip>
+			  	</q-fab-action>
+			  </q-fab>
 			<th:block id="baseActions">
 			</th:block>
 		</div>

@@ -15,9 +15,38 @@
  */
 package com.mlaroche.smartheater.model;
 
-public class HeaterInfo {
-	public double temperature;
-	public double humidity;
-	public String mode;
+import java.io.Serializable;
+
+public class HeaterInfo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private double temperature;
+	private double humidity;
+	private String mode;
+
+	public double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(final double temperature) {
+		this.temperature = temperature;
+	}
+
+	public double getHumidity() {
+		return humidity;
+	}
+
+	public void setHumidity(final double humidity) {
+		this.humidity = humidity;
+	}
+
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(final String mode) {
+		this.mode = mode;
+	}
 
 }

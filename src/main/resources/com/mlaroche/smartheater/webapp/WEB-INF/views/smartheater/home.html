@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:vu="http://www.morphbit.com/thymeleaf/component"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{templates/smartheaterListLayout}"
+>
+	<head>
+		<title>Home</title>
+		<script type="text/javascript">
+			VUiExtensions.dataX.summary = {
+				  heaterCount : 1,
+				  meanTemperature : 22
+			  };
+			
+			VUiExtensions.methods.heaterModeLabel = function (mode) {
+			    switch (mode) {
+					case "arret":
+						return "Arrêt"
+					case "confort":
+						return "Confort"
+					case "eco":
+						return "Eco"
+					case "horsgel":
+						return "Hors-gel"
+					}
+			  };
+			VUiExtensions.methods.getIconName = function (icon) {
+				  switch (icon) {
+				  	case "01n":
+				  		return "fa-moon";
+				  	case "02n":
+				  		return "fa-cloud-moon";
+				  	case "03n":
+				  		return "fa-cloud";
+				  	case "04n":
+				  		return "fa-cloud";
+				  	case "09n":
+				  		return "fa-cloud-moon-rain";
+				  	case "10n":
+				  		return "fa-cloud-showers-heavy";
+				  	case "11n":
+				  		return "fa-bolt";
+				  	case "13n":
+				  		return "fa-snowflake";
+				  	case "50n":
+				  		return "fa-cloud";
+				  	case "01d":
+				  		return "fa-sun";
+				  	case "02d":
+				  		return "fa-cloud-sun";
+				  	case "03d":
+				  		return "fa-cloud";
+				  	case "04d":
+				  		return "fa-cloud";
+				  	case "09d":
+				  		return "fa-cloud-sun-rain";
+				  	case "10d":
+				  		return "fa-cloud-showers-heavy";
+				  	case "11d":
+				  		return "fa-bolt";
+				  	case "13d":
+				  		return "fa-snowflake";
+				  	case "50d":
+				  		return "fa-cloud";
+				}
+				  
+			  };
+		</script>
+	</head>
+	
+	<body>
+		<section layout:fragment="content" >
+			<div class="row">
+  				<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
+  					<q-card class="q-ma-sm">
+  						<q-card-title>
+							<div class="row items-end" ><span class="q-display-1 text-primary" >{{dataX.summary.heaterCount}}</span><span>radiateur géré</span></div>
+						</q-card-title>
+						<q-card-separator></q-card-separator>
+  						<q-card-main>
+  							<dl class="horizontal">
+  							<vu:include-data object="countsByMode" field="'*'" />
+  							  <div v-for="countByMode in vueData.countsByMode" >
+								  <dt>{{heaterModeLabel(countByMode.mode)}}</dt>
+								  <dd>{{countByMode.count}}</dd>
+							  </div>
+							</dl>
+  						</q-card-main>
+  					</q-card>
+  				</div>
+  				<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
+  					<q-card class="q-ma-sm">
+  						<q-card-title>
+							Température moyenne
+						</q-card-title>
+						<q-card-separator></q-card-separator>
+  						<q-card-main>
+  							<span class="q-display-1 text-primary" >{{dataX.summary.meanTemperature}}°C</span>
+  						</q-card-main>
+  					</q-card>
+  				</div>
+  				<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
+  				<q-card class="q-ma-sm">
+  						<vu:include-data-primitive key="weatherInfo" />
+  						<q-card-title>Météo exterieure</q-card-title>
+  						<q-card-separator></q-card-separator>
+  						<q-card-main>
+							<div class="row items-center">
+								<div class="col-4">
+									<div class="row justify-end"><q-icon size="6em" :name="'fas '+getIconName(vueData.weatherInfo.icon)" ></q-icon></div>
+								</div>
+								<div class="col-8">
+									<div class="row justify-center q-display-1 text-primary" >{{vueData.weatherInfo.temperature}}°C</div>
+									<div class="row justify-center q-headline text-weight-light">{{vueData.weatherInfo.humidity}}% d'humidité</span></div>
+									<div class="row justify-center q-headline text-weight-light" >{{vueData.weatherInfo.description}}</div>
+									<div class="row justify-center q-headline text-weight-light text-italic" >{{vueData.weatherInfo.location}}</div>
+								</div>
+							</div>
+						</q-card-main>
+  					</q-card>
+  				</div>
+  			</div>
+		</section>
+	</body>
+</html>

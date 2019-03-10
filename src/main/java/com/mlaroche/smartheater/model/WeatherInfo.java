@@ -15,11 +15,56 @@
  */
 package com.mlaroche.smartheater.model;
 
-public class WeatherInfo {
-	public double temperature;
-	public double humidity;
-	public String location;
-	public String icon;
-	public String description;
+import java.io.Serializable;
+
+public class WeatherInfo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private double temperature;
+	private double humidity;
+	private String location;
+	private String icon;
+	private String description;
+
+	public double getTemperature() {
+		return temperature;
+	}
+
+	public void setTemperature(final double temperature) {
+		this.temperature = temperature;
+	}
+
+	public double getHumidity() {
+		return humidity;
+	}
+
+	public void setHumidity(final double humidity) {
+		this.humidity = humidity;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(final String location) {
+		this.location = location;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(final String icon) {
+		this.icon = icon;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
 }

@@ -65,11 +65,11 @@ public class WeatherServicesImpl implements WeatherServices, Activeable {
 		final String apiKey = paramManager.getParam(API_KEY_PARAM_NAME).getValueAsString();
 		final JsonObject result = callRestWS("http://api.openweathermap.org/data/2.5/weather?id=3016078&lang=fr&units=metric&APPID=" + apiKey, JsonObject.class);
 		final WeatherInfo newWeatherInfo = new WeatherInfo();
-		newWeatherInfo.temperature = result.getAsJsonObject("main").get("temp").getAsDouble();
-		newWeatherInfo.humidity = result.getAsJsonObject("main").get("humidity").getAsDouble();
-		newWeatherInfo.location = result.get("name").getAsString();
-		newWeatherInfo.description = result.getAsJsonArray("weather").get(0).getAsJsonObject().get("description").getAsString();
-		newWeatherInfo.icon = result.getAsJsonArray("weather").get(0).getAsJsonObject().get("icon").getAsString();
+		newWeatherInfo.setTemperature(result.getAsJsonObject("main").get("temp").getAsDouble());
+		newWeatherInfo.setHumidity(result.getAsJsonObject("main").get("humidity").getAsDouble());
+		newWeatherInfo.setLocation(result.get("name").getAsString());
+		newWeatherInfo.setDescription(result.getAsJsonArray("weather").get(0).getAsJsonObject().get("description").getAsString());
+		newWeatherInfo.setIcon(result.getAsJsonArray("weather").get(0).getAsJsonObject().get("icon").getAsString());
 		weatherInfo = newWeatherInfo;
 	}
 

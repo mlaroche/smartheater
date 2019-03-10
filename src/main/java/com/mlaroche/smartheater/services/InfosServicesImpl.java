@@ -67,13 +67,13 @@ public class InfosServicesImpl implements InfosServices {
 				final HeaterInfo heaterInfo = heaterControlServices.getInfo(heater);
 				final Point infoPoint = Point.measurement("heater")
 						.time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-						.addField("temperature", heaterInfo.temperature)
-						.addField("humidity", heaterInfo.humidity)
-						.addField("mode", heaterInfo.mode)
+						.addField("temperature", heaterInfo.getTemperature())
+						.addField("humidity", heaterInfo.getHumidity())
+						.addField("mode", heaterInfo.getMode())
 						.addField("name", heater.getName())
 						.addField("dns", heater.getDnsName())
 						.tag("name", heater.getName())
-						.tag("mode", heaterInfo.mode)
+						.tag("mode", heaterInfo.getMode())
 						.build();
 				influxDB.write(infoPoint);
 			} catch (final WrappedException e) {
@@ -83,14 +83,14 @@ public class InfosServicesImpl implements InfosServices {
 		final WeatherInfo weatherInfo = weatherServices.getWeatherInfo();
 		final Point weatherInfoPoint = Point.measurement("weather")
 				.time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-				.addField("temperature", weatherInfo.temperature)
-				.addField("humidity", weatherInfo.humidity)
-				.addField("description", weatherInfo.description)
-				.addField("location", weatherInfo.location)
-				.addField("icon", weatherInfo.icon)
-				.tag("description", weatherInfo.description)
-				.tag("location", weatherInfo.location)
-				.tag("icon", weatherInfo.icon)
+				.addField("temperature", weatherInfo.getTemperature())
+				.addField("humidity", weatherInfo.getHumidity())
+				.addField("description", weatherInfo.getDescription())
+				.addField("location", weatherInfo.getLocation())
+				.addField("icon", weatherInfo.getIcon())
+				.tag("description", weatherInfo.getDescription())
+				.tag("location", weatherInfo.getLocation())
+				.tag("icon", weatherInfo.getIcon())
 				.build();
 		influxDB.write(weatherInfoPoint);
 		influxDB.disableBatch();

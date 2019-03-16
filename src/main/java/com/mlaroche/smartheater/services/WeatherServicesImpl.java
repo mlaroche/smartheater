@@ -26,7 +26,7 @@ import javax.inject.Inject;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.mlaroche.smartheater.model.WeatherInfo;
+import com.mlaroche.smartheater.domain.WeatherInfo;
 
 import io.vertigo.commons.daemon.DaemonScheduled;
 import io.vertigo.core.component.Activeable;

@@ -17,7 +17,7 @@ package com.mlaroche.smartheater.webservices;
 
 import javax.inject.Inject;
 
-import com.mlaroche.smartheater.model.WeatherInfo;
+import com.mlaroche.smartheater.domain.WeatherInfo;
 import com.mlaroche.smartheater.services.WeatherServices;
 
 import io.vertigo.vega.webservice.WebServices;

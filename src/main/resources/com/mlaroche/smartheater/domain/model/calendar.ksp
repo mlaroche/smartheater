@@ -2,32 +2,48 @@ package com.mlaroche.smartheater.domain
 
 create DtDefinition DT_WEEKLY_CALENDAR {
 	id WCA_ID 				{ domain: DO_ID,			 label: "Id"}
-	field NAME 				{ domain: DO_LABEL,			 label: "Name", 				required: "false" }
+	field NAME 				{ domain: DO_LABEL,			 label: "Nom", 				required: "false" }
 	field JSON_VALUE 		{ domain: DO_TEXT,			 label: "Value as json", 		required: "false" }
 
 }
 
 create DtDefinition DT_HEATER {
 	id HEA_ID 				{ domain: DO_ID,			label: "Id"}
-	field NAME 				{ domain: DO_LABEL,			label: "Name", 					required: "false" }
-	field DNS_NAME 			{ domain: DO_LABEL,			label: "DNS Name",				required: "false" }
-	field ACTIVE			{ domain: DO_BOOLEAN,		label: "Active", 				required: "false" }
+	field NAME 				{ domain: DO_LABEL,			label: "Nom", 					required: "false" }
+	field DNS_NAME 			{ domain: DO_LABEL,			label: "Nom DNS/Adresse IP",				required: "false" }
+	field ACTIVE			{ domain: DO_BOOLEAN,		label: "Actif", 				required: "false" }
 	field AUTO				{ domain: DO_BOOLEAN,		label: "Mode Auto",				required: "true"  }
 	field AUTO_SWITCH		{ domain: DO_TIMESTAMP,		label: "Retour au mode auto", 	required: "false" }
+
+}
+
+create DtDefinition DT_HEATER_INFO {
+	field TEMPERATURE		{ domain: DO_DOUBLE,		label: "Température", 			required: "false" }
+	field HUMIDITY			{ domain: DO_DOUBLE,		label: "Humidité",				required: "false" }
+	field MODE				{ domain: DO_LABEL,			label: "Mode", 					required: "false" }
+
+}
+
+create DtDefinition DT_WEATHER_INFO {
+	field TEMPERATURE		{ domain: DO_DOUBLE,		label: "Temperature", 			required: "false" }
+	field HUMIDITY			{ domain: DO_DOUBLE,		label: "Humidité",				required: "false" }
+	field LOCATION			{ domain: DO_LABEL,			label: "Mode", 					required: "false" }
+	field ICON				{ domain: DO_LABEL,			label: "Mode", 					required: "false" }
+	field DESCRIPTION		{ domain: DO_LABEL,			label: "Mode", 					required: "false" }
 
 }
 
 create DtDefinition DT_PROTOCOL {
 	stereotype : "StaticMasterData",
 	id PRO_CD 				{ domain: DO_LABEL,			 label: "Id"}
-	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		required: "false" }
+	field LABEL 			{ domain: DO_LABEL,			 label: "Nom", 		required: "false" }
 
 }
 
 create DtDefinition DT_HEATER_MODE {
 	stereotype : "StaticMasterData",
 	id MOD_CD	 			{ domain: DO_LABEL,			 label: "Id"}
-	field LABEL 			{ domain: DO_LABEL,			 label: "Name", 		required: "false" }
+	field LABEL 			{ domain: DO_LABEL,			 label: "Nom", 		required: "false" }
 
 }
 
@@ -49,8 +65,8 @@ create Association A_HEA_WCA {
 	multiplicityA:"1..1"
 	multiplicityB:"0..*"
 	
-	labelA : "WeeklyCalendar"
-	labelB : "Heater"
+	labelA : "Calendrier"
+	labelB : "Radiateur"
 	roleA : "WeeklyCalendar"
 	roleB : "Heater"
 },
@@ -69,7 +85,7 @@ create Association A_HEA_PRO {
 	multiplicityB:"0..*"
 	
 	labelA : "Protocol"
-	labelB : "Heater"
+	labelB : "Radiateur"
 	roleA : "Protocol"
 	roleB : "Heater"
 },
@@ -88,7 +104,7 @@ create Association A_HEA_MOD {
 	multiplicityB:"0..*"
 	
 	labelA : "Mode"
-	labelB : "Heater"
+	labelB : "Radiateur"
 	roleA : "Mode"
 	roleB : "Heater"
 },

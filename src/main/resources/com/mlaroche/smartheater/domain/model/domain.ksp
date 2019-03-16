@@ -35,6 +35,12 @@ create Domain DO_DATE {
 	storeType : "DATE"
 }
 
+create Domain DO_DOUBLE {
+	dataType : Double
+	formatter : FMT_DEFAULT
+	storeType : "NUMERIC"
+}
+
 create Domain DO_TIMESTAMP {
 	dataType : Instant
 	formatter : FMT_DEFAULT

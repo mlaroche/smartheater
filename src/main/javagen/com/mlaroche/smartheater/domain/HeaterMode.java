@@ -44,17 +44,17 @@ public final class HeaterMode implements DtStaticMasterData {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'Name'.
+	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String label
 	 */
-	@Field(domain = "DO_LABEL", label = "Name")
+	@Field(domain = "DO_LABEL", label = "Nom")
 	public String getLabel() {
 		return label;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'Name'.
+	 * Définit la valeur de la propriété 'Nom'.
 	 * @param label String
 	 */
 	public void setLabel(final String label) {

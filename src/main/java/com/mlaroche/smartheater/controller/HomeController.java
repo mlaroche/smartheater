@@ -25,7 +25,7 @@ public class HomeController extends AbstractVSpringMvcController {
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
-		viewContext.asMap().put("weatherInfo", weatherServices.getWeatherInfo());
+		viewContext.publishDto(() -> "weatherInfo", weatherServices.getWeatherInfo());
 		viewContext.publishDtList(() -> "countsByMode", HeatersByModeFields.MODE, heaterServices.getHeatersByMode());
 	}
 

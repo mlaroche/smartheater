@@ -15,7 +15,7 @@
  */
 package com.mlaroche.smartheater.services;
 
-import com.mlaroche.smartheater.model.WeatherInfo;
+import com.mlaroche.smartheater.domain.WeatherInfo;
 
 import io.vertigo.core.component.Component;
 

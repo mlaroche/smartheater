@@ -42,13 +42,13 @@ comment on column HEATER.HEA_ID is
 'Id';
 
 comment on column HEATER.NAME is
-'Name';
+'Nom';
 
 comment on column HEATER.DNS_NAME is
-'DNS Name';
+'Nom DNS/Adresse IP';
 
 comment on column HEATER.ACTIVE is
-'Active';
+'Actif';
 
 comment on column HEATER.AUTO is
 'Mode Auto';
@@ -57,7 +57,7 @@ comment on column HEATER.AUTO_SWITCH is
 'Retour au mode auto';
 
 comment on column HEATER.WCA_ID is
-'WeeklyCalendar';
+'Calendrier';
 
 comment on column HEATER.PRO_CD is
 'Protocol';
@@ -79,7 +79,7 @@ comment on column HEATER_MODE.MOD_CD is
 'Id';
 
 comment on column HEATER_MODE.LABEL is
-'Name';
+'Nom';
 
 -- ============================================================
 --   Table : PROTOCOL                                        
@@ -95,7 +95,7 @@ comment on column PROTOCOL.PRO_CD is
 'Id';
 
 comment on column PROTOCOL.LABEL is
-'Name';
+'Nom';
 
 -- ============================================================
 --   Table : WEEKLY_CALENDAR                                        
@@ -112,7 +112,7 @@ comment on column WEEKLY_CALENDAR.WCA_ID is
 'Id';
 
 comment on column WEEKLY_CALENDAR.NAME is
-'Name';
+'Nom';
 
 comment on column WEEKLY_CALENDAR.JSON_VALUE is
 'Value as json';

@@ -21,10 +21,14 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		Heater(com.mlaroche.smartheater.domain.Heater.class),
 		/** Objet de données HeatersByMode. */
 		HeatersByMode(com.mlaroche.smartheater.domain.HeatersByMode.class),
+		/** Objet de données HeaterInfo. */
+		HeaterInfo(com.mlaroche.smartheater.domain.HeaterInfo.class),
 		/** Objet de données HeaterMode. */
 		HeaterMode(com.mlaroche.smartheater.domain.HeaterMode.class),
 		/** Objet de données Protocol. */
 		Protocol(com.mlaroche.smartheater.domain.Protocol.class),
+		/** Objet de données WeatherInfo. */
+		WeatherInfo(com.mlaroche.smartheater.domain.WeatherInfo.class),
 		/** Objet de données WeeklyCalendar. */
 		WeeklyCalendar(com.mlaroche.smartheater.domain.WeeklyCalendar.class)		;
 
@@ -49,17 +53,17 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	public enum HeaterFields implements DtFieldName<com.mlaroche.smartheater.domain.Heater> {
 		/** Propriété 'Id'. */
 		HEA_ID,
-		/** Propriété 'Name'. */
+		/** Propriété 'Nom'. */
 		NAME,
-		/** Propriété 'DNS Name'. */
+		/** Propriété 'Nom DNS/Adresse IP'. */
 		DNS_NAME,
-		/** Propriété 'Active'. */
+		/** Propriété 'Actif'. */
 		ACTIVE,
 		/** Propriété 'Mode Auto'. */
 		AUTO,
 		/** Propriété 'Retour au mode auto'. */
 		AUTO_SWITCH,
-		/** Propriété 'WeeklyCalendar'. */
+		/** Propriété 'Calendrier'. */
 		WCA_ID,
 		/** Propriété 'Protocol'. */
 		PRO_CD,
@@ -76,12 +80,23 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 		COUNT	}
 
 	/**
+	 * Enumération des champs de HeaterInfo.
+	 */
+	public enum HeaterInfoFields implements DtFieldName<com.mlaroche.smartheater.domain.HeaterInfo> {
+		/** Propriété 'Température'. */
+		TEMPERATURE,
+		/** Propriété 'Humidité'. */
+		HUMIDITY,
+		/** Propriété 'Mode'. */
+		MODE	}
+
+	/**
 	 * Enumération des champs de HeaterMode.
 	 */
 	public enum HeaterModeFields implements DtFieldName<com.mlaroche.smartheater.domain.HeaterMode> {
 		/** Propriété 'Id'. */
 		MOD_CD,
-		/** Propriété 'Name'. */
+		/** Propriété 'Nom'. */
 		LABEL	}
 
 	/**
@@ -90,8 +105,23 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	public enum ProtocolFields implements DtFieldName<com.mlaroche.smartheater.domain.Protocol> {
 		/** Propriété 'Id'. */
 		PRO_CD,
-		/** Propriété 'Name'. */
+		/** Propriété 'Nom'. */
 		LABEL	}
+
+	/**
+	 * Enumération des champs de WeatherInfo.
+	 */
+	public enum WeatherInfoFields implements DtFieldName<com.mlaroche.smartheater.domain.WeatherInfo> {
+		/** Propriété 'Temperature'. */
+		TEMPERATURE,
+		/** Propriété 'Humidité'. */
+		HUMIDITY,
+		/** Propriété 'Mode'. */
+		LOCATION,
+		/** Propriété 'Mode'. */
+		ICON,
+		/** Propriété 'Mode'. */
+		DESCRIPTION	}
 
 	/**
 	 * Enumération des champs de WeeklyCalendar.
@@ -99,7 +129,7 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	public enum WeeklyCalendarFields implements DtFieldName<com.mlaroche.smartheater.domain.WeeklyCalendar> {
 		/** Propriété 'Id'. */
 		WCA_ID,
-		/** Propriété 'Name'. */
+		/** Propriété 'Nom'. */
 		NAME,
 		/** Propriété 'Value as json'. */
 		JSON_VALUE	}

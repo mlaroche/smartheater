@@ -14,8 +14,8 @@ import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 
 import com.mlaroche.smartheater.domain.Heater;
-import com.mlaroche.smartheater.model.HeaterInfo;
-import com.mlaroche.smartheater.model.WeatherInfo;
+import com.mlaroche.smartheater.domain.HeaterInfo;
+import com.mlaroche.smartheater.domain.WeatherInfo;
 
 import io.vertigo.commons.daemon.DaemonScheduled;
 import io.vertigo.core.param.ParamManager;

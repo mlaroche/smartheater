@@ -29,12 +29,12 @@ public final class Heater implements Entity {
 			primaryDtDefinitionName = "DT_WEEKLY_CALENDAR",
 			primaryIsNavigable = true,
 			primaryRole = "WeeklyCalendar",
-			primaryLabel = "WeeklyCalendar",
+			primaryLabel = "Calendrier",
 			primaryMultiplicity = "1..1",
 			foreignDtDefinitionName = "DT_HEATER",
 			foreignIsNavigable = false,
 			foreignRole = "Heater",
-			foreignLabel = "Heater",
+			foreignLabel = "Radiateur",
 			foreignMultiplicity = "0..*")
 	private final VAccessor<com.mlaroche.smartheater.domain.WeeklyCalendar> wcaIdAccessor = new VAccessor<>(com.mlaroche.smartheater.domain.WeeklyCalendar.class, "WeeklyCalendar");
 
@@ -49,7 +49,7 @@ public final class Heater implements Entity {
 			foreignDtDefinitionName = "DT_HEATER",
 			foreignIsNavigable = false,
 			foreignRole = "Heater",
-			foreignLabel = "Heater",
+			foreignLabel = "Radiateur",
 			foreignMultiplicity = "0..*")
 	private final EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> proCdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.Protocol.class, "Protocol", com.mlaroche.smartheater.domain.ProtocolEnum.class);
 
@@ -64,7 +64,7 @@ public final class Heater implements Entity {
 			foreignDtDefinitionName = "DT_HEATER",
 			foreignIsNavigable = false,
 			foreignRole = "Heater",
-			foreignLabel = "Heater",
+			foreignLabel = "Radiateur",
 			foreignMultiplicity = "0..*")
 	private final EnumVAccessor<com.mlaroche.smartheater.domain.HeaterMode, com.mlaroche.smartheater.domain.HeaterModeEnum> modCdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.HeaterMode.class, "Mode", com.mlaroche.smartheater.domain.HeaterModeEnum.class);
 
@@ -95,17 +95,17 @@ public final class Heater implements Entity {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'Name'.
+	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String name
 	 */
-	@Field(domain = "DO_LABEL", label = "Name")
+	@Field(domain = "DO_LABEL", label = "Nom")
 	public String getName() {
 		return name;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'Name'.
+	 * Définit la valeur de la propriété 'Nom'.
 	 * @param name String
 	 */
 	public void setName(final String name) {
@@ -114,17 +114,17 @@ public final class Heater implements Entity {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'DNS Name'.
+	 * Récupère la valeur de la propriété 'Nom DNS/Adresse IP'.
 	 * @return String dnsName
 	 */
-	@Field(domain = "DO_LABEL", label = "DNS Name")
+	@Field(domain = "DO_LABEL", label = "Nom DNS/Adresse IP")
 	public String getDnsName() {
 		return dnsName;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'DNS Name'.
+	 * Définit la valeur de la propriété 'Nom DNS/Adresse IP'.
 	 * @param dnsName String
 	 */
 	public void setDnsName(final String dnsName) {
@@ -133,17 +133,17 @@ public final class Heater implements Entity {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'Active'.
+	 * Récupère la valeur de la propriété 'Actif'.
 	 * @return Boolean active
 	 */
-	@Field(domain = "DO_BOOLEAN", label = "Active")
+	@Field(domain = "DO_BOOLEAN", label = "Actif")
 	public Boolean getActive() {
 		return active;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'Active'.
+	 * Définit la valeur de la propriété 'Actif'.
 	 * @param active Boolean
 	 */
 	public void setActive(final Boolean active) {
@@ -190,17 +190,17 @@ public final class Heater implements Entity {
 	
 	/**
 	 * Champ : FOREIGN_KEY.
-	 * Récupère la valeur de la propriété 'WeeklyCalendar'.
+	 * Récupère la valeur de la propriété 'Calendrier'.
 	 * @return Long wcaId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_ID", type = "FOREIGN_KEY", required = true, label = "WeeklyCalendar")
+	@Field(domain = "DO_ID", type = "FOREIGN_KEY", required = true, label = "Calendrier")
 	public Long getWcaId() {
 		return (Long) wcaIdAccessor.getId();
 	}
 
 	/**
 	 * Champ : FOREIGN_KEY.
-	 * Définit la valeur de la propriété 'WeeklyCalendar'.
+	 * Définit la valeur de la propriété 'Calendrier'.
 	 * @param wcaId Long <b>Obligatoire</b>
 	 */
 	public void setWcaId(final Long wcaId) {
@@ -262,8 +262,8 @@ public final class Heater implements Entity {
 	}
 
  	/**
-	 * Association : WeeklyCalendar.
-	 * @return l'accesseur vers la propriété 'WeeklyCalendar'
+	 * Association : Calendrier.
+	 * @return l'accesseur vers la propriété 'Calendrier'
 	 */
 	public VAccessor<com.mlaroche.smartheater.domain.WeeklyCalendar> weeklyCalendar() {
 		return wcaIdAccessor;

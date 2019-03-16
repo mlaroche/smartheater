@@ -2,7 +2,7 @@ package com.mlaroche.smartheater.services;
 
 import java.util.List;
 
-import com.mlaroche.smartheater.model.HeaterInfo;
+import com.mlaroche.smartheater.domain.HeaterInfo;
 
 import io.vertigo.core.component.Component;
 

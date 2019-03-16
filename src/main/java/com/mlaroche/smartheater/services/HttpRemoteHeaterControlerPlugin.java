@@ -24,9 +24,9 @@ import java.net.URL;
 
 import com.google.gson.Gson;
 import com.mlaroche.smartheater.domain.Heater;
+import com.mlaroche.smartheater.domain.HeaterInfo;
 import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.ProtocolEnum;
-import com.mlaroche.smartheater.model.HeaterInfo;
 
 import io.vertigo.lang.Assertion;
 import io.vertigo.lang.WrappedException;

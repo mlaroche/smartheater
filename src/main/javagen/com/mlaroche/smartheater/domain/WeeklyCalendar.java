@@ -45,17 +45,17 @@ public final class WeeklyCalendar implements Entity {
 	
 	/**
 	 * Champ : DATA.
-	 * Récupère la valeur de la propriété 'Name'.
+	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String name
 	 */
-	@Field(domain = "DO_LABEL", label = "Name")
+	@Field(domain = "DO_LABEL", label = "Nom")
 	public String getName() {
 		return name;
 	}
 
 	/**
 	 * Champ : DATA.
-	 * Définit la valeur de la propriété 'Name'.
+	 * Définit la valeur de la propriété 'Nom'.
 	 * @param name String
 	 */
 	public void setName(final String name) {

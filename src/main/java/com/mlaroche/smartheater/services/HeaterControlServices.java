@@ -16,8 +16,8 @@
 package com.mlaroche.smartheater.services;
 
 import com.mlaroche.smartheater.domain.Heater;
+import com.mlaroche.smartheater.domain.HeaterInfo;
 import com.mlaroche.smartheater.domain.HeaterModeEnum;
-import com.mlaroche.smartheater.model.HeaterInfo;
 
 import io.vertigo.core.component.Component;
 

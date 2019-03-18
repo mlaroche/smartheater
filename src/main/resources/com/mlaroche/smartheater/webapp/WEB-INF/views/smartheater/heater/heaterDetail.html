@@ -40,13 +40,19 @@
 	</section>
 	<section layout:fragment="content">
 		<vu:block title="General Information">
-			<vu:grid cols="1">
+			<vu:grid cols="2">
 				<vu:text-field object="heater" field="name" />
 				<vu:text-field object="heater" field="dnsName" />
 				<vu:checkbox object="heater" field="auto" />
 				<vu:select object="heater" field="proCd" list="protocols"/>
 				<vu:select object="heater" field="wcaId" list="calendars"/>
 			</vu:grid>
+		</vu:block>
+		<vu:block title="Température sur 24h">
+			<iframe th:src="|${model.chronografUrl}/sources/1/dashboards/2?tempVars%5Bheater%5D=${model.heater.name}&lower=now%28%29%20-%2024h&present=true|" style="border: none" width="100%" height="280px"></iframe>
+		</vu:block>
+		<vu:block title="Humidité sur 24h">
+			<iframe th:src="|${model.chronografUrl}/sources/1/dashboards/3?tempVars%5Bheater%5D=${model.heater.name}&lower=now%28%29%20-%2024h&present=true|" style="border: none" width="100%" height="280px"></iframe>
 		</vu:block>
 		<q-page-sticky position="bottom-right"> 
 			<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />

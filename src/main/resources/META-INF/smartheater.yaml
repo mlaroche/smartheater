@@ -20,11 +20,17 @@ modules:
   io.vertigo.database.DatabaseFeatures:
     features:
       - sql:
+      - timeseries:
     featuresConfig:
       - sql.c3p0:
           dataBaseClass: io.vertigo.database.impl.sql.vendor.h2.H2DataBase
           jdbcDriver: org.h2.Driver
           jdbcUrl: ${h2_db_url}
+      - timeseries.influxdb:
+          host: ${influxdb_url}
+          user: user
+          password: password
+          dbNames: ${influxdb_dbname}
   io.vertigo.dynamo.DynamoFeatures:
     features:
       - store:

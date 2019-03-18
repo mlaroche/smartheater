@@ -10,6 +10,7 @@ import com.mlaroche.smartheater.domain.DtDefinitions.HeatersByModeFields;
 import com.mlaroche.smartheater.services.HeaterServices;
 import com.mlaroche.smartheater.services.WeatherServices;
 
+import io.vertigo.core.param.ParamManager;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
@@ -19,14 +20,16 @@ public class HomeController extends AbstractVSpringMvcController {
 
 	@Inject
 	private WeatherServices weatherServices;
-
 	@Inject
 	private HeaterServices heaterServices;
+	@Inject
+	private ParamManager paramManager;
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
 		viewContext.publishDto(() -> "weatherInfo", weatherServices.getWeatherInfo());
 		viewContext.publishDtList(() -> "countsByMode", HeatersByModeFields.MODE, heaterServices.getHeatersByMode());
+		viewContext.publishRef(() -> "chronografUrl", paramManager.getParam("chronograf_url").getValueAsString());
 	}
 
 }

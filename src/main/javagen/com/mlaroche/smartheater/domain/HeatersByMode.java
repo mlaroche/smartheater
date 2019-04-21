@@ -21,7 +21,7 @@ public final class HeatersByMode implements DtObject {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return String mode
 	 */
-	@Field(domain = "DO_LABEL", label = "Id")
+	@Field(domain = "DoLabel", label = "Id")
 	public String getMode() {
 		return mode;
 	}
@@ -40,7 +40,7 @@ public final class HeatersByMode implements DtObject {
 	 * Récupère la valeur de la propriété 'Nombre'.
 	 * @return Integer count
 	 */
-	@Field(domain = "DO_NUMBER", label = "Nombre")
+	@Field(domain = "DoNumber", label = "Nombre")
 	public Integer getCount() {
 		return count;
 	}

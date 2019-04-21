@@ -50,8 +50,14 @@ modules:
     featuresConfig:
         - webservices.apiPrefix:
             apiPrefix: /api
+  io.vertigo.orchestra.OrchestraFeatures:
+    featuresConfig:
+      - orchestra.memory:
+          workersCount: 10
+      - orchestra.webapi:
   com.mlaroche.smartheater.boot.SmartHeaterFeature:
 initializers:
   - com.mlaroche.smartheater.boot.DataBaseInitializer:
       __flags__: ["initdb"]
   - com.mlaroche.smartheater.boot.MasterDataInitializer:
+  - com.mlaroche.smartheater.boot.OrchestraInitializer:

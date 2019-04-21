@@ -1,63 +1,69 @@
 package com.mlaroche.smartheater.domain
 
-create DtDefinition DT_WEEKLY_CALENDAR {
-	id WCA_ID 				{ domain: DO_ID,			 label: "Id"}
-	field NAME 				{ domain: DO_LABEL,			 label: "Nom", 				required: "false" }
-	field JSON_VALUE 		{ domain: DO_TEXT,			 label: "Value as json", 		required: "false" }
+create DtDefinition DtWeeklyCalendar {
+	id wcaId 				{ domain: DoId,			 label: "Id"}
+	field name 				{ domain: DoLabel,			 label: "Nom", 				required: "false" }
+	field jsonValue 		{ domain: DoText,			 label: "Value as json", 		required: "false" }
 
 }
 
-create DtDefinition DT_HEATER {
-	id HEA_ID 				{ domain: DO_ID,			label: "Id"}
-	field NAME 				{ domain: DO_LABEL,			label: "Nom", 					required: "false" }
-	field DNS_NAME 			{ domain: DO_LABEL,			label: "Nom DNS/Adresse IP",				required: "false" }
-	field ACTIVE			{ domain: DO_BOOLEAN,		label: "Actif", 				required: "false" }
-	field AUTO				{ domain: DO_BOOLEAN,		label: "Mode Auto",				required: "true"  }
-	field AUTO_SWITCH		{ domain: DO_TIMESTAMP,		label: "Retour au mode auto", 	required: "false" }
+create DtDefinition DtHeater {
+	id heaId 				{ domain: DoId,			label: "Id"}
+	field name 				{ domain: DoLabel,			label: "Nom", 					required: "false" }
+	field dnsName 			{ domain: DoLabel,			label: "Nom DNS/Adresse IP",				required: "false" }
+	field active			{ domain: DoBoolean,		label: "Actif", 				required: "false" }
+	field auto				{ domain: DoBoolean,		label: "Mode Auto",				required: "true"  }
+	field autoSwitch		{ domain: DoTimestamp,		label: "Retour au mode auto", 	required: "false" }
 
 }
 
-create DtDefinition DT_HEATER_INFO {
-	field TEMPERATURE		{ domain: DO_DOUBLE,		label: "Température", 			required: "false" }
-	field HUMIDITY			{ domain: DO_DOUBLE,		label: "Humidité",				required: "false" }
-	field MODE				{ domain: DO_LABEL,			label: "Mode", 					required: "false" }
+create DtDefinition DtHeaterInfo {
+	field temperature		{ domain: DoDouble,		label: "Température", 			required: "false" }
+	field humidity			{ domain: DoDouble,		label: "Humidité",				required: "false" }
+	field mode				{ domain: DoLabel,			label: "Mode", 					required: "false" }
 
 }
 
-create DtDefinition DT_WEATHER_INFO {
-	field TEMPERATURE		{ domain: DO_DOUBLE,		label: "Temperature", 			required: "false" }
-	field HUMIDITY			{ domain: DO_DOUBLE,		label: "Humidité",				required: "false" }
-	field LOCATION			{ domain: DO_LABEL,			label: "Mode", 					required: "false" }
-	field ICON				{ domain: DO_LABEL,			label: "Mode", 					required: "false" }
-	field DESCRIPTION		{ domain: DO_LABEL,			label: "Mode", 					required: "false" }
+create DtDefinition DtWeatherInfo {
+	field temperature		{ domain: DoDouble,		label: "Temperature", 			required: "false" }
+	field humidity			{ domain: DoDouble,		label: "Humidité",				required: "false" }
+	field location			{ domain: DoLabel,			label: "Mode", 					required: "false" }
+	field icon				{ domain: DoLabel,			label: "Mode", 					required: "false" }
+	field description		{ domain: DoLabel,			label: "Mode", 					required: "false" }
 
 }
 
-create DtDefinition DT_PROTOCOL {
+create DtDefinition DtElectricalConsumption {
+	field timestamp			{ domain: DoTimestamp,		label: "Heure", 				required: "false" }
+	field meanPower		{ domain: DoDouble,		label: "Puissance moyenne",		required: "false" }
+
+}
+
+create DtDefinition DtProtocol {
 	stereotype : "StaticMasterData",
-	id PRO_CD 				{ domain: DO_LABEL,			 label: "Id"}
-	field LABEL 			{ domain: DO_LABEL,			 label: "Nom", 		required: "false" }
+	id proCd 				{ domain: DoLabel,			 label: "Id"}
+	field label 			{ domain: DoLabel,			 label: "Nom", 		required: "false" }
 
 }
 
-create DtDefinition DT_HEATER_MODE {
+create DtDefinition DtHeaterMode {
 	stereotype : "StaticMasterData",
-	id MOD_CD	 			{ domain: DO_LABEL,			 label: "Id"}
-	field LABEL 			{ domain: DO_LABEL,			 label: "Nom", 		required: "false" }
+	id modCd	 			{ domain: DoLabel,			 label: "Id"}
+	field label 			{ domain: DoLabel,			 label: "Nom", 		required: "false" }
 
 }
 
-create DtDefinition DT_HEATERS_BY_MODE {
-	field MODE		{ domain: DO_LABEL,			 label: "Id" , 			required: "false"}
-	field COUNT		{ domain: DO_NUMBER,		 label: "Nombre", 		required: "false" }
+create DtDefinition DtHeatersByMode {
+	field mode		{ domain: DoLabel,			 label: "Id" , 			required: "false"}
+	field count		{ domain: DoNumber,		 label: "Nombre", 		required: "false" }
 
 }
 
-create Association A_HEA_WCA {
-  	fkFieldName : "WCA_ID"
+create Association AHeaWca {
+  	fkFieldName : "wcaId"
     
-  	dtDefinitionA : DT_WEEKLY_CALENDAR
-	dtDefinitionB : DT_HEATER
+  	dtDefinitionA : DtWeeklyCalendar
+	dtDefinitionB : DtHeater
 			
 	navigabilityA : "true"
 	navigabilityB : "false"
@@ -72,11 +78,11 @@ create Association A_HEA_WCA {
 },
 
 
-create Association A_HEA_PRO {
-  	fkFieldName : "PRO_CD"
+create Association AHeaPro {
+  	fkFieldName : "proCd"
     
-  	dtDefinitionA : DT_PROTOCOL
-	dtDefinitionB : DT_HEATER
+  	dtDefinitionA : DtProtocol
+	dtDefinitionB : DtHeater
 			
 	navigabilityA : "true"
 	navigabilityB : "false"
@@ -91,11 +97,11 @@ create Association A_HEA_PRO {
 },
 
 
-create Association A_HEA_MOD {
-  	fkFieldName : "MOD_CD"
+create Association AHeaMod {
+  	fkFieldName : "modCd"
     
-  	dtDefinitionA : DT_HEATER_MODE
-	dtDefinitionB : DT_HEATER
+  	dtDefinitionA : DtHeaterMode
+	dtDefinitionB : DtHeater
 			
 	navigabilityA : "true"
 	navigabilityB : "false"

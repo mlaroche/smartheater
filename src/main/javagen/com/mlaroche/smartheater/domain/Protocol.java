@@ -28,7 +28,7 @@ public final class Protocol implements DtStaticMasterData {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return String proCd <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_LABEL", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoLabel", type = "ID", required = true, label = "Id")
 	public String getProCd() {
 		return proCd;
 	}
@@ -47,7 +47,7 @@ public final class Protocol implements DtStaticMasterData {
 	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String label
 	 */
-	@Field(domain = "DO_LABEL", label = "Nom")
+	@Field(domain = "DoLabel", label = "Nom")
 	public String getLabel() {
 		return label;
 	}

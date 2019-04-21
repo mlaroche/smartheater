@@ -22,7 +22,7 @@ public final class HeaterInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Température'.
 	 * @return Double temperature
 	 */
-	@Field(domain = "DO_DOUBLE", label = "Température")
+	@Field(domain = "DoDouble", label = "Température")
 	public Double getTemperature() {
 		return temperature;
 	}
@@ -41,7 +41,7 @@ public final class HeaterInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Humidité'.
 	 * @return Double humidity
 	 */
-	@Field(domain = "DO_DOUBLE", label = "Humidité")
+	@Field(domain = "DoDouble", label = "Humidité")
 	public Double getHumidity() {
 		return humidity;
 	}
@@ -60,7 +60,7 @@ public final class HeaterInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String mode
 	 */
-	@Field(domain = "DO_LABEL", label = "Mode")
+	@Field(domain = "DoLabel", label = "Mode")
 	public String getMode() {
 		return mode;
 	}

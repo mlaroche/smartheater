@@ -17,14 +17,16 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	 * Enumération des DtDefinitions.
 	 */
 	public enum Definitions {
+		/** Objet de données ElectricalConsumption. */
+		ElectricalConsumption(com.mlaroche.smartheater.domain.ElectricalConsumption.class),
 		/** Objet de données Heater. */
 		Heater(com.mlaroche.smartheater.domain.Heater.class),
-		/** Objet de données HeatersByMode. */
-		HeatersByMode(com.mlaroche.smartheater.domain.HeatersByMode.class),
 		/** Objet de données HeaterInfo. */
 		HeaterInfo(com.mlaroche.smartheater.domain.HeaterInfo.class),
 		/** Objet de données HeaterMode. */
 		HeaterMode(com.mlaroche.smartheater.domain.HeaterMode.class),
+		/** Objet de données HeatersByMode. */
+		HeatersByMode(com.mlaroche.smartheater.domain.HeatersByMode.class),
 		/** Objet de données Protocol. */
 		Protocol(com.mlaroche.smartheater.domain.Protocol.class),
 		/** Objet de données WeatherInfo. */
@@ -48,91 +50,100 @@ public final class DtDefinitions implements Iterable<Class<?>> {
 	}
 
 	/**
+	 * Enumération des champs de ElectricalConsumption.
+	 */
+	public enum ElectricalConsumptionFields implements DtFieldName<com.mlaroche.smartheater.domain.ElectricalConsumption> {
+		/** Propriété 'Heure'. */
+		timestamp,
+		/** Propriété 'Puissance moyenne'. */
+		meanPower	}
+
+	/**
 	 * Enumération des champs de Heater.
 	 */
 	public enum HeaterFields implements DtFieldName<com.mlaroche.smartheater.domain.Heater> {
 		/** Propriété 'Id'. */
-		HEA_ID,
+		heaId,
 		/** Propriété 'Nom'. */
-		NAME,
+		name,
 		/** Propriété 'Nom DNS/Adresse IP'. */
-		DNS_NAME,
+		dnsName,
 		/** Propriété 'Actif'. */
-		ACTIVE,
+		active,
 		/** Propriété 'Mode Auto'. */
-		AUTO,
+		auto,
 		/** Propriété 'Retour au mode auto'. */
-		AUTO_SWITCH,
+		autoSwitch,
 		/** Propriété 'Calendrier'. */
-		WCA_ID,
+		wcaId,
 		/** Propriété 'Protocol'. */
-		PRO_CD,
+		proCd,
 		/** Propriété 'Mode'. */
-		MOD_CD	}
-
-	/**
-	 * Enumération des champs de HeatersByMode.
-	 */
-	public enum HeatersByModeFields implements DtFieldName<com.mlaroche.smartheater.domain.HeatersByMode> {
-		/** Propriété 'Id'. */
-		MODE,
-		/** Propriété 'Nombre'. */
-		COUNT	}
+		modCd	}
 
 	/**
 	 * Enumération des champs de HeaterInfo.
 	 */
 	public enum HeaterInfoFields implements DtFieldName<com.mlaroche.smartheater.domain.HeaterInfo> {
 		/** Propriété 'Température'. */
-		TEMPERATURE,
+		temperature,
 		/** Propriété 'Humidité'. */
-		HUMIDITY,
+		humidity,
 		/** Propriété 'Mode'. */
-		MODE	}
+		mode	}
 
 	/**
 	 * Enumération des champs de HeaterMode.
 	 */
 	public enum HeaterModeFields implements DtFieldName<com.mlaroche.smartheater.domain.HeaterMode> {
 		/** Propriété 'Id'. */
-		MOD_CD,
+		modCd,
 		/** Propriété 'Nom'. */
-		LABEL	}
+		label	}
+
+	/**
+	 * Enumération des champs de HeatersByMode.
+	 */
+	public enum HeatersByModeFields implements DtFieldName<com.mlaroche.smartheater.domain.HeatersByMode> {
+		/** Propriété 'Id'. */
+		mode,
+		/** Propriété 'Nombre'. */
+		count	}
 
 	/**
 	 * Enumération des champs de Protocol.
 	 */
 	public enum ProtocolFields implements DtFieldName<com.mlaroche.smartheater.domain.Protocol> {
 		/** Propriété 'Id'. */
-		PRO_CD,
+		proCd,
 		/** Propriété 'Nom'. */
-		LABEL	}
+		label	}
 
 	/**
 	 * Enumération des champs de WeatherInfo.
 	 */
 	public enum WeatherInfoFields implements DtFieldName<com.mlaroche.smartheater.domain.WeatherInfo> {
 		/** Propriété 'Temperature'. */
-		TEMPERATURE,
+		temperature,
 		/** Propriété 'Humidité'. */
-		HUMIDITY,
+		humidity,
 		/** Propriété 'Mode'. */
-		LOCATION,
+		location,
 		/** Propriété 'Mode'. */
-		ICON,
+		icon,
 		/** Propriété 'Mode'. */
-		DESCRIPTION	}
+		description	}
 
 	/**
 	 * Enumération des champs de WeeklyCalendar.
 	 */
 	public enum WeeklyCalendarFields implements DtFieldName<com.mlaroche.smartheater.domain.WeeklyCalendar> {
 		/** Propriété 'Id'. */
-		WCA_ID,
+		wcaId,
 		/** Propriété 'Nom'. */
-		NAME,
+		name,
 		/** Propriété 'Value as json'. */
-		JSON_VALUE	}
+		jsonValue	}
 
 	/** {@inheritDoc} */
 	@Override

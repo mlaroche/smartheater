@@ -41,11 +41,11 @@ public final class HeaterPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TK_GET_HEATERS_BY_MODE.
+	 * Execute la tache TkGetHeatersByMode.
 	 * @return io.vertigo.dynamo.domain.model.DtList<com.mlaroche.smartheater.domain.HeatersByMode> result
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<com.mlaroche.smartheater.domain.HeatersByMode> getHeatersByMode() {
-		final Task task = createTaskBuilder("TK_GET_HEATERS_BY_MODE")
+		final Task task = createTaskBuilder("TkGetHeatersByMode")
 				.build();
 		return getTaskManager()
 				.execute(task)
@@ -53,12 +53,12 @@ public final class HeaterPAO implements StoreServices {
 	}
 
 	/**
-	 * Execute la tache TK_SWITCH_HEATER_TO_AUTO.
+	 * Execute la tache TkSwitchHeaterToAuto.
 	 * @param heaId Long 
 	*/
 	public void switchHeaterToAuto(final Long heaId) {
-		final Task task = createTaskBuilder("TK_SWITCH_HEATER_TO_AUTO")
-				.addValue("HEA_ID", heaId)
+		final Task task = createTaskBuilder("TkSwitchHeaterToAuto")
+				.addValue("heaId", heaId)
 				.build();
 		getTaskManager().execute(task);
 	}

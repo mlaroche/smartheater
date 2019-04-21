@@ -24,14 +24,14 @@ public final class Heater implements Entity {
 	private java.time.Instant autoSwitch;
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
-			name = "A_HEA_WCA",
-			fkFieldName = "WCA_ID",
-			primaryDtDefinitionName = "DT_WEEKLY_CALENDAR",
+			name = "AHeaWca",
+			fkFieldName = "wcaId",
+			primaryDtDefinitionName = "DtWeeklyCalendar",
 			primaryIsNavigable = true,
 			primaryRole = "WeeklyCalendar",
 			primaryLabel = "Calendrier",
 			primaryMultiplicity = "1..1",
-			foreignDtDefinitionName = "DT_HEATER",
+			foreignDtDefinitionName = "DtHeater",
 			foreignIsNavigable = false,
 			foreignRole = "Heater",
 			foreignLabel = "Radiateur",
@@ -39,14 +39,14 @@ public final class Heater implements Entity {
 	private final VAccessor<com.mlaroche.smartheater.domain.WeeklyCalendar> wcaIdAccessor = new VAccessor<>(com.mlaroche.smartheater.domain.WeeklyCalendar.class, "WeeklyCalendar");
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
-			name = "A_HEA_PRO",
-			fkFieldName = "PRO_CD",
-			primaryDtDefinitionName = "DT_PROTOCOL",
+			name = "AHeaPro",
+			fkFieldName = "proCd",
+			primaryDtDefinitionName = "DtProtocol",
 			primaryIsNavigable = true,
 			primaryRole = "Protocol",
 			primaryLabel = "Protocol",
 			primaryMultiplicity = "1..1",
-			foreignDtDefinitionName = "DT_HEATER",
+			foreignDtDefinitionName = "DtHeater",
 			foreignIsNavigable = false,
 			foreignRole = "Heater",
 			foreignLabel = "Radiateur",
@@ -54,14 +54,14 @@ public final class Heater implements Entity {
 	private final EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> proCdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.Protocol.class, "Protocol", com.mlaroche.smartheater.domain.ProtocolEnum.class);
 
 	@io.vertigo.dynamo.domain.stereotype.Association(
-			name = "A_HEA_MOD",
-			fkFieldName = "MOD_CD",
-			primaryDtDefinitionName = "DT_HEATER_MODE",
+			name = "AHeaMod",
+			fkFieldName = "modCd",
+			primaryDtDefinitionName = "DtHeaterMode",
 			primaryIsNavigable = true,
 			primaryRole = "Mode",
 			primaryLabel = "Mode",
 			primaryMultiplicity = "1..1",
-			foreignDtDefinitionName = "DT_HEATER",
+			foreignDtDefinitionName = "DtHeater",
 			foreignIsNavigable = false,
 			foreignRole = "Heater",
 			foreignLabel = "Radiateur",
@@ -79,7 +79,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long heaId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_ID", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
 	public Long getHeaId() {
 		return heaId;
 	}
@@ -98,7 +98,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String name
 	 */
-	@Field(domain = "DO_LABEL", label = "Nom")
+	@Field(domain = "DoLabel", label = "Nom")
 	public String getName() {
 		return name;
 	}
@@ -117,7 +117,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Nom DNS/Adresse IP'.
 	 * @return String dnsName
 	 */
-	@Field(domain = "DO_LABEL", label = "Nom DNS/Adresse IP")
+	@Field(domain = "DoLabel", label = "Nom DNS/Adresse IP")
 	public String getDnsName() {
 		return dnsName;
 	}
@@ -136,7 +136,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Actif'.
 	 * @return Boolean active
 	 */
-	@Field(domain = "DO_BOOLEAN", label = "Actif")
+	@Field(domain = "DoBoolean", label = "Actif")
 	public Boolean getActive() {
 		return active;
 	}
@@ -155,7 +155,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Mode Auto'.
 	 * @return Boolean auto <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_BOOLEAN", required = true, label = "Mode Auto")
+	@Field(domain = "DoBoolean", required = true, label = "Mode Auto")
 	public Boolean getAuto() {
 		return auto;
 	}
@@ -174,7 +174,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Retour au mode auto'.
 	 * @return Instant autoSwitch
 	 */
-	@Field(domain = "DO_TIMESTAMP", label = "Retour au mode auto")
+	@Field(domain = "DoTimestamp", label = "Retour au mode auto")
 	public java.time.Instant getAutoSwitch() {
 		return autoSwitch;
 	}
@@ -193,7 +193,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Calendrier'.
 	 * @return Long wcaId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_ID", type = "FOREIGN_KEY", required = true, label = "Calendrier")
+	@Field(domain = "DoId", type = "FOREIGN_KEY", required = true, label = "Calendrier")
 	public Long getWcaId() {
 		return (Long) wcaIdAccessor.getId();
 	}
@@ -212,7 +212,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Protocol'.
 	 * @return String proCd <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_LABEL", type = "FOREIGN_KEY", required = true, label = "Protocol")
+	@Field(domain = "DoLabel", type = "FOREIGN_KEY", required = true, label = "Protocol")
 	public String getProCd() {
 		return (String) proCdAccessor.getId();
 	}
@@ -231,7 +231,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String modCd <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_LABEL", type = "FOREIGN_KEY", required = true, label = "Mode")
+	@Field(domain = "DoLabel", type = "FOREIGN_KEY", required = true, label = "Mode")
 	public String getModCd() {
 		return (String) modCdAccessor.getId();
 	}

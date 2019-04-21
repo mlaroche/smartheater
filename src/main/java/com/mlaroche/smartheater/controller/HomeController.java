@@ -28,7 +28,7 @@ public class HomeController extends AbstractVSpringMvcController {
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
 		viewContext.publishDto(() -> "weatherInfo", weatherServices.getWeatherInfo());
-		viewContext.publishDtList(() -> "countsByMode", HeatersByModeFields.MODE, heaterServices.getHeatersByMode());
+		viewContext.publishDtList(() -> "countsByMode", HeatersByModeFields.mode, heaterServices.getHeatersByMode());
 		viewContext.publishRef(() -> "chronografUrl", paramManager.getParam("chronograf_url").getValueAsString());
 	}
 

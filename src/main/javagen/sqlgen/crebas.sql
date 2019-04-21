@@ -118,7 +118,6 @@ comment on column WEEKLY_CALENDAR.JSON_VALUE is
 'Value as json';
 
 
-
 alter table HEATER
 	add constraint FK_HEA_MOD_HEATER_MODE foreign key (MOD_CD)
 	references HEATER_MODE (MOD_CD);

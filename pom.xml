@@ -35,6 +35,12 @@
 			<artifactId>vertigo-ui</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>io.vertigo</groupId>
+			<artifactId>vertigo-orchestra</artifactId>
+			<version>${vertigo.version}</version>
+		</dependency>
 
 
 		<dependency>

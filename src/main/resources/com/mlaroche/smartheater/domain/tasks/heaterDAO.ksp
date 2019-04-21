@@ -1,18 +1,18 @@
 package com.mlaroche.smartheater.dao.heater
 
-create Task TK_SWITCH_HEATER_TO_AUTO {
+create Task TkSwitchHeaterToAuto {
 	className : "io.vertigo.dynamox.task.TaskEngineProc"
         request : "
-        	update heater set auto = true where hea_id = #HEA_ID#
+        	update heater set auto = true where hea_id = #heaId#
 			"
-	attribute HEA_ID		{domain : DO_ID 		required:"true" 	inOut :"in"}
+	attribute heaId		{domain : DoId 		required:"true" 	inOut :"in"}
 }
 
 
-create Task TK_GET_HEATERS_BY_MODE {
+create Task TkGetHeatersByMode {
 	className : "io.vertigo.dynamox.task.TaskEngineSelect"
         request : "
         	select mod_cd as MODE,  count(mod_cd) as COUNT from heater group by mod_cd
 			"
-	attribute RESULT		{domain : DO_DT_HEATERS_BY_MODE_DTC 		required:"true" 	inOut :"out"}
+	attribute result		{domain : DoDtHeatersByModeDtc 		required:"true" 	inOut :"out"}
 }

@@ -56,7 +56,7 @@ public class WeatherServicesImpl implements WeatherServices, Activeable {
 
 	}
 
-	@DaemonScheduled(name = "DMN_WEATHER_UPDATE", periodInSeconds = 60 * 1) // every minutes
+	@DaemonScheduled(name = "DmnWeatherUpdate", periodInSeconds = 60 * 1) // every minutes
 	public void updateWeather() {
 		retrieveData();
 	}

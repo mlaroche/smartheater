@@ -24,7 +24,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Temperature'.
 	 * @return Double temperature
 	 */
-	@Field(domain = "DO_DOUBLE", label = "Temperature")
+	@Field(domain = "DoDouble", label = "Temperature")
 	public Double getTemperature() {
 		return temperature;
 	}
@@ -43,7 +43,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Humidité'.
 	 * @return Double humidity
 	 */
-	@Field(domain = "DO_DOUBLE", label = "Humidité")
+	@Field(domain = "DoDouble", label = "Humidité")
 	public Double getHumidity() {
 		return humidity;
 	}
@@ -62,7 +62,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String location
 	 */
-	@Field(domain = "DO_LABEL", label = "Mode")
+	@Field(domain = "DoLabel", label = "Mode")
 	public String getLocation() {
 		return location;
 	}
@@ -81,7 +81,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String icon
 	 */
-	@Field(domain = "DO_LABEL", label = "Mode")
+	@Field(domain = "DoLabel", label = "Mode")
 	public String getIcon() {
 		return icon;
 	}
@@ -100,7 +100,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String description
 	 */
-	@Field(domain = "DO_LABEL", label = "Mode")
+	@Field(domain = "DoLabel", label = "Mode")
 	public String getDescription() {
 		return description;
 	}

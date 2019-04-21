@@ -1,17 +1,17 @@
 package io.mars
 
-alter DtDefinition DT_HEATER_MODE {
-	sortField : "LABEL"
- 	displayField : "LABEL"
+alter DtDefinition DtHeaterMode {
+	sortField : "label"
+ 	displayField : "label"
 }
 
-alter DtDefinition DT_PROTOCOL {
-	sortField : "LABEL"
- 	displayField : "LABEL"
+alter DtDefinition DtProtocol {
+	sortField : "label"
+ 	displayField : "label"
 }
 
-alter DtDefinition DT_WEEKLY_CALENDAR {
-	sortField : "NAME"
- 	displayField : "NAME"
+alter DtDefinition DtWeeklyCalendar {
+	sortField : "name"
+ 	displayField : "name"
 }
 

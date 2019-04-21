@@ -78,7 +78,7 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 
 	}
 
-	@DaemonScheduled(name = "DMN_HEATER_MODE", periodInSeconds = 60 * 2) // every two minutes
+	@DaemonScheduled(name = "DmnHeaterMode", periodInSeconds = 60 * 2) // every two minutes
 	public void mainLoop() {
 		final DtList<Heater> heaters = heaterDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
 		final LocalDateTime now = LocalDateTime.now();
@@ -113,7 +113,7 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 
 	}
 
-	@DaemonScheduled(name = "DMN_HEATER_AUTOSWITCH", periodInSeconds = 60 * 2) // every two minutes
+	@DaemonScheduled(name = "DmnHeaterAutoswitch", periodInSeconds = 60 * 2) // every two minutes
 	public void switchToAutoMode() {
 
 	}

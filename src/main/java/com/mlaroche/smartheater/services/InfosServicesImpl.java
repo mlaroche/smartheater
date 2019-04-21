@@ -35,7 +35,7 @@ public class InfosServicesImpl implements InfosServices {
 	@Inject
 	private WeatherServices weatherServices;
 
-	@DaemonScheduled(name = "DMN_STORE_INFOS", periodInSeconds = 60 * 1) // every minute
+	@DaemonScheduled(name = "DmnStoreInfos", periodInSeconds = 60 * 1) // every minute
 	public void putInfosToInflux() {
 		final String dbName = paramManager.getParam("influxdb_dbname").getValueAsString();
 

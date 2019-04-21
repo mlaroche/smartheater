@@ -29,7 +29,7 @@ public final class WeeklyCalendar implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long wcaId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DO_ID", type = "ID", required = true, label = "Id")
+	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
 	public Long getWcaId() {
 		return wcaId;
 	}
@@ -48,7 +48,7 @@ public final class WeeklyCalendar implements Entity {
 	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String name
 	 */
-	@Field(domain = "DO_LABEL", label = "Nom")
+	@Field(domain = "DoLabel", label = "Nom")
 	public String getName() {
 		return name;
 	}
@@ -67,7 +67,7 @@ public final class WeeklyCalendar implements Entity {
 	 * Récupère la valeur de la propriété 'Value as json'.
 	 * @return String jsonValue
 	 */
-	@Field(domain = "DO_TEXT", label = "Value as json")
+	@Field(domain = "DoText", label = "Value as json")
 	public String getJsonValue() {
 		return jsonValue;
 	}

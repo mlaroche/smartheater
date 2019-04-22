@@ -77,7 +77,7 @@ public class EnedisElectricalConsumptionActivityEngine extends RunnableActivityE
 			from = LocalDate.now().minusMonths(6); // go back 6 months just to have some data
 		}
 
-		if (from.until(LocalDate.now()).getDays() > 1) {
+		if (from.until(LocalDate.now(), ChronoUnit.DAYS) > 1L) {
 			//there is data to be retrieve
 			final List<ElectricalConsumption> electricalConsumptions = retrieveHourData(from, LocalDate.now());
 			final List<Measure> measures = electricalConsumptions.stream().map(electricalConsumption -> Measure.builder("electricalConsumption")

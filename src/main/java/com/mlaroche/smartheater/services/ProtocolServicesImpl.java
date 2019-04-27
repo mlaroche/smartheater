@@ -23,6 +23,7 @@ import com.mlaroche.smartheater.domain.Protocol;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
+import io.vertigo.dynamo.domain.model.DtListState;
 import io.vertigo.lang.Assertion;
 
 @Transactional
@@ -48,7 +49,7 @@ public class ProtocolServicesImpl implements ProtocolServices {
 
 	@Override
 	public DtList<Protocol> listProtocols() {
-		return protocolDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
+		return protocolDAO.findAll(Criterions.alwaysTrue(), DtListState.of(null));
 	}
 
 }

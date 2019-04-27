@@ -26,6 +26,7 @@ import com.mlaroche.smartheater.model.HeaterWeeklyCalendar;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
+import io.vertigo.dynamo.domain.model.DtListState;
 import io.vertigo.lang.Assertion;
 import io.vertigo.lang.VUserException;
 
@@ -60,7 +61,7 @@ public class WeeklyCalendarServicesImpl implements WeeklyCalendarServices {
 
 	@Override
 	public DtList<WeeklyCalendar> listCalendars() {
-		return weeklyCalendarDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
+		return weeklyCalendarDAO.findAll(Criterions.alwaysTrue(), DtListState.of(null));
 	}
 
 }

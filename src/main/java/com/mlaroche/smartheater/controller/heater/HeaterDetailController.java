@@ -34,9 +34,9 @@ import com.mlaroche.smartheater.domain.Protocol;
 import com.mlaroche.smartheater.domain.WeeklyCalendar;
 import com.mlaroche.smartheater.services.HeaterControlServices;
 import com.mlaroche.smartheater.services.HeaterServices;
+import com.mlaroche.smartheater.services.InfosServices;
 import com.mlaroche.smartheater.services.WeeklyCalendarServices;
 
-import io.vertigo.core.param.ParamManager;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.core.ViewContextKey;
 import io.vertigo.ui.impl.springmvc.argumentresolvers.ViewAttribute;
@@ -59,7 +59,7 @@ public final class HeaterDetailController extends AbstractVSpringMvcController {
 	@Inject
 	private HeaterControlServices heaterControlServices;
 	@Inject
-	private ParamManager paramManager;
+	private InfosServices infosServices;
 
 	@GetMapping("/new")
 	public void initContext(final ViewContext viewContext) {
@@ -74,7 +74,9 @@ public final class HeaterDetailController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext, @PathVariable("heaId") final Long heaId) {
 		loadLists(viewContext);
 		//---
-		viewContext.publishDto(heaterKey, heaterServices.getHeater(heaId));
+		final Heater heater = heaterServices.getHeater(heaId);
+		viewContext.publishDto(heaterKey, heater);
+		viewContext.publishRef(() -> "heaterData", infosServices.getLastDayHeaterInfos(heater));
 		toModeReadOnly();
 	}
 
@@ -82,7 +84,6 @@ public final class HeaterDetailController extends AbstractVSpringMvcController {
 		viewContext.publishMdl(heaterModesKey, HeaterMode.class, null); //all
 		viewContext.publishMdl(protocolsKey, Protocol.class, null); //all
 		viewContext.publishDtList(calendarsKey, weeklyCalendarServices.listCalendars());
-		viewContext.publishRef(() -> "chronografUrl", paramManager.getParam("chronograf_url").getValueAsString());
 	}
 
 	@PostMapping("/_edit")

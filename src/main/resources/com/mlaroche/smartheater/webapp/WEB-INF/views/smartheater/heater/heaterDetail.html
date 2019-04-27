@@ -48,15 +48,85 @@
 				<vu:select object="heater" field="wcaId" list="calendars"/>
 			</vu:grid>
 		</vu:block>
-		<vu:block title="Température sur 24h">
-			<iframe th:src="|${model.chronografUrl}/sources/1/dashboards/2?tempVars%5Bheater%5D=${model.heater.name}&lower=now%28%29%20-%2024h&present=true|" style="border: none" width="100%" height="280px"></iframe>
+		
+		<vu:block title="Evolution sur 24h" th:if="${!model.modeCreate}">
+			<canvas id="myChart" height="500"></canvas>
 		</vu:block>
-		<vu:block title="Humidité sur 24h">
-			<iframe th:src="|${model.chronografUrl}/sources/1/dashboards/3?tempVars%5Bheater%5D=${model.heater.name}&lower=now%28%29%20-%2024h&present=true|" style="border: none" width="100%" height="280px"></iframe>
-		</vu:block>
+		<vu:include-data-primitive key="heaterData" />
 		<q-page-sticky position="bottom-right"> 
 			<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
 		</q-page-sticky>
 	</section>
+		
+		<div layout:fragment="javascript-footer">
+			<script th:if="${!model.modeCreate}">
+				var ctx = document.getElementById('myChart').getContext('2d');
+				var graphTemperatureData = vueData.heaterData.timedDataSeries.map(function(value){
+			    	return {
+			    		x : value.time.epochSecond*1000,
+			    		y : value.values["temperature:mean"]
+			    	}
+			    });
+				var graphHumidityData = vueData.heaterData.timedDataSeries.map(function(value){
+			    	return {
+			    		x : value.time.epochSecond*1000,
+			    		y : value.values["humidity:mean"]
+			    	}
+			    });
+				var myChart = new Chart(ctx, {
+				    type: 'line',
+				    data: {
+				        datasets: [{
+				            label: 'Température',
+				            data: graphTemperatureData,
+				            yAxisID: 'temperature-y-axis',
+				            backgroundColor : 'rgba(255, 159, 64, 0.2)'
+			        	},
+			        	{
+				            label: 'Humidité',
+				            data: graphHumidityData,
+				            yAxisID: 'humidity-y-axis',
+				            backgroundColor : 'rgba(75, 192, 192, 0.2)'
+			        	}]
+				    },
+				    options: {
+				    	maintainAspectRatio: false,
+				        scales: {
+				        	xAxes: [{
+				                type: 'time',
+				                time: {
+				                    unit: 'hour'
+				                }
+				            }],
+				            yAxes: [{	
+						            	id: 'humidity-y-axis',
+						            	position: 'right',
+						                ticks: {
+						                	suggestedMin: 40,
+					               		}
+					            	},{
+						            	id: 'temperature-y-axis',
+						            	ticks: {
+						                	suggestedMin: 10,
+					                	}
+				            		}
+				            ]
+				        },
+				        plugins: {
+							zoom: {
+								pan: {
+									enabled: true,
+									mode: 'xy'
+								},
+								zoom: {
+									enabled: true,
+									mode: 'x'
+								}
+							}
+						}
+				    }
+				});
+			</script>
+		</div>
 </body>
 </html>

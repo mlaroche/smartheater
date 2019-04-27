@@ -25,6 +25,7 @@ import com.mlaroche.smartheater.domain.HeatersByMode;
 import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
+import io.vertigo.dynamo.domain.model.DtListState;
 import io.vertigo.lang.Assertion;
 
 @Transactional
@@ -52,7 +53,7 @@ public class HeaterServicesImpl implements HeaterServices {
 
 	@Override
 	public DtList<Heater> listHeaters() {
-		return heaterDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
+		return heaterDAO.findAll(Criterions.alwaysTrue(), DtListState.of(null));
 	}
 
 	@Override

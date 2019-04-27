@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mlaroche.smartheater.domain.DtDefinitions.HeatersByModeFields;
 import com.mlaroche.smartheater.services.HeaterServices;
+import com.mlaroche.smartheater.services.InfosServices;
 import com.mlaroche.smartheater.services.WeatherServices;
 
-import io.vertigo.core.param.ParamManager;
 import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
@@ -23,13 +23,16 @@ public class HomeController extends AbstractVSpringMvcController {
 	@Inject
 	private HeaterServices heaterServices;
 	@Inject
-	private ParamManager paramManager;
+	private InfosServices infosServices;
 
 	@GetMapping("/")
 	public void initContext(final ViewContext viewContext) {
 		viewContext.publishDto(() -> "weatherInfo", weatherServices.getWeatherInfo());
 		viewContext.publishDtList(() -> "countsByMode", HeatersByModeFields.mode, heaterServices.getHeatersByMode());
-		viewContext.publishRef(() -> "chronografUrl", paramManager.getParam("chronograf_url").getValueAsString());
+
+		viewContext.publishRef(() -> "electricalData", infosServices.getWeekElectricalData());
+		viewContext.publishRef(() -> "indoorTemperatureData", infosServices.getWeekMeanIndoorTemperature());
+		viewContext.publishRef(() -> "outdoorTemperatureData", infosServices.getWeekMeanOutdoorTemperature());
 	}
 
 }

@@ -44,6 +44,7 @@ import io.vertigo.commons.transaction.Transactional;
 import io.vertigo.core.component.Activeable;
 import io.vertigo.dynamo.criteria.Criterions;
 import io.vertigo.dynamo.domain.model.DtList;
+import io.vertigo.dynamo.domain.model.DtListState;
 import io.vertigo.lang.Assertion;
 
 @Transactional
@@ -80,7 +81,7 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 
 	@DaemonScheduled(name = "DmnHeaterMode", periodInSeconds = 60 * 2) // every two minutes
 	public void mainLoop() {
-		final DtList<Heater> heaters = heaterDAO.findAll(Criterions.alwaysTrue(), Integer.MAX_VALUE);
+		final DtList<Heater> heaters = heaterDAO.findAll(Criterions.alwaysTrue(), DtListState.of(null));
 		final LocalDateTime now = LocalDateTime.now();
 		final LocalTime nowTime = now.toLocalTime();
 

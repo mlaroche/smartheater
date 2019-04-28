@@ -15,7 +15,7 @@ import io.vertigo.ui.core.ViewContext;
 import io.vertigo.ui.impl.springmvc.controller.AbstractVSpringMvcController;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("")
 public class HomeController extends AbstractVSpringMvcController {
 
 	@Inject

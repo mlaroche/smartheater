@@ -42,5 +42,6 @@ public final class SmartHeaterFeature extends ModuleDiscoveryFeatures<SmartHeate
 				.addDefinitionResource("kpr", "com/mlaroche/smartheater/domain/execution.kpr")
 				.addParam(Param.of("encoding", "utf8"))
 				.build());
+		getModuleConfigBuilder().addDefinitionProvider(SmartheaterMasterDataDefinitionProvider.class);
 	}
 }

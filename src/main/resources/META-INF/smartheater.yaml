@@ -59,5 +59,4 @@ modules:
 initializers:
   - com.mlaroche.smartheater.boot.DataBaseInitializer:
       __flags__: ["initdb"]
-  - com.mlaroche.smartheater.boot.MasterDataInitializer:
   - com.mlaroche.smartheater.boot.OrchestraInitializer:

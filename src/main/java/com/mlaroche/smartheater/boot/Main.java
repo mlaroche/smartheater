@@ -17,10 +17,7 @@ package com.mlaroche.smartheater.boot;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import org.eclipse.jetty.annotations.ServletContainerInitializersStarter;
 import org.eclipse.jetty.plus.annotation.ContainerInitializer;
@@ -30,19 +27,6 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.springframework.web.SpringServletContainerInitializer;
 
 public class Main {
-
-	private static List<ContainerInitializer> springInitializers() {
-		final SpringServletContainerInitializer sci = new SpringServletContainerInitializer();
-		final ContainerInitializer initializer = new ContainerInitializer(sci, null);
-		initializer.addApplicableTypeName(SmartheaterVSpringWebApplicationInitializer.class.getCanonicalName());
-		final List<ContainerInitializer> initializers = new ArrayList<>();
-		initializers.add(initializer);
-		return initializers;
-	}
-
-	private static ClassLoader getUrlClassLoader() {
-		return new URLClassLoader(new URL[0], Main.class.getClassLoader());
-	}
 
 	private static File getScratchDir() throws IOException {
 		final File tempDir = new File(System.getProperty("java.io.tmpdir"));
@@ -58,17 +42,21 @@ public class Main {
 
 	public static void main(final String[] args) throws IOException, Exception {
 		final Server server = new Server(8080);
-		final WebAppContext context = new WebAppContext(getUrlClassLoader().getResource("com/mlaroche/smartheater/webapp").toExternalForm(), "/smartheater");
+		final ClassLoader currentClassLoader = Main.class.getClassLoader();
+		final WebAppContext context = new WebAppContext(currentClassLoader.getResource("com/mlaroche/smartheater/webapp").toExternalForm(), "/smartheater");
 		System.setProperty("org.apache.jasper.compiler.disablejsr199", "false");
 		//context.setAttribute("jacoco.exclClassLoaders", "*");
 
 		context.setAttribute("javax.servlet.context.tempdir", getScratchDir());
-		context.setAttribute("org.eclipse.jetty.containerInitializers", springInitializers());
+
+		final ContainerInitializer springInitializer = new ContainerInitializer(new SpringServletContainerInitializer(), null);
+		springInitializer.addApplicableTypeName(SmartheaterVSpringWebApplicationInitializer.class.getCanonicalName());
+		context.setAttribute("org.eclipse.jetty.containerInitializers", Collections.singletonList(springInitializer));
 
 		context.setInitParameter("boot.paramsUrl", args[0]);
 		context.addBean(new ServletContainerInitializersStarter(context), true);
-		context.setClassLoader(getUrlClassLoader());
-		context.setClassLoader(new WebAppClassLoader(Main.class.getClassLoader(), context));
+		//context.setClassLoader(getUrlClassLoader());
+		context.setClassLoader(new WebAppClassLoader(currentClassLoader, context));
 
 		server.setHandler(context);
 		server.start();

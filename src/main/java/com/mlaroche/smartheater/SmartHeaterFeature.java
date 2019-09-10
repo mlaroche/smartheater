@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mlaroche.smartheater.boot;
+package com.mlaroche.smartheater;
 
+import com.mlaroche.smartheater.boot.SmartheaterMasterDataDefinitionProvider;
 import com.mlaroche.smartheater.domain.DtDefinitions;
 
 import io.vertigo.app.config.DefinitionProviderConfig;

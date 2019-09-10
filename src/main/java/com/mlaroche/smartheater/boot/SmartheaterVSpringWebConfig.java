@@ -23,8 +23,7 @@ import org.springframework.context.annotation.ComponentScan;
 import io.vertigo.ui.impl.springmvc.config.VSpringWebConfig;
 
 @ComponentScan({
-		"com.mlaroche.smartheater.controller",
-		"com.mlaroche.smartheater.controller.heater" })
+		"com.mlaroche.smartheater.controllers" })
 public class SmartheaterVSpringWebConfig extends VSpringWebConfig {
 	// nothing basic config is enough
 }

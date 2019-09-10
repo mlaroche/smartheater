@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mlaroche.smartheater.controller.heater;
+package com.mlaroche.smartheater.controllers.heater;
 
 import javax.inject.Inject;
 

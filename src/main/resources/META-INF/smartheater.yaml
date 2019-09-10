@@ -55,7 +55,7 @@ modules:
       - orchestra.memory:
           workersCount: 10
       - orchestra.webapi:
-  com.mlaroche.smartheater.boot.SmartHeaterFeature:
+  com.mlaroche.smartheater.SmartHeaterFeature:
 initializers:
   - com.mlaroche.smartheater.boot.DataBaseInitializer:
       __flags__: ["initdb"]

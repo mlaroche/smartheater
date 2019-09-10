@@ -1,4 +1,4 @@
-package com.mlaroche.smartheater.controller;
+package com.mlaroche.smartheater.controllers;
 
 import javax.inject.Inject;
 

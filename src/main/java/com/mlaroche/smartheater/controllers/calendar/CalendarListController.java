@@ -1,4 +1,4 @@
-package com.mlaroche.smartheater.controller.calendar;
+package com.mlaroche.smartheater.controllers.calendar;
 
 import javax.inject.Inject;
 

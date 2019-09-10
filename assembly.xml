@@ -15,4 +15,14 @@
       <scope>runtime</scope>
     </dependencySet>
   </dependencySets>
+  <fileSets>
+        <fileSet>
+            <directory>${basedir}/target/classes
+            </directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>io/vertigo/**/*.class</include>
+            </includes>
+        </fileSet>
+    </fileSets>
 </assembly>

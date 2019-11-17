@@ -42,7 +42,7 @@ public final class HeaterPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkGetHeatersByMode.
-	 * @return io.vertigo.dynamo.domain.model.DtList<com.mlaroche.smartheater.domain.HeatersByMode> result
+	 * @return DtList de HeatersByMode result
 	*/
 	public io.vertigo.dynamo.domain.model.DtList<com.mlaroche.smartheater.domain.HeatersByMode> getHeatersByMode() {
 		final Task task = createTaskBuilder("TkGetHeatersByMode")

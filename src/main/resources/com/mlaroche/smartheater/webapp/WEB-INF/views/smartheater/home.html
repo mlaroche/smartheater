@@ -69,57 +69,57 @@
 	</head>
 	
 	<body>
-		<section layout:fragment="content" >
-			<div class="row">
-  				<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
-  					<q-card class="q-ma-sm">
-  						<q-card-title>
-							<div class="row items-end" ><span class="q-display-1 text-primary" >{{dataX.summary.heaterCount}}</span><span>radiateur géré</span></div>
-						</q-card-title>
-						<q-card-separator></q-card-separator>
-  						<q-card-main>
-  							<dl class="horizontal">
-  							<vu:include-data object="countsByMode" field="'*'" />
-  							  <div v-for="countByMode in vueData.countsByMode" >
-								  <dt>{{heaterModeLabel(countByMode.mode)}}</dt>
-								  <dd>{{countByMode.count}}</dd>
-							  </div>
-							</dl>
-  						</q-card-main>
-  					</q-card>
-  				</div>
-  				<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
-  					<q-card class="q-ma-sm">
-  						<q-card-title>
-							Température moyenne
-						</q-card-title>
-						<q-card-separator></q-card-separator>
-  						<q-card-main>
-  							<span class="q-display-1 text-primary" >{{dataX.summary.meanTemperature}}°C</span>
-  						</q-card-main>
-  					</q-card>
-  				</div>
-  				<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
-  				<q-card class="q-ma-sm">
-  						<vu:include-data object="weatherInfo" field="'*'" />
-  						<q-card-title>Météo exterieure</q-card-title>
-  						<q-card-separator></q-card-separator>
-  						<q-card-main>
-							<div class="row items-center">
-								<div class="col-4">
-									<div class="row justify-end"><q-icon size="6em" :name="'fas '+getIconName(vueData.weatherInfo.icon)" ></q-icon></div>
-								</div>
-								<div class="col-8">
-									<div class="row justify-center q-display-1 text-primary" >{{vueData.weatherInfo.temperature}}°C</div>
-									<div class="row justify-center q-headline text-weight-light">{{vueData.weatherInfo.humidity}}% d'humidité</span></div>
-									<div class="row justify-center q-headline text-weight-light" >{{vueData.weatherInfo.description}}</div>
-									<div class="row justify-center q-headline text-weight-light text-italic" >{{vueData.weatherInfo.location}}</div>
-								</div>
-							</div>
-						</q-card-main>
-  					</q-card>
-  				</div>
-  			</div>
+		<section layout:fragment="content" class="col q-col-gutter-md " >
+			<div class="row q-col-gutter-md">
+			<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
+				<q-card>
+					<q-card-section class="text-h6">
+				<span class="text-h5 text-primary" >{{dataX.summary.heaterCount}}</span><span> radiateur géré</span>
+			</q-card-section>
+			<q-card-separator></q-card-separator>
+					<q-card-section class="items-center">
+						<dl>
+						<vu:include-data object="countsByMode" field="'*'" />
+						  <div v-for="countByMode in vueData.countsByMode" class="row" >
+					  <dt>{{heaterModeLabel(countByMode.mode)}}</dt>
+					  <dd>{{countByMode.count}}</dd>
+				  </div>
+				</dl>
+					</q-card-section>
+				</q-card>
+			</div>
+			<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
+				<q-card>
+					<q-card-section class="text-h6" >
+						Température moyenne
+					</q-card-section>
+					<q-card-separator></q-card-separator>
+					<q-card-section>
+						<span class="q-display-1 text-primary" >{{dataX.summary.meanTemperature}}°C</span>
+					</q-card-section>
+				</q-card>
+			</div>
+			<div class="col-xl-4 col-md-6 col-sm-12 col-xs-12 ">
+				<q-card>
+					<vu:include-data object="weatherInfo" field="'*'" />
+					<q-card-section class="text-h6">Météo exterieure</q-card-section>
+					<q-card-separator></q-card-separator>
+					<q-card-section>
+				<div class="row items-center">
+					<div class="col-4">
+						<div class="row justify-end"><q-icon size="6em" :name="'fas '+getIconName(vueData.weatherInfo.icon)" ></q-icon></div>
+					</div>
+					<div class="col-8">
+						<div class="row justify-center q-display-1 text-primary" >{{vueData.weatherInfo.temperature}}°C</div>
+						<div class="row justify-center q-headline text-weight-light">{{vueData.weatherInfo.humidity}}% d'humidité</span></div>
+						<div class="row justify-center q-headline text-weight-light" >{{vueData.weatherInfo.description}}</div>
+						<div class="row justify-center q-headline text-weight-light text-italic" >{{vueData.weatherInfo.location}}</div>
+					</div>
+				</div>
+			</q-card-section>
+				</q-card>
+			</div>
+			</div>
   			<vu:block title="Evolution sur une semaine" style="height: 600px;">
   				<canvas id="myChart" height="500"></canvas>
   			</vu:block>

@@ -7,8 +7,8 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Demo Application of Vertigo UI powered by SpringMvc, Thymeleaf and Quasar Framework"/>
-    <meta name="author" content="Klee Group"/>
+    <meta name="description" content="Smartheater"/>
+    <meta name="author" content="mlaroche"/>
     
     <link rel="stylesheet" th:href="@{/static/css/smartheater.css}"/>
 	<link rel="icon" th:href="@{/static/img/favicon.ico}"/>
@@ -25,70 +25,72 @@
 	
       <q-layout view="hHh LpR fff" id="page" v-cloak>
 			<!-- BEGIN HEADER-->
-			<q-layout-header class="items-center">
+			<q-header class="items-center">
 				<q-toolbar class="justify-between">
 					<div class="row">
 						<q-btn flat round dense class="lt-lg"
 						th:with="showLeft=${model.vContext['componentStates'].addComponentState('navDrawer').addPrimitive('showLeft', true)}, mini=${model.vContext['componentStates']['navDrawer'].addPrimitive('mini', false)}"
 						@click="componentStates.navDrawer.showLeft = !componentStates.navDrawer.showLeft" icon="menu" aria-label="Toggle menu on left side"></q-btn>
 						<q-toolbar-title class="gt-md">
-								Gestion du chauffage
-		        				<span slot="subtitle">Maison Laroche</span>
+								<div>Gestion du chauffage</div>
+								<div class="text-subtitle2">Maison Laroche</div>
 						</q-toolbar-title>
 					</div>
 					<!-- Brand and toggle get grouped for better mobile display -->
-					<div><!-- 
-						<input type="text"/>
-						<i aria-hidden="true" class="q-icon material-icons">search</i>
-						 -->
-					</div>
-					<div>
-						<q-btn flat round dense icon="apps" size="lg" aria-label="Toggle apps">
-						</q-btn>
-					</div>
 				</q-toolbar>
-			</q-layout-header>
+			</q-header>
         	<!-- END HEADER-->
         			
   			
-  			<q-layout-drawer
+  			<q-drawer
   			  content-class="bg-white text-primary"
 		      side="left"
+		      elevated
 		      :mini="function() {var miniMenu = this.$cookies.get('miniMenu', true) === 'true';componentStates.navDrawer.mini = miniMenu;return miniMenu;}()"
 		      v-model="componentStates.navDrawer.showLeft">
 		      
-		      <q-list link :class="{'dense-list-header':!componentStates.navDrawer.mini}" style="height:100%">
-		     	<nav class="text-no-wrap">
-					<q-item tag="a" th:href="@{/}">
-						<q-item-side icon="fas fa-home" ></q-item-side>
-						<q-item-main label="Accueil" ></q-item-main>
-					</q-item>
-					<q-item tag="a" th:href="@{/heaters/}">
-						<q-item-side icon="fas fa-fire" ></q-item-side>
-						<q-item-main label="Radiateurs" ></q-item-main>
-					</q-item>
-					<q-item tag="a" th:href="@{/calendars/}">
-						<q-item-side icon="fas fa-calendar-alt" ></q-item-side>
-						<q-item-main label="Calendriers" ></q-item-main>
-					</q-item>
-			       <q-item-separator></q-item-separator>
-			        <q-item v-if="componentStates.navDrawer.mini"
-							@click.native="componentStates.navDrawer.mini = false; $cookies.set('miniMenu', false)" title="Expand menu">
-						<q-item-side icon="arrow_right"></q-item-side>
-					</q-item>
-					 <q-item v-if="!componentStates.navDrawer.mini"
-							@click.native="componentStates.navDrawer.mini = true; $cookies.set('miniMenu', true)" title="Minify menu">
-						<q-item-main></q-item-main><q-item-side icon="arrow_left" right></q-item-side>
-					</q-item>
-			      </nav>
+		      <q-list :class="{'dense-list-header':!componentStates.navDrawer.mini}" style="height:100%">
+		      <nav class="text-no-wrap">
+		        <q-item tag="a" th:href="@{/}">
+		          <q-item-section avatar>
+		          	<q-icon name="fas fa-home"></q-icon>
+		          </q-item-section>
+		          <q-item-section>Home</q-item-section>
+		        </q-item>
+		        <q-separator></q-separator>
+		        <q-item tag="a" th:href="@{/heaters/}">
+		          <q-item-section avatar>
+		          	<q-icon name="fas fa-fire"></q-icon>
+		          </q-item-section>
+		          <q-item-section>Radiateurs</q-item-section>
+		        </q-item>
+		        <q-item tag="a" th:href="@{/calendars/}">
+		          <q-item-section avatar>
+		          	<q-icon name="fas fa-calendar-alt"></q-icon>
+		          </q-item-section>
+		          <q-item-section>Calendriers</q-item-section>
+		        </q-item>
+		       	<q-separator></q-separator>
+		        <q-item v-if="componentStates.navDrawer.mini"
+						@click.native="componentStates.navDrawer.mini = false; $cookies.set('miniMenu', false)" title="Expand menu">
+						<q-item-section avatar>
+		          			<q-icon name="arrow_right"></q-icon>
+		          		</q-item-section>
+				</q-item>
+				 <q-item v-if="!componentStates.navDrawer.mini"
+						@click.native="componentStates.navDrawer.mini = true; $cookies.set('miniMenu', true)" title="Minify menu">
+					<q-item-section side>
+		          		<q-icon name="arrow_left"></q-icon>
+		          	</q-item-section>
+				</q-item>
+		        </nav>
 		        </q-list>
 		        
-		    </q-layout-drawer>
+		    </q-drawer>
 		    
 			<q-page-container class="row justify-center q-pb-lg" >
 				<section class="col container-bottom-padding" layout:fragment="page-container"></section>
 			</q-page-container>
-			
 			
 			<div class="fixed-bottom-right version-watermark">
     			<div class="row items-center">

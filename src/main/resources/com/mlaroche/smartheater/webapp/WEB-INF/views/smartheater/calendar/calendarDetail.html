@@ -28,7 +28,7 @@
 				<vu:include-data object="calendar" field="jsonValue" />
 			</vu:grid>
 		</vu:block>
-		<div id="schedule"></div>
+		<div id="schedule" class="col"></div>
 		<input name="vContext[calendar][jsonValue]" type="hidden" v-bind:value="vueData.calendar.jsonValue">
 		<q-page-sticky position="bottom-right"> 
 			<vu:button-submit th:if="${!model.modeReadOnly}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />

@@ -11,11 +11,7 @@
 create sequence SEQ_HEATER
 	start with 1000 cache 20; 
 
-create sequence SEQ_HEATER_MODE
-	start with 1000 cache 20; 
 
-create sequence SEQ_PROTOCOL
-	start with 1000 cache 20; 
 
 create sequence SEQ_WEEKLY_CALENDAR
 	start with 1000 cache 20; 

@@ -3,6 +3,7 @@ package com.mlaroche.smartheater.domain
 /**************************************************************************************************/
 /********************************* Formatters *****************************************************/
 /**************************************************************************************************/
+/*
 create Formatter FmtDefault{
 	className : "io.vertigo.dynamox.domain.formatter.FormatterDefault"
 }
@@ -11,7 +12,7 @@ create Formatter FmtDate {
      className :"io.vertigo.dynamox.domain.formatter.FormatterDate"
      args : "dd/MM/yy;dd/MM/yyyy"
 }
-
+*/
 
 /**************************************************************************************************/
 /********************************* Constraints ****************************************************/
@@ -25,51 +26,43 @@ create Formatter FmtDate {
 
 create Domain DoId {
 	dataType : Long
-	formatter : FmtDefault
 	storeType : "NUMERIC"
 }
 
 create Domain DoDate {
 	dataType : LocalDate
-	formatter : FmtDate
 	storeType : "DATE"
 }
 
 create Domain DoDouble {
 	dataType : Double
-	formatter : FmtDefault
 	storeType : "NUMERIC"
 }
 
 create Domain DoTimestamp {
 	dataType : Instant
-	formatter : FmtDefault
 	storeType : "TIMESTAMP"
 }
 
 
 create Domain DoNumber {
 	dataType : Integer
-	formatter : FmtDefault
 	storeType : "NUMERIC"
 }
 
 
 create Domain DoLabel {
 	dataType : String
-	formatter : FmtDefault
 	storeType : "VARCHAR(100)"
 }
 
 create Domain DoText {
 	dataType : String
-	formatter : FmtDefault
 	storeType : "TEXT"
 }
 
 create Domain DoBoolean {
 	dataType : Boolean
-	formatter : FmtDefault
 	storeType : "BOOL"
 }
 

@@ -1,61 +1,60 @@
 package com.mlaroche.smartheater.domain
 
 create DtDefinition DtWeeklyCalendar {
-	id wcaId 				{ domain: DoId,			 label: "Id"}
-	field name 				{ domain: DoLabel,			 label: "Nom", 				required: "false" }
-	field jsonValue 		{ domain: DoText,			 label: "Value as json", 		required: "false" }
+	id wcaId 				{ domain: DoId			 label: "Id"}
+	field name 				{ domain: DoLabel			 label: "Nom" 				 }
+	field jsonValue 		{ domain: DoText			 label: "Value as json" 		 }
 
 }
 
 create DtDefinition DtHeater {
-	id heaId 				{ domain: DoId,			label: "Id"}
-	field name 				{ domain: DoLabel,			label: "Nom", 					required: "false" }
-	field dnsName 			{ domain: DoLabel,			label: "Nom DNS/Adresse IP",				required: "false" }
-	field active			{ domain: DoBoolean,		label: "Actif", 				required: "false" }
-	field auto				{ domain: DoBoolean,		label: "Mode Auto",				required: "true"  }
-	field autoSwitch		{ domain: DoTimestamp,		label: "Retour au mode auto", 	required: "false" }
+	id heaId 				{ domain: DoId			label: "Id"}
+	field name 				{ domain: DoLabel			label: "Nom" 					 }
+	field dnsName 			{ domain: DoLabel			label: "Nom DNS/Adresse IP"				 }
+	field active			{ domain: DoBoolean		label: "Actif" 				 }
+	field auto				{ domain: DoBoolean		label: "Mode Auto"				cardinality: "1"  }
+	field autoSwitch		{ domain: DoTimestamp		label: "Retour au mode auto" 	 }
 
 }
-
 create DtDefinition DtHeaterInfo {
-	field temperature		{ domain: DoDouble,		label: "Température", 			required: "false" }
-	field humidity			{ domain: DoDouble,		label: "Humidité",				required: "false" }
-	field mode				{ domain: DoLabel,			label: "Mode", 					required: "false" }
+	field temperature		{ domain: DoDouble		label: "Température" 			 }
+	field humidity			{ domain: DoDouble		label: "Humidité"				 }
+	field mode				{ domain: DoLabel			label: "Mode" 					 }
 
 }
 
 create DtDefinition DtWeatherInfo {
-	field temperature		{ domain: DoDouble,		label: "Temperature", 			required: "false" }
-	field humidity			{ domain: DoDouble,		label: "Humidité",				required: "false" }
-	field location			{ domain: DoLabel,			label: "Mode", 					required: "false" }
-	field icon				{ domain: DoLabel,			label: "Mode", 					required: "false" }
-	field description		{ domain: DoLabel,			label: "Mode", 					required: "false" }
+	field temperature		{ domain: DoDouble		label: "Temperature" 			 }
+	field humidity			{ domain: DoDouble		label: "Humidité"				 }
+	field location			{ domain: DoLabel			label: "Mode" 					 }
+	field icon				{ domain: DoLabel			label: "Mode" 					 }
+	field description		{ domain: DoLabel			label: "Mode" 					 }
 
 }
 
 create DtDefinition DtElectricalConsumption {
-	field timestamp			{ domain: DoTimestamp,		label: "Heure", 				required: "false" }
-	field meanPower		{ domain: DoDouble,		label: "Puissance moyenne",		required: "false" }
+	field timestamp			{ domain: DoTimestamp		label: "Heure" 				 }
+	field meanPower		{ domain: DoDouble		label: "Puissance moyenne"		 }
 
 }
 
 create DtDefinition DtProtocol {
-	stereotype : "StaticMasterData",
-	id proCd 				{ domain: DoLabel,			 label: "Id"}
-	field label 			{ domain: DoLabel,			 label: "Nom", 		required: "false" }
+	stereotype : "StaticMasterData"
+	id proCd 				{ domain: DoLabel			 label: "Id"}
+	field label 			{ domain: DoLabel			 label: "Nom" 		 }
 
 }
 
 create DtDefinition DtHeaterMode {
-	stereotype : "StaticMasterData",
-	id modCd	 			{ domain: DoLabel,			 label: "Id"}
-	field label 			{ domain: DoLabel,			 label: "Nom", 		required: "false" }
+	stereotype : "StaticMasterData"
+	id modCd	 			{ domain: DoLabel			 label: "Id"}
+	field label 			{ domain: DoLabel			 label: "Nom" 		 }
 
 }
 
 create DtDefinition DtHeatersByMode {
-	field mode		{ domain: DoLabel,			 label: "Id" , 			required: "false"}
-	field count		{ domain: DoNumber,		 label: "Nombre", 		required: "false" }
+	field mode		{ domain: DoLabel			 label: "Id"  			}
+	field count		{ domain: DoNumber		 label: "Nombre" 		 }
 
 }
 
@@ -75,7 +74,7 @@ create Association AHeaWca {
 	labelB : "Radiateur"
 	roleA : "WeeklyCalendar"
 	roleB : "Heater"
-},
+}
 
 
 create Association AHeaPro {
@@ -94,7 +93,7 @@ create Association AHeaPro {
 	labelB : "Radiateur"
 	roleA : "Protocol"
 	roleB : "Heater"
-},
+}
 
 
 create Association AHeaMod {
@@ -113,4 +112,4 @@ create Association AHeaMod {
 	labelB : "Radiateur"
 	roleA : "Mode"
 	roleB : "Heater"
-},
+}

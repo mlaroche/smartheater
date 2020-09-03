@@ -28,8 +28,8 @@ import com.mlaroche.smartheater.domain.HeaterInfo;
 import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.ProtocolEnum;
 
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.WrappedException;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.WrappedException;
 
 public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlugin {
 
@@ -37,8 +37,9 @@ public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlu
 
 	@Override
 	public void changeHeaterMode(final Heater heater, final HeaterModeEnum heaterMode) {
-		Assertion.checkNotNull(heater);
-		Assertion.checkNotNull(heaterMode);
+		Assertion.check()
+				.isNotNull(heater)
+				.isNotNull(heaterMode);
 		//---
 		final String url = "http://" + heater.getDnsName() + "/mode/" + heaterMode.name();
 		callRestWS(url);
@@ -47,7 +48,7 @@ public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlu
 
 	@Override
 	public HeaterInfo getInfo(final Heater heater) {
-		Assertion.checkNotNull(heater);
+		Assertion.check().isNotNull(heater);
 		//---
 		final String url = "http://" + heater.getDnsName() + "/infos/";
 		return callRestWS(url, HeaterInfo.class);
@@ -60,7 +61,7 @@ public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlu
 	}
 
 	private static void callRestWS(final String wsUrl) {
-		Assertion.checkArgNotEmpty(wsUrl);
+		Assertion.check().isNotBlank(wsUrl);
 		// ---
 		try {
 			final URL url = new URL(wsUrl);
@@ -68,7 +69,7 @@ public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlu
 			httpURLConnection.setConnectTimeout(500);
 			httpURLConnection.setReadTimeout(500);
 			//---
-			Assertion.checkState(httpURLConnection.getResponseCode() == 200, "Error calling '{0}' ", wsUrl);
+			Assertion.check().isTrue(httpURLConnection.getResponseCode() == 200, "Error calling '{0}' ", wsUrl);
 		} catch (final IOException e) {
 			throw WrappedException.wrap(e);
 		}
@@ -76,7 +77,7 @@ public class HttpRemoteHeaterControlerPlugin implements RemoteHeaterControlerPlu
 	}
 
 	private static <R> R callRestWS(final String wsUrl, final Type returnType) {
-		Assertion.checkArgNotEmpty(wsUrl);
+		Assertion.check().isNotBlank(wsUrl);
 		// ---
 		try {
 			final URL url = new URL(wsUrl);

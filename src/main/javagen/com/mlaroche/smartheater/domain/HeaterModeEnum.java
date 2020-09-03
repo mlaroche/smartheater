@@ -2,8 +2,8 @@ package com.mlaroche.smartheater.domain;
 
 import java.io.Serializable;
 
-import io.vertigo.dynamo.domain.model.MasterDataEnum;
-import io.vertigo.dynamo.domain.model.UID;
+import io.vertigo.datamodel.structure.model.MasterDataEnum;
+import io.vertigo.datamodel.structure.model.UID;
 
 public enum HeaterModeEnum implements MasterDataEnum<com.mlaroche.smartheater.domain.HeaterMode> {
 

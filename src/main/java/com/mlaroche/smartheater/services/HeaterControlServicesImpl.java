@@ -39,13 +39,13 @@ import com.mlaroche.smartheater.model.HeaterWeeklyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.DailyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
 
-import io.vertigo.commons.daemon.DaemonScheduled;
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.core.component.Activeable;
-import io.vertigo.dynamo.criteria.Criterions;
-import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.daemon.DaemonScheduled;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.node.component.Activeable;
+import io.vertigo.datamodel.criteria.Criterions;
+import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.structure.model.DtListState;
 
 @Transactional
 public class HeaterControlServicesImpl implements HeaterControlServices, Activeable {
@@ -66,8 +66,9 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 
 	@Override
 	public void start() {
-		Assertion.checkNotNull(remoteHeaterControlerPlugins);
-		Assertion.checkState(!remoteHeaterControlerPlugins.isEmpty(), "at least one remoteHeaterControlerPlugin is needed");
+		Assertion.check()
+				.isNotNull(remoteHeaterControlerPlugins)
+				.isFalse(remoteHeaterControlerPlugins.isEmpty(), "at least one remoteHeaterControlerPlugin is needed");
 		//---
 		remoteHeaterControlerPlugins.forEach(plugin -> pluginByProtocol.put(plugin.getProtocol(), plugin));
 
@@ -121,8 +122,9 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 
 	@Override
 	public void forceHeaterMode(final Long heaId, final HeaterModeEnum heaterMode) {
-		Assertion.checkNotNull(heaId);
-		Assertion.checkNotNull(heaterMode);
+		Assertion.check()
+				.isNotNull(heaId)
+				.isNotNull(heaterMode);
 		//---
 		final Heater heater = heaterDAO.get(heaId);
 		pluginByProtocol.get(heater.protocol().getEnumValue()).changeHeaterMode(heater, heaterMode);
@@ -133,7 +135,7 @@ public class HeaterControlServicesImpl implements HeaterControlServices, Activea
 
 	@Override
 	public void switchToAuto(final Long heaId) {
-		Assertion.checkNotNull(heaId);
+		Assertion.check().isNotNull(heaId);
 		//---
 		heaterPAO.switchHeaterToAuto(heaId);
 

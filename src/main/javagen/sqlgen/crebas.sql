@@ -115,21 +115,21 @@ comment on column WEEKLY_CALENDAR.JSON_VALUE is
 
 
 alter table HEATER
-	add constraint FK_HEA_MOD_HEATER_MODE foreign key (MOD_CD)
+	add constraint FK_A_HEA_MOD_HEATER_MODE foreign key (MOD_CD)
 	references HEATER_MODE (MOD_CD);
 
-create index HEA_MOD_HEATER_MODE_FK on HEATER (MOD_CD asc);
+create index A_HEA_MOD_HEATER_MODE_FK on HEATER (MOD_CD asc);
 
 alter table HEATER
-	add constraint FK_HEA_PRO_PROTOCOL foreign key (PRO_CD)
+	add constraint FK_A_HEA_PRO_PROTOCOL foreign key (PRO_CD)
 	references PROTOCOL (PRO_CD);
 
-create index HEA_PRO_PROTOCOL_FK on HEATER (PRO_CD asc);
+create index A_HEA_PRO_PROTOCOL_FK on HEATER (PRO_CD asc);
 
 alter table HEATER
-	add constraint FK_HEA_WCA_WEEKLY_CALENDAR foreign key (WCA_ID)
+	add constraint FK_A_HEA_WCA_WEEKLY_CALENDAR foreign key (WCA_ID)
 	references WEEKLY_CALENDAR (WCA_ID);
 
-create index HEA_WCA_WEEKLY_CALENDAR_FK on HEATER (WCA_ID asc);
+create index A_HEA_WCA_WEEKLY_CALENDAR_FK on HEATER (WCA_ID asc);
 
 

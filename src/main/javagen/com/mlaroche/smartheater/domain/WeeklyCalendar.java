@@ -1,10 +1,10 @@
 package com.mlaroche.smartheater.domain;
 
-import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -29,7 +29,7 @@ public final class WeeklyCalendar implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long wcaId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(smartType = "STyId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getWcaId() {
 		return wcaId;
 	}
@@ -48,7 +48,9 @@ public final class WeeklyCalendar implements Entity {
 	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", label = "Nom")
+	@Field(smartType = "STyLabel", label = "Nom")
+	@io.vertigo.datamodel.structure.stereotype.SortField
+	@io.vertigo.datamodel.structure.stereotype.DisplayField
 	public String getName() {
 		return name;
 	}
@@ -67,7 +69,7 @@ public final class WeeklyCalendar implements Entity {
 	 * Récupère la valeur de la propriété 'Value as json'.
 	 * @return String jsonValue
 	 */
-	@Field(domain = "DoText", label = "Value as json")
+	@Field(smartType = "STyText", label = "Value as json")
 	public String getJsonValue() {
 		return jsonValue;
 	}

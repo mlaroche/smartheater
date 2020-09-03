@@ -20,7 +20,7 @@ import com.mlaroche.smartheater.domain.HeaterInfo;
 import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.ProtocolEnum;
 
-import io.vertigo.core.component.Plugin;
+import io.vertigo.core.node.component.Plugin;
 
 public interface RemoteHeaterControlerPlugin extends Plugin {
 

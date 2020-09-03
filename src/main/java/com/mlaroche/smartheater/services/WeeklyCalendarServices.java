@@ -17,8 +17,8 @@ package com.mlaroche.smartheater.services;
 
 import com.mlaroche.smartheater.domain.WeeklyCalendar;
 
-import io.vertigo.core.component.Component;
-import io.vertigo.dynamo.domain.model.DtList;
+import io.vertigo.core.node.component.Component;
+import io.vertigo.datamodel.structure.model.DtList;
 
 public interface WeeklyCalendarServices extends Component {
 

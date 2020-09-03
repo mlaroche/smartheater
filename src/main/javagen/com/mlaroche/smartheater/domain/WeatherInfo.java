@@ -1,9 +1,9 @@
 package com.mlaroche.smartheater.domain;
 
-import io.vertigo.dynamo.domain.model.DtObject;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.DtObject;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -24,7 +24,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Temperature'.
 	 * @return Double temperature
 	 */
-	@Field(domain = "DoDouble", label = "Temperature")
+	@Field(smartType = "STyDouble", label = "Temperature")
 	public Double getTemperature() {
 		return temperature;
 	}
@@ -43,7 +43,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Humidité'.
 	 * @return Double humidity
 	 */
-	@Field(domain = "DoDouble", label = "Humidité")
+	@Field(smartType = "STyDouble", label = "Humidité")
 	public Double getHumidity() {
 		return humidity;
 	}
@@ -62,7 +62,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String location
 	 */
-	@Field(domain = "DoLabel", label = "Mode")
+	@Field(smartType = "STyLabel", label = "Mode")
 	public String getLocation() {
 		return location;
 	}
@@ -81,7 +81,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String icon
 	 */
-	@Field(domain = "DoLabel", label = "Mode")
+	@Field(smartType = "STyLabel", label = "Mode")
 	public String getIcon() {
 		return icon;
 	}
@@ -100,7 +100,7 @@ public final class WeatherInfo implements DtObject {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String description
 	 */
-	@Field(domain = "DoLabel", label = "Mode")
+	@Field(smartType = "STyLabel", label = "Mode")
 	public String getDescription() {
 		return description;
 	}

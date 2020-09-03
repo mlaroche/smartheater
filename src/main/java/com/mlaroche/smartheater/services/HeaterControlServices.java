@@ -19,7 +19,7 @@ import com.mlaroche.smartheater.domain.Heater;
 import com.mlaroche.smartheater.domain.HeaterInfo;
 import com.mlaroche.smartheater.domain.HeaterModeEnum;
 
-import io.vertigo.core.component.Component;
+import io.vertigo.core.node.component.Component;
 
 public interface HeaterControlServices extends Component {
 

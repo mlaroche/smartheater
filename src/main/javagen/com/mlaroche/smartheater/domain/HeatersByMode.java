@@ -1,9 +1,9 @@
 package com.mlaroche.smartheater.domain;
 
-import io.vertigo.dynamo.domain.model.DtObject;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.DtObject;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -21,7 +21,7 @@ public final class HeatersByMode implements DtObject {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return String mode
 	 */
-	@Field(domain = "DoLabel", label = "Id")
+	@Field(smartType = "STyLabel", label = "Id")
 	public String getMode() {
 		return mode;
 	}
@@ -40,7 +40,7 @@ public final class HeatersByMode implements DtObject {
 	 * Récupère la valeur de la propriété 'Nombre'.
 	 * @return Integer count
 	 */
-	@Field(domain = "DoNumber", label = "Nombre")
+	@Field(smartType = "STyNumber", label = "Nombre")
 	public Integer getCount() {
 		return count;
 	}

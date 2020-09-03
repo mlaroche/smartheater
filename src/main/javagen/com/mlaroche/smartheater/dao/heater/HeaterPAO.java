@@ -2,14 +2,14 @@ package com.mlaroche.smartheater.dao.heater;
 
 import javax.inject.Inject;
 
-import io.vertigo.app.Home;
-import io.vertigo.dynamo.task.TaskManager;
-import io.vertigo.dynamo.task.metamodel.TaskDefinition;
-import io.vertigo.dynamo.task.model.Task;
-import io.vertigo.dynamo.task.model.TaskBuilder;
-import io.vertigo.dynamo.store.StoreServices;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.node.Node;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.task.TaskManager;
+import io.vertigo.datamodel.task.definitions.TaskDefinition;
+import io.vertigo.datamodel.task.model.Task;
+import io.vertigo.datamodel.task.model.TaskBuilder;
+import io.vertigo.datastore.impl.dao.StoreServices;
 
 /**
  * This class is automatically generated.
@@ -25,7 +25,7 @@ public final class HeaterPAO implements StoreServices {
 	 */
 	@Inject
 	public HeaterPAO(final TaskManager taskManager) {
-		Assertion.checkNotNull(taskManager);
+		Assertion.check().isNotNull(taskManager);
 		//-----
 		this.taskManager = taskManager;
 	}
@@ -36,7 +36,7 @@ public final class HeaterPAO implements StoreServices {
 	 * @return the builder 
 	 */
 	private static TaskBuilder createTaskBuilder(final String name) {
-		final TaskDefinition taskDefinition = Home.getApp().getDefinitionSpace().resolve(name, TaskDefinition.class);
+		final TaskDefinition taskDefinition = Node.getNode().getDefinitionSpace().resolve(name, TaskDefinition.class);
 		return Task.builder(taskDefinition);
 	}
 
@@ -44,7 +44,12 @@ public final class HeaterPAO implements StoreServices {
 	 * Execute la tache TkGetHeatersByMode.
 	 * @return DtList de HeatersByMode result
 	*/
-	public io.vertigo.dynamo.domain.model.DtList<com.mlaroche.smartheater.domain.HeatersByMode> getHeatersByMode() {
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkGetHeatersByMode",
+			request = "select mod_cd as MODE,  count(mod_cd) as COUNT from heater group by mod_cd",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineSelect.class)
+	@io.vertigo.datamodel.task.proxy.TaskOutput(smartType = "STyDtHeatersByMode")
+	public io.vertigo.datamodel.structure.model.DtList<com.mlaroche.smartheater.domain.HeatersByMode> getHeatersByMode() {
 		final Task task = createTaskBuilder("TkGetHeatersByMode")
 				.build();
 		return getTaskManager()
@@ -54,9 +59,13 @@ public final class HeaterPAO implements StoreServices {
 
 	/**
 	 * Execute la tache TkSwitchHeaterToAuto.
-	 * @param heaId Long 
+	 * @param heaId Long
 	*/
-	public void switchHeaterToAuto(final Long heaId) {
+	@io.vertigo.datamodel.task.proxy.TaskAnnotation(
+			name = "TkSwitchHeaterToAuto",
+			request = "update heater set auto = true where hea_id = #heaId#",
+			taskEngineClass = io.vertigo.basics.task.TaskEngineProc.class)
+	public void switchHeaterToAuto(@io.vertigo.datamodel.task.proxy.TaskInput(name = "heaId", smartType = "STyId") final Long heaId) {
 		final Task task = createTaskBuilder("TkSwitchHeaterToAuto")
 				.addValue("heaId", heaId)
 				.build();

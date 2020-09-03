@@ -15,7 +15,6 @@
  */
 package com.mlaroche.smartheater.boot;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 
@@ -28,26 +27,11 @@ import org.springframework.web.SpringServletContainerInitializer;
 
 public class Main {
 
-	private static File getScratchDir() throws IOException {
-		final File tempDir = new File(System.getProperty("java.io.tmpdir"));
-		final File scratchDir = new File(tempDir.toString(), "embedded-jetty-jsp");
-
-		if (!scratchDir.exists()) {
-			if (!scratchDir.mkdirs()) {
-				throw new IOException("Unable to create scratch directory: " + scratchDir);
-			}
-		}
-		return scratchDir;
-	}
-
 	public static void main(final String[] args) throws IOException, Exception {
 		final Server server = new Server(8080);
 		final ClassLoader currentClassLoader = Main.class.getClassLoader();
 		final WebAppContext context = new WebAppContext(currentClassLoader.getResource("com/mlaroche/smartheater/webapp").toExternalForm(), "/smartheater");
 		System.setProperty("org.apache.jasper.compiler.disablejsr199", "false");
-		//context.setAttribute("jacoco.exclClassLoaders", "*");
-
-		context.setAttribute("javax.servlet.context.tempdir", getScratchDir());
 
 		final ContainerInitializer springInitializer = new ContainerInitializer(new SpringServletContainerInitializer(), null);
 		springInitializer.addApplicableTypeName(SmartheaterVSpringWebApplicationInitializer.class.getCanonicalName());
@@ -55,7 +39,6 @@ public class Main {
 
 		context.setInitParameter("boot.paramsUrl", args[0]);
 		context.addBean(new ServletContainerInitializersStarter(context), true);
-		//context.setClassLoader(getUrlClassLoader());
 		context.setClassLoader(new WebAppClassLoader(currentClassLoader, context));
 
 		server.setHandler(context);

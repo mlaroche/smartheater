@@ -33,14 +33,14 @@ import com.google.gson.Gson;
 import com.mlaroche.smartheater.domain.ElectricalConsumption;
 
 import io.vertigo.commons.codec.CodecManager;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.param.ParamManager;
 import io.vertigo.database.timeseries.DataFilter;
 import io.vertigo.database.timeseries.Measure;
 import io.vertigo.database.timeseries.TimeFilter;
-import io.vertigo.database.timeseries.TimeSeriesDataBaseManager;
+import io.vertigo.database.timeseries.TimeSeriesManager;
 import io.vertigo.database.timeseries.TimedDatas;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.WrappedException;
 import io.vertigo.orchestra.services.execution.RunnableActivityEngine;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -58,7 +58,7 @@ public class EnedisElectricalConsumptionActivityEngine extends RunnableActivityE
 	@Inject
 	private CodecManager codecManager;
 	@Inject
-	private TimeSeriesDataBaseManager timeSeriesDataBaseManager;
+	private TimeSeriesManager timeSeriesManager;
 
 	private static final String ENEDIS_LOGIN_PARAM = "enedis_login";
 	private static final String ENEDIS_PASSWORD_PARAM = "enedis_password";
@@ -69,7 +69,7 @@ public class EnedisElectricalConsumptionActivityEngine extends RunnableActivityE
 	public void run() {
 
 		final String dbName = paramManager.getParam("influxdb_dbname").getValueAsString();
-		final TimedDatas lastConsumption = timeSeriesDataBaseManager.getTabularTimedData(dbName, Arrays.asList("meanPower:last"), DataFilter.builder("electricalConsumption").build(), TimeFilter.builder("now() - 30w", "now()").build());
+		final TimedDatas lastConsumption = timeSeriesManager.getTabularTimedData(dbName, Arrays.asList("meanPower:last"), DataFilter.builder("electricalConsumption").build(), TimeFilter.builder("now() - 30w", "now()").build());
 		final LocalDate from;
 		if (!lastConsumption.getTimedDataSeries().isEmpty()) {
 			from = lastConsumption.getTimedDataSeries().get(0).getTime().atZone(ZoneId.of("Europe/Paris")).toLocalDate();
@@ -84,7 +84,7 @@ public class EnedisElectricalConsumptionActivityEngine extends RunnableActivityE
 					.time(electricalConsumption.getTimestamp())
 					.addField("meanPower", electricalConsumption.getMeanPower())
 					.build()).collect(Collectors.toList());
-			timeSeriesDataBaseManager.insertMeasures(dbName, measures);
+			timeSeriesManager.insertMeasures(dbName, measures);
 		}
 	}
 
@@ -152,7 +152,7 @@ public class EnedisElectricalConsumptionActivityEngine extends RunnableActivityE
 			throw WrappedException.wrap(e);
 		}
 
-		Assertion.checkState("termine".equals(enedisInfo.etat.valeur), "Error retrieving infos from Enedis");
+		Assertion.check().isTrue("termine".equals(enedisInfo.etat.valeur), "Error retrieving infos from Enedis");
 		final Instant debut = LocalDate.parse(enedisInfo.graphe.periode.dateDebut, ENEDIS_DATE_FORMAT).atStartOfDay(ZoneId.of("Europe/Paris")).toInstant();
 		return enedisInfo.graphe.data
 				.stream()

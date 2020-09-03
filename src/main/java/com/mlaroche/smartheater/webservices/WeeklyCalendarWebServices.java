@@ -27,8 +27,8 @@ import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.DailyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar.TimeSlot;
 import com.mlaroche.smartheater.services.WeeklyCalendarServices;
 
-import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.GET;
 import io.vertigo.vega.webservice.stereotype.POST;
@@ -70,7 +70,7 @@ public class WeeklyCalendarWebServices implements WebServices {
 
 	@PUT("/{wcaId}")
 	public void save(@PathParam("wcaId") final Long wcaId, final WeeklyCalendar weeklyCalendar) {
-		Assertion.checkState(wcaId.equals(weeklyCalendar.getWcaId()), "you are trying to update the wrong weelycalendar");
+		Assertion.check().isTrue(wcaId.equals(weeklyCalendar.getWcaId()), "you are trying to update the wrong weelycalendar");
 		//---
 		weeklyCalendarServices.saveWeeklyCalendar(weeklyCalendar);
 

@@ -21,10 +21,10 @@ import com.mlaroche.smartheater.dao.ProtocolDAO;
 import com.mlaroche.smartheater.domain.Protocol;
 
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.dynamo.criteria.Criterions;
-import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.datamodel.criteria.Criterions;
+import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.structure.model.DtListState;
 
 @Transactional
 public class ProtocolServicesImpl implements ProtocolServices {
@@ -34,14 +34,14 @@ public class ProtocolServicesImpl implements ProtocolServices {
 
 	@Override
 	public Protocol saveProtocol(final Protocol protocol) {
-		Assertion.checkNotNull(protocol);
+		Assertion.check().isNotNull(protocol);
 		//---
 		return protocolDAO.save(protocol);
 	}
 
 	@Override
 	public Protocol getProtocol(final String proCd) {
-		Assertion.checkNotNull(proCd);
+		Assertion.check().isNotNull(proCd);
 		//---
 		return protocolDAO.get(proCd);
 

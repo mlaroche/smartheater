@@ -62,7 +62,7 @@
 				<vu:include-data-primitive key="heaterData" />
 				<script>
 					var ctx = document.getElementById('myChart').getContext('2d');
-					var graphTemperatureData = vueData.heaterData.timedDataSeries.map(function(value){
+					var graphTemperatureData = VertigoUi.vueData.heaterData.timedDataSeries.map(function(value){
 				    	return {
 				    		x : value.time.epochSecond*1000,
 				    		y : value.values["temperature:mean"]

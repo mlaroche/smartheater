@@ -24,7 +24,7 @@ import java.util.Map;
 
 import com.mlaroche.smartheater.domain.HeaterModeEnum;
 
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
 
 public class HeaterWeeklyCalendar {
 
@@ -44,9 +44,10 @@ public class HeaterWeeklyCalendar {
 		}
 
 		public TimeSlot(final LocalTime begin, final LocalTime end, final HeaterModeEnum mode) {
-			Assertion.checkNotNull(begin);
-			Assertion.checkNotNull(end);
-			Assertion.checkNotNull(mode);
+			Assertion.check()
+					.isNotNull(begin)
+					.isNotNull(end)
+					.isNotNull(mode);
 			//---
 			this.begin = begin;
 			this.end = end;

@@ -24,11 +24,11 @@ import com.mlaroche.smartheater.domain.WeeklyCalendar;
 import com.mlaroche.smartheater.model.HeaterWeeklyCalendar;
 
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.dynamo.criteria.Criterions;
-import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.VUserException;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.VUserException;
+import io.vertigo.datamodel.criteria.Criterions;
+import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.structure.model.DtListState;
 
 @Transactional
 public class WeeklyCalendarServicesImpl implements WeeklyCalendarServices {
@@ -40,7 +40,7 @@ public class WeeklyCalendarServicesImpl implements WeeklyCalendarServices {
 
 	@Override
 	public WeeklyCalendar saveWeeklyCalendar(final WeeklyCalendar weeklyCalendar) {
-		Assertion.checkNotNull(weeklyCalendar);
+		Assertion.check().isNotNull(weeklyCalendar);
 		//---
 		// just to make sure that the weeklyCalendar is valid we marshall and unmarshall the json value
 		try {
@@ -53,7 +53,7 @@ public class WeeklyCalendarServicesImpl implements WeeklyCalendarServices {
 
 	@Override
 	public WeeklyCalendar getWeeklyCalendar(final Long wcaId) {
-		Assertion.checkNotNull(wcaId);
+		Assertion.check().isNotNull(wcaId);
 		//---
 		return weeklyCalendarDAO.get(wcaId);
 

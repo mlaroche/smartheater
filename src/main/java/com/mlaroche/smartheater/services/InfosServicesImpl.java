@@ -14,22 +14,22 @@ import com.mlaroche.smartheater.domain.Heater;
 import com.mlaroche.smartheater.domain.HeaterInfo;
 import com.mlaroche.smartheater.domain.WeatherInfo;
 
-import io.vertigo.commons.daemon.DaemonScheduled;
+import io.vertigo.core.daemon.DaemonScheduled;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.WrappedException;
 import io.vertigo.core.param.ParamManager;
 import io.vertigo.database.timeseries.DataFilter;
 import io.vertigo.database.timeseries.Measure;
 import io.vertigo.database.timeseries.TimeFilter;
-import io.vertigo.database.timeseries.TimeSeriesDataBaseManager;
+import io.vertigo.database.timeseries.TimeSeriesManager;
 import io.vertigo.database.timeseries.TimedDatas;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.WrappedException;
 
 public class InfosServicesImpl implements InfosServices {
 
 	private final static Logger LOGGER = LogManager.getLogger(InfosServicesImpl.class);
 
 	@Inject
-	private TimeSeriesDataBaseManager timeSeriesDataBaseManager;
+	private TimeSeriesManager timeSeriesManager;
 	@Inject
 	private ParamManager paramManager;
 
@@ -57,7 +57,7 @@ public class InfosServicesImpl implements InfosServices {
 						.tag("name", heater.getName())
 						.tag("mode", heaterInfo.getMode())
 						.build();
-				timeSeriesDataBaseManager.insertMeasure(dbName, infoMeasure);
+				timeSeriesManager.insertMeasure(dbName, infoMeasure);
 			} catch (final WrappedException e) {
 				LOGGER.error(e.getCause());
 			}
@@ -74,7 +74,7 @@ public class InfosServicesImpl implements InfosServices {
 				.tag("location", weatherInfo.getLocation())
 				.tag("icon", weatherInfo.getIcon())
 				.build();
-		timeSeriesDataBaseManager.insertMeasure(dbName, weatherInfoMeasure);
+		timeSeriesManager.insertMeasure(dbName, weatherInfoMeasure);
 
 	}
 
@@ -86,27 +86,27 @@ public class InfosServicesImpl implements InfosServices {
 	@Override
 	public TimedDatas getWeekElectricalData() {
 		final String dbName = paramManager.getParam("influxdb_dbname").getValueAsString();
-		return timeSeriesDataBaseManager.getTimeSeries(dbName, Arrays.asList("meanPower:mean"), DataFilter.builder("electricalConsumption").build(), TimeFilter.builder("now() - 1w", "now()").withTimeDim("30m").build());
+		return timeSeriesManager.getTimeSeries(dbName, Arrays.asList("meanPower:mean"), DataFilter.builder("electricalConsumption").build(), TimeFilter.builder("now() - 1w", "now()").withTimeDim("30m").build());
 	}
 
 	@Override
 	public TimedDatas getWeekMeanIndoorTemperature() {
 		final String dbName = paramManager.getParam("influxdb_dbname").getValueAsString();
-		return timeSeriesDataBaseManager.getTimeSeries(dbName, Arrays.asList("temperature:mean"), DataFilter.builder("heater").build(), TimeFilter.builder("now() - 1w", "now()").withTimeDim("30m").build());
+		return timeSeriesManager.getTimeSeries(dbName, Arrays.asList("temperature:mean"), DataFilter.builder("heater").build(), TimeFilter.builder("now() - 1w", "now()").withTimeDim("30m").build());
 	}
 
 	@Override
 	public TimedDatas getWeekMeanOutdoorTemperature() {
 		final String dbName = paramManager.getParam("influxdb_dbname").getValueAsString();
-		return timeSeriesDataBaseManager.getTimeSeries(dbName, Arrays.asList("temperature:mean"), DataFilter.builder("weather").build(), TimeFilter.builder("now() - 1w", "now()").withTimeDim("30m").build());
+		return timeSeriesManager.getTimeSeries(dbName, Arrays.asList("temperature:mean"), DataFilter.builder("weather").build(), TimeFilter.builder("now() - 1w", "now()").withTimeDim("30m").build());
 	}
 
 	@Override
 	public TimedDatas getLastDayHeaterInfos(final Heater heater) {
-		Assertion.checkNotNull(heater);
+		Assertion.check().isNotNull(heater);
 		//---
 		final String dbName = paramManager.getParam("influxdb_dbname").getValueAsString();
-		return timeSeriesDataBaseManager.getTimeSeries(dbName, Arrays.asList("temperature:mean", "humidity:mean"), DataFilter.builder("heater").addFilter("name", heater.getName()).build(), TimeFilter.builder("now() - 1d", "now()").withTimeDim("6m").build());
+		return timeSeriesManager.getTimeSeries(dbName, Arrays.asList("temperature:mean", "humidity:mean"), DataFilter.builder("heater").addFilter("name", heater.getName()).build(), TimeFilter.builder("now() - 1d", "now()").withTimeDim("6m").build());
 	}
 
 }

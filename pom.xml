@@ -9,10 +9,10 @@
 
 
 	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vertigo.version>2.1.0</vertigo.version>
+		<vertigo.version>3.0.0-RC</vertigo.version>
 	</properties>
 
 
@@ -20,7 +20,7 @@
 
 		<dependency>
 			<groupId>io.vertigo</groupId>
-			<artifactId>vertigo-vega-impl</artifactId>
+			<artifactId>vertigo-vega</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
 
@@ -52,13 +52,13 @@
 		<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
-			<version>0.9.5.4</version>
+			<version>0.9.5.5</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>org.influxdb</groupId>
-			<artifactId>influxdb-java</artifactId>
-			<version>2.15</version>
+			<groupId>io.vertigo</groupId>
+			<artifactId>vertigo-influxdb-connector</artifactId>
+			<version>${vertigo.version}</version>
 		</dependency>
 		
 		
@@ -66,23 +66,23 @@
 		<!-- jetty -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>apache-jsp</artifactId>
-			<version>9.4.18.v20190429</version>
+			<artifactId>jetty-server</artifactId>
+			<version>9.4.31.v20200723</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>apache-jstl</artifactId>
-			<version>9.4.18.v20190429</version>
+			<artifactId>jetty-webapp</artifactId>
+			<version>9.4.31.v20200723</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-plus</artifactId>
-			<version>9.4.18.v20190429</version>
+			<version>9.4.31.v20200723</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-annotations</artifactId>
-			<version>9.4.18.v20190429</version>
+			<version>9.4.31.v20200723</version>
 		</dependency>
 
 		<!-- for tests -->
@@ -107,11 +107,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.5.1</version>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
-					</configuration>
+					<version>3.8.1</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -142,14 +138,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.18.1</version>
+				<version>3.0.0-M3</version>
 				<configuration>
 					<testFailureIgnore>true</testFailureIgnore>
 					<junitArtifactName>junit:junit</junitArtifactName>
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<inputEncoding>${project.build.sourceEncoding}</inputEncoding>
 					<outputEncoding>${project.build.sourceEncoding}</outputEncoding>
-					<!-- <argLine>-Dfile.encoding=${project.build.sourceEncoding} ${argLine}</argLine> -->
 				</configuration>
 			</plugin>
 			<plugin>

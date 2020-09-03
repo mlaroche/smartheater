@@ -1,9 +1,9 @@
 package com.mlaroche.smartheater.domain;
 
-import io.vertigo.dynamo.domain.model.DtObject;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.DtObject;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -21,7 +21,7 @@ public final class ElectricalConsumption implements DtObject {
 	 * Récupère la valeur de la propriété 'Heure'.
 	 * @return Instant timestamp
 	 */
-	@Field(domain = "DoTimestamp", label = "Heure")
+	@Field(smartType = "STyTimestamp", label = "Heure")
 	public java.time.Instant getTimestamp() {
 		return timestamp;
 	}
@@ -40,7 +40,7 @@ public final class ElectricalConsumption implements DtObject {
 	 * Récupère la valeur de la propriété 'Puissance moyenne'.
 	 * @return Double meanPower
 	 */
-	@Field(domain = "DoDouble", label = "Puissance moyenne")
+	@Field(smartType = "STyDouble", label = "Puissance moyenne")
 	public Double getMeanPower() {
 		return meanPower;
 	}

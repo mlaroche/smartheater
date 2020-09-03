@@ -23,10 +23,10 @@ import com.mlaroche.smartheater.domain.Heater;
 import com.mlaroche.smartheater.domain.HeatersByMode;
 
 import io.vertigo.commons.transaction.Transactional;
-import io.vertigo.dynamo.criteria.Criterions;
-import io.vertigo.dynamo.domain.model.DtList;
-import io.vertigo.dynamo.domain.model.DtListState;
-import io.vertigo.lang.Assertion;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.datamodel.criteria.Criterions;
+import io.vertigo.datamodel.structure.model.DtList;
+import io.vertigo.datamodel.structure.model.DtListState;
 
 @Transactional
 public class HeaterServicesImpl implements HeaterServices {
@@ -38,14 +38,14 @@ public class HeaterServicesImpl implements HeaterServices {
 
 	@Override
 	public Heater saveHeater(final Heater heater) {
-		Assertion.checkNotNull(heater);
+		Assertion.check().isNotNull(heater);
 		//---
 		return heaterDAO.save(heater);
 	}
 
 	@Override
 	public Heater getHeater(final Long heaId) {
-		Assertion.checkNotNull(heaId);
+		Assertion.check().isNotNull(heaId);
 		//---
 		return heaterDAO.get(heaId);
 

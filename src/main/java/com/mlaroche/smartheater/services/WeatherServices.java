@@ -17,7 +17,7 @@ package com.mlaroche.smartheater.services;
 
 import com.mlaroche.smartheater.domain.WeatherInfo;
 
-import io.vertigo.core.component.Component;
+import io.vertigo.core.node.component.Component;
 
 public interface WeatherServices extends Component {
 

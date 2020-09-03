@@ -28,11 +28,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.mlaroche.smartheater.domain.WeatherInfo;
 
-import io.vertigo.commons.daemon.DaemonScheduled;
-import io.vertigo.core.component.Activeable;
+import io.vertigo.core.daemon.DaemonScheduled;
+import io.vertigo.core.lang.Assertion;
+import io.vertigo.core.lang.WrappedException;
+import io.vertigo.core.node.component.Activeable;
 import io.vertigo.core.param.ParamManager;
-import io.vertigo.lang.Assertion;
-import io.vertigo.lang.WrappedException;
 
 public class WeatherServicesImpl implements WeatherServices, Activeable {
 
@@ -79,7 +79,7 @@ public class WeatherServicesImpl implements WeatherServices, Activeable {
 	}
 
 	private static <R> R callRestWS(final String wsUrl, final Type returnType) {
-		Assertion.checkArgNotEmpty(wsUrl);
+		Assertion.check().isNotBlank(wsUrl);
 		// ---
 		try {
 			final URL url = new URL(wsUrl);

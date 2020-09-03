@@ -2,12 +2,13 @@ package com.mlaroche.smartheater.dao;
 
 import javax.inject.Inject;
 
-import io.vertigo.dynamo.impl.store.util.DAO;
-import io.vertigo.dynamo.store.StoreManager;
-import io.vertigo.dynamo.store.StoreServices;
-import io.vertigo.dynamo.task.TaskManager;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datastore.entitystore.EntityStoreManager;
+import io.vertigo.datastore.impl.dao.DAO;
+import io.vertigo.datastore.impl.dao.StoreServices;
+import io.vertigo.datamodel.smarttype.SmartTypeManager;
+import io.vertigo.datamodel.task.TaskManager;
 import com.mlaroche.smartheater.domain.HeaterMode;
-import io.vertigo.lang.Generated;
 
 /**
  * This class is automatically generated.
@@ -18,12 +19,13 @@ public final class HeaterModeDAO extends DAO<HeaterMode, java.lang.String> imple
 
 	/**
 	 * Contructeur.
-	 * @param storeManager Manager de persistance
+	 * @param entityStoreManager Manager de persistance
 	 * @param taskManager Manager de Task
+	 * @param smartTypeManager SmartTypeManager
 	 */
 	@Inject
-	public HeaterModeDAO(final StoreManager storeManager, final TaskManager taskManager) {
-		super(HeaterMode.class, storeManager, taskManager);
+	public HeaterModeDAO(final EntityStoreManager entityStoreManager, final TaskManager taskManager, final SmartTypeManager smartTypeManager) {
+		super(HeaterMode.class, entityStoreManager, taskManager, smartTypeManager);
 	}
 
 }

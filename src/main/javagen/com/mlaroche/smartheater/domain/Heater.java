@@ -1,12 +1,12 @@
 package com.mlaroche.smartheater.domain;
 
-import io.vertigo.dynamo.domain.model.Entity;
-import io.vertigo.dynamo.domain.model.EnumVAccessor;
-import io.vertigo.dynamo.domain.model.UID;
-import io.vertigo.dynamo.domain.model.VAccessor;
-import io.vertigo.dynamo.domain.stereotype.Field;
-import io.vertigo.dynamo.domain.util.DtObjectUtil;
-import io.vertigo.lang.Generated;
+import io.vertigo.core.lang.Generated;
+import io.vertigo.datamodel.structure.model.Entity;
+import io.vertigo.datastore.impl.entitystore.EnumStoreVAccessor;
+import io.vertigo.datamodel.structure.model.UID;
+import io.vertigo.datastore.impl.entitystore.StoreVAccessor;
+import io.vertigo.datamodel.structure.stereotype.Field;
+import io.vertigo.datamodel.structure.util.DtObjectUtil;
 
 /**
  * This class is automatically generated.
@@ -23,7 +23,7 @@ public final class Heater implements Entity {
 	private Boolean auto;
 	private java.time.Instant autoSwitch;
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AHeaWca",
 			fkFieldName = "wcaId",
 			primaryDtDefinitionName = "DtWeeklyCalendar",
@@ -36,9 +36,9 @@ public final class Heater implements Entity {
 			foreignRole = "Heater",
 			foreignLabel = "Radiateur",
 			foreignMultiplicity = "0..*")
-	private final VAccessor<com.mlaroche.smartheater.domain.WeeklyCalendar> wcaIdAccessor = new VAccessor<>(com.mlaroche.smartheater.domain.WeeklyCalendar.class, "WeeklyCalendar");
+	private final StoreVAccessor<com.mlaroche.smartheater.domain.WeeklyCalendar> wcaIdAccessor = new StoreVAccessor<>(com.mlaroche.smartheater.domain.WeeklyCalendar.class, "WeeklyCalendar");
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AHeaPro",
 			fkFieldName = "proCd",
 			primaryDtDefinitionName = "DtProtocol",
@@ -51,9 +51,9 @@ public final class Heater implements Entity {
 			foreignRole = "Heater",
 			foreignLabel = "Radiateur",
 			foreignMultiplicity = "0..*")
-	private final EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> proCdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.Protocol.class, "Protocol", com.mlaroche.smartheater.domain.ProtocolEnum.class);
+	private final EnumStoreVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> proCdAccessor = new EnumStoreVAccessor<>(com.mlaroche.smartheater.domain.Protocol.class, "Protocol", com.mlaroche.smartheater.domain.ProtocolEnum.class);
 
-	@io.vertigo.dynamo.domain.stereotype.Association(
+	@io.vertigo.datamodel.structure.stereotype.Association(
 			name = "AHeaMod",
 			fkFieldName = "modCd",
 			primaryDtDefinitionName = "DtHeaterMode",
@@ -66,7 +66,7 @@ public final class Heater implements Entity {
 			foreignRole = "Heater",
 			foreignLabel = "Radiateur",
 			foreignMultiplicity = "0..*")
-	private final EnumVAccessor<com.mlaroche.smartheater.domain.HeaterMode, com.mlaroche.smartheater.domain.HeaterModeEnum> modCdAccessor = new EnumVAccessor<>(com.mlaroche.smartheater.domain.HeaterMode.class, "Mode", com.mlaroche.smartheater.domain.HeaterModeEnum.class);
+	private final EnumStoreVAccessor<com.mlaroche.smartheater.domain.HeaterMode, com.mlaroche.smartheater.domain.HeaterModeEnum> modCdAccessor = new EnumStoreVAccessor<>(com.mlaroche.smartheater.domain.HeaterMode.class, "Mode", com.mlaroche.smartheater.domain.HeaterModeEnum.class);
 
 	/** {@inheritDoc} */
 	@Override
@@ -79,7 +79,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Id'.
 	 * @return Long heaId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "ID", required = true, label = "Id")
+	@Field(smartType = "STyId", type = "ID", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Id")
 	public Long getHeaId() {
 		return heaId;
 	}
@@ -98,7 +98,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Nom'.
 	 * @return String name
 	 */
-	@Field(domain = "DoLabel", label = "Nom")
+	@Field(smartType = "STyLabel", label = "Nom")
 	public String getName() {
 		return name;
 	}
@@ -117,7 +117,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Nom DNS/Adresse IP'.
 	 * @return String dnsName
 	 */
-	@Field(domain = "DoLabel", label = "Nom DNS/Adresse IP")
+	@Field(smartType = "STyLabel", label = "Nom DNS/Adresse IP")
 	public String getDnsName() {
 		return dnsName;
 	}
@@ -136,7 +136,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Actif'.
 	 * @return Boolean active
 	 */
-	@Field(domain = "DoBoolean", label = "Actif")
+	@Field(smartType = "STyBoolean", label = "Actif")
 	public Boolean getActive() {
 		return active;
 	}
@@ -155,7 +155,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Mode Auto'.
 	 * @return Boolean auto <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoBoolean", required = true, label = "Mode Auto")
+	@Field(smartType = "STyBoolean", cardinality = io.vertigo.core.lang.Cardinality.ONE, label = "Mode Auto")
 	public Boolean getAuto() {
 		return auto;
 	}
@@ -174,7 +174,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Retour au mode auto'.
 	 * @return Instant autoSwitch
 	 */
-	@Field(domain = "DoTimestamp", label = "Retour au mode auto")
+	@Field(smartType = "STyTimestamp", label = "Retour au mode auto")
 	public java.time.Instant getAutoSwitch() {
 		return autoSwitch;
 	}
@@ -193,7 +193,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Calendrier'.
 	 * @return Long wcaId <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoId", type = "FOREIGN_KEY", required = true, label = "Calendrier")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyId", label = "Calendrier", fkDefinition = "DtWeeklyCalendar" )
 	public Long getWcaId() {
 		return (Long) wcaIdAccessor.getId();
 	}
@@ -212,7 +212,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Protocol'.
 	 * @return String proCd <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabel", type = "FOREIGN_KEY", required = true, label = "Protocol")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyLabel", label = "Protocol", fkDefinition = "DtProtocol" )
 	public String getProCd() {
 		return (String) proCdAccessor.getId();
 	}
@@ -231,7 +231,7 @@ public final class Heater implements Entity {
 	 * Récupère la valeur de la propriété 'Mode'.
 	 * @return String modCd <b>Obligatoire</b>
 	 */
-	@Field(domain = "DoLabel", type = "FOREIGN_KEY", required = true, label = "Mode")
+	@io.vertigo.datamodel.structure.stereotype.ForeignKey(smartType = "STyLabel", label = "Mode", fkDefinition = "DtHeaterMode" )
 	public String getModCd() {
 		return (String) modCdAccessor.getId();
 	}
@@ -249,7 +249,7 @@ public final class Heater implements Entity {
 	 * Association : Mode.
 	 * @return l'accesseur vers la propriété 'Mode'
 	 */
-	public EnumVAccessor<com.mlaroche.smartheater.domain.HeaterMode, com.mlaroche.smartheater.domain.HeaterModeEnum> mode() {
+	public EnumStoreVAccessor<com.mlaroche.smartheater.domain.HeaterMode, com.mlaroche.smartheater.domain.HeaterModeEnum> mode() {
 		return modCdAccessor;
 	}
 
@@ -257,7 +257,7 @@ public final class Heater implements Entity {
 	 * Association : Protocol.
 	 * @return l'accesseur vers la propriété 'Protocol'
 	 */
-	public EnumVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> protocol() {
+	public EnumStoreVAccessor<com.mlaroche.smartheater.domain.Protocol, com.mlaroche.smartheater.domain.ProtocolEnum> protocol() {
 		return proCdAccessor;
 	}
 
@@ -265,7 +265,7 @@ public final class Heater implements Entity {
 	 * Association : Calendrier.
 	 * @return l'accesseur vers la propriété 'Calendrier'
 	 */
-	public VAccessor<com.mlaroche.smartheater.domain.WeeklyCalendar> weeklyCalendar() {
+	public StoreVAccessor<com.mlaroche.smartheater.domain.WeeklyCalendar> weeklyCalendar() {
 		return wcaIdAccessor;
 	}
 	

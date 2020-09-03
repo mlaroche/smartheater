@@ -6,7 +6,7 @@ package com.mlaroche.smartheater.boot;
 import com.mlaroche.smartheater.domain.HeaterMode;
 import com.mlaroche.smartheater.domain.Protocol;
 
-import io.vertigo.dynamo.impl.store.datastore.AbstractMasterDataDefinitionProvider;
+import io.vertigo.datastore.impl.entitystore.AbstractMasterDataDefinitionProvider;
 
 /**
  * Init masterdata definition.

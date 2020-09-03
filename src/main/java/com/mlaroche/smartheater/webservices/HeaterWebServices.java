@@ -23,7 +23,7 @@ import com.mlaroche.smartheater.domain.HeatersByMode;
 import com.mlaroche.smartheater.services.HeaterControlServices;
 import com.mlaroche.smartheater.services.HeaterServices;
 
-import io.vertigo.dynamo.domain.model.DtList;
+import io.vertigo.datamodel.structure.model.DtList;
 import io.vertigo.vega.webservice.WebServices;
 import io.vertigo.vega.webservice.stereotype.GET;
 import io.vertigo.vega.webservice.stereotype.POST;

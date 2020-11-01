@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mlaroche</groupId>
@@ -29,13 +30,13 @@
 			<artifactId>vertigo-studio</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-ui</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-orchestra</artifactId>
@@ -54,15 +55,15 @@
 			<artifactId>c3p0</artifactId>
 			<version>0.9.5.5</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.vertigo</groupId>
 			<artifactId>vertigo-influxdb-connector</artifactId>
 			<version>${vertigo.version}</version>
 		</dependency>
-		
-		
-		
+
+
+
 		<!-- jetty -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
@@ -149,7 +150,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.3.0</version>
 				<configuration>
 					<descriptors>
 						<descriptor>assembly.xml</descriptor>

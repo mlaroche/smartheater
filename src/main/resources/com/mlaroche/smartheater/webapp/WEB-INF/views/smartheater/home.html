@@ -131,21 +131,21 @@
 		<div layout:fragment="javascript-footer">
 			<script>
 				var ctx = document.getElementById('myChart').getContext('2d');
-				var graphElectricalData = vueData.electricalData.timedDataSeries.map(function(value){
+				var graphElectricalData = VertigoUi.vueData.electricalData.timedDataSeries.map(function(value){
 			    	return {
-			    		x : value.time.epochSecond*1000,
+			    		x : new Date(value.time).getTime(),
 			    		y : value.values["meanPower:mean"]
 			    	}
 			    });
-				var graphIndoorTemperatureData = vueData.indoorTemperatureData.timedDataSeries.map(function(value){
+				var graphIndoorTemperatureData = VertigoUi.vueData.indoorTemperatureData.timedDataSeries.map(function(value){
 			    	return {
-			    		x : value.time.epochSecond*1000,
+			    		x : new Date(value.time).getTime(),
 			    		y : value.values["temperature:mean"]
 			    	}
 			    });
-				var graphOutdoorTemperatureData = vueData.outdoorTemperatureData.timedDataSeries.map(function(value){
+				var graphOutdoorTemperatureData = VertigoUi.vueData.outdoorTemperatureData.timedDataSeries.map(function(value){
 			    	return {
-			    		x : value.time.epochSecond*1000,
+			    		x : new Date(value.time).getTime(),
 			    		y : value.values["temperature:mean"]
 			    	}
 			    });

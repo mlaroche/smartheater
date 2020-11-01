@@ -53,7 +53,9 @@ public class InfosServicesImpl implements InfosServices {
 						.addField("humidity", heaterInfo.getHumidity())
 						.addField("mode", heaterInfo.getMode())
 						.addField("name", heater.getName())
+						.addField("id", heater.getHeaId().toString())
 						.addField("dns", heater.getDnsName())
+						.tag("id", heater.getHeaId().toString())
 						.tag("name", heater.getName())
 						.tag("mode", heaterInfo.getMode())
 						.build();
@@ -106,7 +108,7 @@ public class InfosServicesImpl implements InfosServices {
 		Assertion.check().isNotNull(heater);
 		//---
 		final String dbName = paramManager.getParam("influxdb_dbname").getValueAsString();
-		return timeSeriesManager.getTimeSeries(dbName, Arrays.asList("temperature:mean", "humidity:mean"), DataFilter.builder("heater").addFilter("name", heater.getName()).build(), TimeFilter.builder("now() - 1d", "now()").withTimeDim("6m").build());
+		return timeSeriesManager.getTimeSeries(dbName, Arrays.asList("temperature:mean", "humidity:mean"), DataFilter.builder("heater").addFilter("id", heater.getHeaId().toString()).build(), TimeFilter.builder("now() - 1d", "now()").withTimeDim("6m").build());
 	}
 
 }

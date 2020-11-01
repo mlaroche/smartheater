@@ -65,7 +65,7 @@ public final class HeaterDetailController extends AbstractVSpringMvcController {
 	public void initContext(final ViewContext viewContext) {
 		loadLists(viewContext);
 		//---
-		viewContext.publishDto(heaterKey, new Heater());
+		viewContext.publishDto(heaterKey, heaterServices.initHeater());
 		//---
 		toModeCreate();
 	}
@@ -110,4 +110,5 @@ public final class HeaterDetailController extends AbstractVSpringMvcController {
 		heaterServices.saveHeater(heater);
 		return "redirect:/heater/" + heater.getHeaId();
 	}
+
 }

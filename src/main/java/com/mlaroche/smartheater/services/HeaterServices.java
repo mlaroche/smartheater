@@ -31,4 +31,6 @@ public interface HeaterServices extends Component {
 
 	DtList<HeatersByMode> getHeatersByMode();
 
+	Heater initHeater();
+
 }

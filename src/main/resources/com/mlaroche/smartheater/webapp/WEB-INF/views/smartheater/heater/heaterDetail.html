@@ -54,23 +54,24 @@
 		</vu:block>
 		<q-page-sticky position="bottom-right"> 
 			<vu:button-submit th:if="${model.modeEdit}" icon="save" label="Save" action="@{_save}" size="lg" color="primary" />
+			<vu:button-submit th:if="${model.modeCreate}" icon="save" label="Create" action="@{_save}" size="lg" color="primary" />
 		</q-page-sticky>
+		<vu:include-data-primitive th:if="${!model.modeCreate}" key="heaterData" />
 	</section>
 		
 		<div layout:fragment="javascript-footer">
 			<th:block th:if="${!model.modeCreate}">
-				<vu:include-data-primitive key="heaterData" />
 				<script>
 					var ctx = document.getElementById('myChart').getContext('2d');
 					var graphTemperatureData = VertigoUi.vueData.heaterData.timedDataSeries.map(function(value){
 				    	return {
-				    		x : value.time.epochSecond*1000,
+				    		x : new Date(value.time).getTime(),
 				    		y : value.values["temperature:mean"]
 				    	}
 				    });
-					var graphHumidityData = vueData.heaterData.timedDataSeries.map(function(value){
+					var graphHumidityData = VertigoUi.vueData.heaterData.timedDataSeries.map(function(value){
 				    	return {
-				    		x : value.time.epochSecond*1000,
+				    		x : new Date(value.time).getTime(),
 				    		y : value.values["humidity:mean"]
 				    	}
 				    });

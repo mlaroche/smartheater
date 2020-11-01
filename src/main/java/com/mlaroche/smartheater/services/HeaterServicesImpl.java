@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import com.mlaroche.smartheater.dao.HeaterDAO;
 import com.mlaroche.smartheater.dao.heater.HeaterPAO;
 import com.mlaroche.smartheater.domain.Heater;
+import com.mlaroche.smartheater.domain.HeaterModeEnum;
 import com.mlaroche.smartheater.domain.HeatersByMode;
 
 import io.vertigo.commons.transaction.Transactional;
@@ -59,6 +60,13 @@ public class HeaterServicesImpl implements HeaterServices {
 	@Override
 	public DtList<HeatersByMode> getHeatersByMode() {
 		return heaterPAO.getHeatersByMode();
+	}
+
+	@Override
+	public Heater initHeater() {
+		final Heater heater = new Heater();
+		heater.mode().setEnumValue(HeaterModeEnum.arret);
+		return heater;
 	}
 
 }
